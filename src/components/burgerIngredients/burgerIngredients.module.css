@@ -1,0 +1,32 @@
+.section {
+  max-width: 600px;
+  width    : 100%;
+}
+
+.ingredientsTypeBox {
+  display    : flex;
+  align-items: center;
+  flex-wrap  : wrap;
+}
+
+.ingredientsScrollBox {
+  overflow  : auto;
+  max-height: 756px;
+}
+
+.ingredientsScrollBox::-webkit-scrollbar {
+  width: 8px;
+  /* ширина скроллбара */
+}
+
+.ingredientsScrollBox::-webkit-scrollbar-track {
+  background: #2F2F37;
+  /* цвет скроллбара */
+}
+
+.ingredientsScrollBox::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  /* цвет плашки */
+  border-radius   : 10px;
+  /* закругления плашки */
+}
