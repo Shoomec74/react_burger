@@ -1,5 +1,6 @@
 import React from "react";
 import headerMenuElementStyles from "./headerMenuElement.module.css";
+import PropTypes from "prop-types";
 
 const HeaderMenuElement = (props) => {
   const { element, title, link } = headerMenuElementStyles;
@@ -18,6 +19,12 @@ const HeaderMenuElement = (props) => {
       </a>
     </li>
   );
+
+  HeaderMenuElement.propTypes ={
+    text: PropTypes.string,
+    children: PropTypes.node
+  }
+
 };
 
 export default HeaderMenuElement;

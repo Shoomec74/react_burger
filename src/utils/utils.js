@@ -1,3 +1,12 @@
 const API_URL ="https://norma.nomoreparties.space/api/ingredients";
 
-export default API_URL;
+const ORDER_DATA = {
+  orderNumber: 777777,
+  totalorder: 888,
+  status: {
+    isDone: false,
+    statusText: 'Ваш заказ начали готовить'
+  }
+}
+
+export {API_URL, ORDER_DATA};

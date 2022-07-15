@@ -1,7 +1,7 @@
 import React from "react";
 import spinerStyles from "./loadingSpinner.module.css";
 
-export default function LoadingSpinner() {
+function LoadingSpinner() {
   const { loadingSpinner, spinnerContainer } = spinerStyles;
   return (
     <div className={spinnerContainer}>
@@ -9,3 +9,5 @@ export default function LoadingSpinner() {
     </div>
   );
 }
+
+export default LoadingSpinner;

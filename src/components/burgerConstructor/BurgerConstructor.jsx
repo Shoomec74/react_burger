@@ -6,14 +6,21 @@ import {
   DragIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../Modal/Modal.jsx";
+import OrderDetails from "../OrderDetails/OrderDetails.jsx";
+import { ORDER_DATA } from "../../utils/utils.js";
+import PropTypes from "prop-types";
 
 const BurgerConstructor = ({ ingredients }) => {
-  const { ingredientsScrollBox, section, ingridientBox, info } = burgerConstructorStyles;
+  const { ingredientsScrollBox, section, ingridientBox, info } =
+    burgerConstructorStyles;
+  const [isOpened, setIsOpened] = React.useState(false);
 
   return (
     <section className={`${section} pt-25`}>
       <div className={`ml-9 mb-4`}>
         <ConstructorElement
+          key={ingredients[0]._id}
           type="top"
           isLocked={true}
           text={`${ingredients[0].name} (верх)`}
@@ -27,16 +34,20 @@ const BurgerConstructor = ({ ingredients }) => {
             <li className={`${ingridientBox} mb-4`}>
               <DragIcon type="primary" />
               <ConstructorElement
+                key={ingredient._id}
                 text={ingredient.name}
                 price={ingredient.price}
                 thumbnail={ingredient.image_mobile}
               />
             </li>
-          ) : (<></>)
+          ) : (
+            <></>
+          )
         )}
       </ul>
       <div className={`ml-9 mt-4`}>
         <ConstructorElement
+          key={`${ingredients[0]._id} duble`}
           type="bottom"
           isLocked={true}
           text={`${ingredients[0].name} (низ)`}
@@ -46,15 +57,22 @@ const BurgerConstructor = ({ ingredients }) => {
       </div>
       <div className={`${info} mt-10 mr-4`}>
         <p className="text text_type_digits-medium mr-10">
-          888&ensp;
+          {ORDER_DATA.totalorder}&ensp;
           <CurrencyIcon type="primary" />
         </p>
-        <Button type="primary" size="large">
-          Нажми на меня
+        <Button type="primary" size="large" onClick={() => setIsOpened(true)}>
+          Оформить заказ
         </Button>
       </div>
+      <Modal isOpened={isOpened} onClose={() => setIsOpened(false)}>
+        <OrderDetails orderData={ORDER_DATA} />
+      </Modal>
     </section>
   );
+
+  BurgerConstructor.propTypes = {
+    ingredients: PropTypes.objectOf(PropTypes.object),
+  };
 };
 
 export default BurgerConstructor;

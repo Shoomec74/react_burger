@@ -1,14 +1,14 @@
 import React from "react";
 import appStyles from "./app.module.css";
-import API_URL from "../../utils/utils.js";
-import AppHeader from "../appHeader/AppHeader.jsx";
-import BurgerIngredients from "../burgerIngredients/BurgerIngredients.jsx";
-import BurgerConstructor from "../burgerConstructor/BurgerConstructor.jsx";
-import LoadingSpinner from "../loadingSpinner/LoadingSpinner.jsx";
+import {API_URL} from "../../utils/utils.js";
+import AppHeader from "../AppHeader/AppHeader.jsx";
+import BurgerIngredients from "../BurgerIngredients/BurgerIngredients.jsx";
+import BurgerConstructor from "../BurgerConstructor/BurgerConstructor.jsx";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner.jsx";
+import Modal from '../Modal/Modal.jsx';
 
 const App = () => {
   const { page, content } = appStyles;
-
   const [state, setState] = React.useState({
     success: false,
     ingredients: [],

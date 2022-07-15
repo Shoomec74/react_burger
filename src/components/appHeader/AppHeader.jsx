@@ -6,7 +6,7 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import HeaderMenuElement from "../headerMenuElement/HeaderMenuElement";
+import HeaderMenuElement from "../HeaderMenuElement/HeaderMenuElement";
 
 const AppHeader = () => {
   const { header, menu, logo } = headerStyles;
