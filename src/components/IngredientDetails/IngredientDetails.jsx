@@ -30,10 +30,11 @@ function IngredientDetails({ ingredient, children }) {
       </ul>
     </div>
   );
-  IngredientDetails.propTypes = {
-    ingredient: PropTypes.object,
-    children: PropTypes.node
-  }
+}
+
+IngredientDetails.propTypes = {
+  ingredient: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default IngredientDetails;

@@ -19,12 +19,11 @@ const HeaderMenuElement = (props) => {
       </a>
     </li>
   );
-
-  HeaderMenuElement.propTypes ={
-    text: PropTypes.string,
-    children: PropTypes.node
-  }
-
 };
+
+HeaderMenuElement.propTypes ={
+  text: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired
+}
 
 export default HeaderMenuElement;

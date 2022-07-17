@@ -4,17 +4,14 @@ import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../Modal/Modal.jsx";
-import IngredientDetails from '../IngredientDetails/IngredientDetails.jsx';
 import PropTypes from "prop-types";
 
-const IngredientElement = ({ ingredient, countIngredient }) => {
+const IngredientElement = ({ ingredient, countIngredient, onClick }) => {
   const { ingredientBox, image, count, name } = ingredientElementStyles;
-  const [isOpened, setIsOpened] = React.useState(false);
 
   return (
     <>
-    <li className={`${ingredientBox} mr-6 ml-4`}  onClick={() => setIsOpened(true)}>
+    <li className={`${ingredientBox} mr-6 ml-4`}  onClick={onClick}>
       <img
         className={`${image} ml-4 mr-4`}
         src={ingredient.image_large}
@@ -29,17 +26,14 @@ const IngredientElement = ({ ingredient, countIngredient }) => {
       </p>
       <p className={`${name} text text_type_main-default`}>{ingredient.name}</p>
     </li>
-    <Modal isOpened={isOpened} onClose={() => setIsOpened(false)}>
-      <IngredientDetails ingredient={ingredient} >
-        Детали ингридиента
-      </IngredientDetails>
-    </Modal>
     </>
   );
-  IngredientElement.propTypes ={
-    ingredient: PropTypes.object,
-    countIngredient: PropTypes.number
-  }
 };
+
+IngredientElement.propTypes ={
+  ingredient: PropTypes.object,
+  countIngredient: PropTypes.number,
+  onClick: PropTypes.func.isRequired
+}
 
 export default IngredientElement;

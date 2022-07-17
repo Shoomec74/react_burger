@@ -31,18 +31,15 @@ const BurgerConstructor = ({ ingredients }) => {
       <ul className={ingredientsScrollBox}>
         {ingredients.map((ingredient) =>
           ingredient.type !== "bun" ? (
-            <li className={`${ingridientBox} mb-4`}>
+            <li className={`${ingridientBox} mb-4`} key={ingredient._id}>
               <DragIcon type="primary" />
               <ConstructorElement
-                key={ingredient._id}
                 text={ingredient.name}
                 price={ingredient.price}
                 thumbnail={ingredient.image_mobile}
               />
             </li>
-          ) : (
-            <></>
-          )
+          ) : null
         )}
       </ul>
       <div className={`ml-9 mt-4`}>
@@ -69,10 +66,10 @@ const BurgerConstructor = ({ ingredients }) => {
       </Modal>
     </section>
   );
+};
 
-  BurgerConstructor.propTypes = {
-    ingredients: PropTypes.objectOf(PropTypes.object),
-  };
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default BurgerConstructor;
