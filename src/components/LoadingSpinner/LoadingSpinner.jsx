@@ -2,10 +2,15 @@ import React from "react";
 import spinerStyles from "./loadingSpinner.module.css";
 
 function LoadingSpinner() {
-  const { loadingSpinner, spinnerContainer } = spinerStyles;
+  const { spinnerContainer, spinner, spinnerBlur} = spinerStyles;
   return (
     <div className={spinnerContainer}>
-      <div className={loadingSpinner}></div>
+      <div className={spinner}>
+        <span className={spinnerBlur}></span>
+        <span className={spinnerBlur}></span>
+        <span className={spinnerBlur}></span>
+        <span className={spinnerBlur}></span>
+      </div>
     </div>
   );
 }

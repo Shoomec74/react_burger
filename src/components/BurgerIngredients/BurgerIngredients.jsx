@@ -3,11 +3,15 @@ import burgerIngredientsStyles from "./burgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientElement from "../IngredientElement/IngredientElement.jsx";
 import PropTypes from "prop-types";
+import Modal from "../Modal/Modal";
+import IngredientDetails from "../IngredientDetails/IngredientDetails";
 
 const BurgerIngredients = ({ ingredients }) => {
   const { section, ingredientsScrollBox, ingredientsTypeBox } = burgerIngredientsStyles;
   const [current, setCurrent] = React.useState("bun");
   const [manifestation, setManifestation] = React.useState(0);
+  const [ingredientItem, setIngredientItem] = React.useState(null);
+  const [isOpened, setIsOpened] = React.useState(false);
 
   return (
     <section className={`${section} mr-10`}>
@@ -41,18 +45,25 @@ const BurgerIngredients = ({ ingredients }) => {
                   key={ingredient._id}
                   ingredient={ingredient}
                   countIngredient={ingredient.__v}
+                  onClick={() => {setIsOpened(true); setIngredientItem(ingredient)}}
                 />
               )
           )}
         </ul>
       </div>
-
+      {isOpened &&
+      <Modal isOpened={isOpened} onClose={() => setIsOpened(false)}>
+        <IngredientDetails ingredient={ingredientItem}>
+          Детали ингридиента
+        </IngredientDetails>
+      </Modal>
+      }
     </section>
   );
-
-  BurgerIngredients.propTypes ={
-    ingredients: PropTypes.objectOf(PropTypes.object),
-  }
 };
+
+BurgerIngredients.propTypes ={
+  ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
+}
 
 export default BurgerIngredients;

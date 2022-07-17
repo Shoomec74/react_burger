@@ -15,12 +15,17 @@ const App = () => {
     isLoading: false,
   });
 
+  function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
   React.useEffect(() => {
     try {
       const getData = async () => {
         setState({ ...state, isLoading: true });
-        const res = await fetch(API_URL);
-        const data = await res.json();
+        await delay(3000);
+        const res = await fetch(API_URL)
+        const data = res.ok ? await res.json() : Promise.reject(`Ошибка ${res.status}`);
         setState({
           ...state,
           ingredients: data.data,
