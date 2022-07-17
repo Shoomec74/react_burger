@@ -20,7 +20,7 @@ const App = () => {
       const getData = async () => {
         setState({ ...state, isLoading: true });
         const res = await fetch(API_URL);
-        const data = await res.json();
+        const data = res.ok ? await res.json() : Promise.reject(`Ошибка ${res.status}`);
         setState({
           ...state,
           ingredients: data.data,

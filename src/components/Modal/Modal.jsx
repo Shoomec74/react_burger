@@ -9,16 +9,18 @@ function Modal({ isOpened, onClose, children }) {
   const { content, closeButton } = modalStyles;
 
   React.useEffect(() => {
-    const handleESC = (e) => {
-      if (e.key === "Escape") {
+    function closeByEscape(evt) {
+      if (evt.key === "Escape") {
         onClose();
       }
     };
-    document.addEventListener("keydown", handleESC);
+    if(isOpened){
+      document.addEventListener("keydown", closeByEscape);
     return () => {
-      document.removeEventListener("keydown", handleESC);
+      document.removeEventListener("keydown", closeByEscape);
     };
-  });
+    }
+  }, [isOpened]);
 
   if (!isOpened) return null;
 
@@ -34,11 +36,12 @@ function Modal({ isOpened, onClose, children }) {
     </>,
     document.getElementById("modal")
   );
-  Modal.propTypes ={
-    isOpened: PropTypes.bool,
-    onClose: PropTypes.func,
-    children: PropTypes.element
-  }
+}
+
+Modal.propTypes ={
+  isOpened: PropTypes.bool,
+  onClose: PropTypes.func,
+  children: PropTypes.element
 }
 
 export default Modal;
