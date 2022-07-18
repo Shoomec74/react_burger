@@ -1,0 +1,26 @@
+.ingredientBox {
+  display       : flex;
+  width         : 272px;
+  height        : 208px;
+  flex-direction: column;
+  align-items   : center;
+  position      : relative;
+}
+
+.ingredientBox:nth-of-type(2n) {
+  margin-left : 0;
+  margin-right: 8px;
+}
+
+.image {
+  cursor: pointer;
+  width : 240px;
+}
+
+.count {
+  display: flex;
+}
+
+.name {
+  text-align: center;
+}

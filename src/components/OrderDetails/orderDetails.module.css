@@ -1,0 +1,52 @@
+.popup {
+  width: 720px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+  align-items: center;
+}
+
+.status {
+  width   : 120px;
+  height  : 120px;
+  position: relative;
+}
+
+.gradientItem {
+  position    : absolute;
+  left        : 50%;
+  top         : 50%;
+  transform   : translate(-50%, -50%);
+  width       : 107px;
+  height      : 100px;
+  background  : radial-gradient(50% 50% at 50% 50%, rgba(128, 26, 179, 0) 0%, rgba(76, 76, 255, 0.25) 100%)
+    /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */
+  ;
+  border-radius: 40px;
+}
+
+.gradientItemTwo {
+  position    : absolute;
+  left        : 50%;
+  top         : 50%;
+  transform   : translate(-50%, -50%);
+  width       : 68px;
+  height      : 66px;
+  background  : radial-gradient(50% 50% at 50% 50%, rgba(128, 26, 179, 0) 0%, rgba(76, 76, 255, 0.125) 100%)
+    /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */
+  ;
+  border-radius: 40px;
+
+}
+
+.icon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position    : absolute;
+  left        : 50%;
+  top         : 50%;
+  transform   : translate(-50%, -50%);
+  width       : 48px;
+  height      : 48px;
+}

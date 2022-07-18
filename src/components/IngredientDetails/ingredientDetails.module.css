@@ -1,0 +1,29 @@
+.popup {
+  display       : flex;
+  flex-direction: column;
+  justify-items : center;
+  width         : 720px;
+  padding-top   : 12px;
+}
+
+.nutritionalValues {
+  width          : 516px;
+  display        : flex;
+  align-items    : center;
+  justify-content: space-between;
+  align-self: center;
+}
+
+.nutritionalValue {
+  text-align: center;
+}
+
+.image {
+  width : 480px;
+  height: 240px;
+  margin: 0 auto;
+}
+
+.name {
+  text-align: center;
+}
