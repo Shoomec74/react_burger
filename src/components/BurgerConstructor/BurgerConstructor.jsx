@@ -9,13 +9,13 @@ import {
 import Modal from "../Modal/Modal.jsx";
 import OrderDetails from "../OrderDetails/OrderDetails.jsx";
 import { ORDER_DATA } from "../../utils/utils.js";
-import PropTypes from "prop-types";
+import AppContext from "../../services/AppContext.jsx";
 
-const BurgerConstructor = ({ ingredients }) => {
+const BurgerConstructor = () => {
   const { ingredientsScrollBox, section, ingridientBox, info } =
     burgerConstructorStyles;
   const [isOpened, setIsOpened] = React.useState(false);
-
+  const ingredients = React.useContext(AppContext)
   return (
     <section className={`${section} pt-25`}>
       <div className={`ml-9 mb-4`}>
@@ -66,10 +66,6 @@ const BurgerConstructor = ({ ingredients }) => {
       </Modal>
     </section>
   );
-};
-
-BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default BurgerConstructor;

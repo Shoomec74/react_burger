@@ -2,16 +2,17 @@ import React from "react";
 import burgerIngredientsStyles from "./burgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientElement from "../IngredientElement/IngredientElement.jsx";
-import PropTypes from "prop-types";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import AppContext from "../../services/AppContext";
 
-const BurgerIngredients = ({ ingredients }) => {
+const BurgerIngredients = () => {
   const { section, ingredientsScrollBox, ingredientsTypeBox } = burgerIngredientsStyles;
   const [current, setCurrent] = React.useState("bun");
   const [manifestation, setManifestation] = React.useState(0);
   const [ingredientItem, setIngredientItem] = React.useState(null);
   const [isOpened, setIsOpened] = React.useState(false);
+  const ingredients = React.useContext(AppContext);
 
   return (
     <section className={`${section} mr-10`}>
@@ -61,9 +62,5 @@ const BurgerIngredients = ({ ingredients }) => {
     </section>
   );
 };
-
-BurgerIngredients.propTypes ={
-  ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
-}
 
 export default BurgerIngredients;
