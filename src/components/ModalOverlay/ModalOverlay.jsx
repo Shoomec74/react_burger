@@ -6,9 +6,10 @@ function ModalOverlay({onClose}) {
   const { overlay } = modalOverlayStyles;
   return <div className={overlay} onClick={onClose}></div>;
 
-  ModalOverlay.propTypes ={
-    onClose: PropTypes.func,
-  }
+
 }
 
+ModalOverlay.propTypes ={
+  onClose: PropTypes.func,
+}
 export default ModalOverlay;
