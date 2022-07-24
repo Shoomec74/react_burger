@@ -8,7 +8,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal.jsx";
 import OrderDetails from "../OrderDetails/OrderDetails.jsx";
-import { ORDER_DATA } from "../../utils/utils.js";
 import AppContext from "../../services/AppContext.jsx";
 import BurgerConstructorContext from "../../services/BurgerConstructorContext";
 
@@ -86,16 +85,17 @@ const BurgerConstructor = () => {
           type="primary"
           size="large"
           onClick={() => {
-            orderInfo.success && setIsOpened(true);
+            setIsOpened(true);
             getOrder(inbgredientsId);
           }}
         >
           Оформить заказ
         </Button>
       </div>
+      {!orderInfo.isLoading &&
       <Modal isOpened={isOpened} onClose={() => setIsOpened(false)}>
         <OrderDetails orderData={orderInfo} />
-      </Modal>
+      </Modal>}
     </section>
   );
 };
