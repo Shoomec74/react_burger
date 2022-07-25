@@ -31,10 +31,17 @@ const BurgerConstructor = () => {
         ingredient.type !== "bun" &&
         index < Math.floor(Math.random() * ingredients.length)
     );
-    arr.map((item) => dispatch({ price: item.price }));
-    dispatch({ price: rundBun.price * 2 });
+
     return arr;
   }, [ingredients]);
+
+function fn() {
+  ingredientsSort.map((item) => dispatch({ price: item.price }));
+  dispatch({ price: rundBun.price * 2 });
+}
+
+
+
 
   const inbgredientsId = React.useMemo(() => {
     const componentId = {"ingredients": []};
@@ -87,6 +94,7 @@ const BurgerConstructor = () => {
           onClick={() => {
             setIsOpened(true);
             getOrder(inbgredientsId);
+            fn();
           }}
         >
           Оформить заказ
