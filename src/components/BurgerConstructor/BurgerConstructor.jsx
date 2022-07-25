@@ -12,13 +12,22 @@ import AppContext from "../../services/AppContext.jsx";
 import BurgerConstructorContext from "../../services/BurgerConstructorContext";
 
 const BurgerConstructor = () => {
+  // начальное значение стейта
+  const initialState = { orderSum: 0 };
+  // функция-редьюсер
+  // изменяет состояния
+  function reducer(orderSum, action) {
+    return { orderSum: orderSum.orderSum + action.price };
+  }
+
+  const [orderSum, dispatch] = React.useReducer(reducer, initialState);
+
   const { ingredientsScrollBox, section, ingridientBox, info } =
     burgerConstructorStyles;
   const [isOpened, setIsOpened] = React.useState(false);
+
   const ingredients = React.useContext(AppContext);
-  const { orderSum, dispatch, getOrder, orderInfo } = React.useContext(
-    BurgerConstructorContext
-  );
+  const { getOrder, orderInfo } = React.useContext(BurgerConstructorContext);
 
   const rundBun = React.useMemo(() => {
     const buns = ingredients.filter((ingredient) => ingredient.type === "bun");
@@ -37,8 +46,10 @@ const BurgerConstructor = () => {
   }, [ingredients]);
 
   const inbgredientsId = React.useMemo(() => {
-    const componentId = {"ingredients": []};
-    componentId["ingredients"] = ingredientsSort.map(ingredient => ingredient._id);
+    const componentId = { ingredients: [] };
+    componentId["ingredients"] = ingredientsSort.map(
+      (ingredient) => ingredient._id
+    );
     return componentId;
   }, [ingredients]);
 
@@ -92,10 +103,11 @@ const BurgerConstructor = () => {
           Оформить заказ
         </Button>
       </div>
-      {!orderInfo.isLoading &&
-      <Modal isOpened={isOpened} onClose={() => setIsOpened(false)}>
-        <OrderDetails orderData={orderInfo} />
-      </Modal>}
+      {!orderInfo.isLoading && (
+        <Modal isOpened={isOpened} onClose={() => setIsOpened(false)}>
+          <OrderDetails orderData={orderInfo} />
+        </Modal>
+      )}
     </section>
   );
 };

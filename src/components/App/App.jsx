@@ -18,28 +18,15 @@ const App = () => {
     isLoading: false,
   });
 
-  // начальное значение стейта
-  const initialState = { orderSum: 0 };
-
-// функция-редьюсер
-// изменяет состояния
-function reducer(orderSum, action) {
-  return {orderSum: orderSum.orderSum + action.price};
-}
-
-const [orderSum, dispatch] = React.useReducer(reducer, initialState);
-
   React.useEffect(() => {
     try {
       const getData = async () => {
-        setState({ ...orderSum, isLoading: true });
+        setState({ ...state, isLoading: true });
         await delay(500);
         const res = await fetch(`${API_URL}ingredients`);
-        const data = res.ok
-          ? await res.json()
-          : Promise.reject(`Ошибка ${res.status}`);
+        const data = await checkResponse(res);
         setState({
-          ...orderSum,
+          ...state,
           ingredients: data.data,
           success: true,
           isLoading: false,
@@ -91,14 +78,12 @@ const [orderSum, dispatch] = React.useReducer(reducer, initialState);
       <AppHeader />
       <main className={content}>
         {state.success && (
-          <>
             <AppContext.Provider value={state.ingredients}>
               <BurgerIngredients />
-              <BurgerConstructorContext.Provider value={{orderSum, dispatch, getOrder, orderInfo}}>
+              <BurgerConstructorContext.Provider value={{getOrder, orderInfo}}>
                 <BurgerConstructor />
               </BurgerConstructorContext.Provider>
             </AppContext.Provider>
-          </>
         )}
       </main>
     </div>
