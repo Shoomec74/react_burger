@@ -61,7 +61,6 @@ const [orderSum, dispatch] = React.useReducer(reducer, initialState);
   });
 
   function getOrder(burgerId) {
-    console.log(burgerId)
     try {
         setOrderInfo({ ...orderInfo, isLoading: true });
         fetch(`${API_URL}orders`, {
@@ -73,7 +72,6 @@ const [orderSum, dispatch] = React.useReducer(reducer, initialState);
         })
         .then(checkResponse)
         .then((data) => {
-          console.log(data);
           setOrderInfo({
             ...orderInfo,
             order: data.order.number,
@@ -82,7 +80,6 @@ const [orderSum, dispatch] = React.useReducer(reducer, initialState);
             isLoading: false,
           });
         })
-        // console.log(orderInfo);
     } catch (e) {
       setOrderInfo({ ...orderInfo, isLoading: false, error: e });
       console.log(orderInfo.error);
