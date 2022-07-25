@@ -31,7 +31,6 @@ const BurgerConstructor = () => {
         ingredient.type !== "bun" &&
         index < Math.floor(Math.random() * ingredients.length)
     );
-
     return arr;
   }, [ingredients]);
 
@@ -39,9 +38,6 @@ function fn() {
   ingredientsSort.map((item) => dispatch({ price: item.price }));
   dispatch({ price: rundBun.price * 2 });
 }
-
-
-
 
   const inbgredientsId = React.useMemo(() => {
     const componentId = {"ingredients": []};
