@@ -4,7 +4,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientElement from "../IngredientElement/IngredientElement.jsx";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import AppContext from "../../services/AppContext";
+import { useSelector } from "react-redux";
 
 const BurgerIngredients = () => {
   const { section, ingredientsScrollBox, ingredientsTypeBox } = burgerIngredientsStyles;
@@ -12,7 +12,7 @@ const BurgerIngredients = () => {
   const [manifestation, setManifestation] = React.useState(0);
   const [ingredientItem, setIngredientItem] = React.useState(null);
   const [isOpened, setIsOpened] = React.useState(false);
-  const ingredients = React.useContext(AppContext);
+  const ingredients = useSelector(store => store.ingredients.ingredients);
 
   return (
     <section className={`${section} mr-10`}>

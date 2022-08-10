@@ -8,8 +8,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal.jsx";
 import OrderDetails from "../OrderDetails/OrderDetails.jsx";
-import AppContext from "../../services/AppContext.jsx";
-import BurgerConstructorContext from "../../services/BurgerConstructorContext";
+import { useSelector, useDispatch } from "react-redux";
+import postOrder from "../../services/actions/butgerConstructor";
 
 const BurgerConstructor = () => {
   // начальное значение стейта
@@ -26,8 +26,13 @@ const BurgerConstructor = () => {
     burgerConstructorStyles;
   const [isOpened, setIsOpened] = React.useState(false);
 
-  const ingredients = React.useContext(AppContext);
-  const { getOrder, orderInfo } = React.useContext(BurgerConstructorContext);
+  const {ingredients, order, name, isLoading} = useSelector(store => ({
+    ingredients: store.ingredients.ingredients,
+    order: store.order.order,
+    name: store.order.name,
+    isLoading: store.order.isLoading,
+  }));
+
 
   const rundBun = React.useMemo(() => {
     const buns = ingredients.filter((ingredient) => ingredient.type === "bun");
@@ -97,15 +102,15 @@ const BurgerConstructor = () => {
           size="large"
           onClick={() => {
             setIsOpened(true);
-            getOrder(inbgredientsId);
+            postOrder(inbgredientsId);
           }}
         >
           Оформить заказ
         </Button>
       </div>
-      {!orderInfo.isLoading && (
+      {!isLoading && (
         <Modal isOpened={isOpened} onClose={() => setIsOpened(false)}>
-          <OrderDetails orderData={orderInfo} />
+          <OrderDetails order={order} name={name}/>
         </Modal>
       )}
     </section>
