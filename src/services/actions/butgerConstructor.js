@@ -28,7 +28,10 @@ function postOrder(burgerId) {
         });
       })
       .catch((error) => {
-        console.log(error)
+        dispatch({
+          type: POST_ORDER_FAILED,
+          error: error
+        })
       });
   };
 }

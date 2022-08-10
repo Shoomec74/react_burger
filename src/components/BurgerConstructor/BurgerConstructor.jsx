@@ -8,7 +8,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal.jsx";
 import OrderDetails from "../OrderDetails/OrderDetails.jsx";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import postOrder from "../../services/actions/butgerConstructor";
 
 const BurgerConstructor = () => {
@@ -32,7 +32,6 @@ const BurgerConstructor = () => {
     name: store.order.name,
     isLoading: store.order.isLoading,
   }));
-
 
   const rundBun = React.useMemo(() => {
     const buns = ingredients.filter((ingredient) => ingredient.type === "bun");
