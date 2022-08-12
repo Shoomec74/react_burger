@@ -8,69 +8,83 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal.jsx";
 import OrderDetails from "../OrderDetails/OrderDetails.jsx";
-import { useSelector } from "react-redux";
-import postOrder from "../../services/actions/butgerConstructor";
+import { useSelector, useDispatch } from "react-redux";
+import postOrder from "../../services/actions/orederDetails";
+import { ORDER_MODAL } from "../../utils/constants";
+import { handleWievPopup } from "../../services/actions/modals";
+import { addIngredient, addBun } from "../../services/actions/burgerConstructor";
+import { useDrop } from "react-dnd";
+import { nanoid } from "nanoid";
 
 const BurgerConstructor = () => {
-  // начальное значение стейта
-  const initialState = { orderSum: 0 };
-  // функция-редьюсер
-  // изменяет состояния
-  function reducer(orderSum, action) {
-    return { orderSum: orderSum.orderSum + action.price };
-  }
+  const [totalPrice, setTotalPrice] = React.useState(0);
 
-  const [orderSum, dispatch] = React.useReducer(reducer, initialState);
+  const dispatch = useDispatch();
 
-  const { ingredientsScrollBox, section, ingridientBox, info } =
-    burgerConstructorStyles;
-  const [isOpened, setIsOpened] = React.useState(false);
+  const { ingredientsScrollBox, section, ingridientBox, info, abracadabra } = burgerConstructorStyles;
 
-  const {ingredients, order, name, isLoading} = useSelector(store => ({
-    ingredients: store.ingredients.ingredients,
+  const {filling, bun, order, name, isLoading, orderModal} = useSelector(store => ({
+    filling: store.constructor.filling,
+    bun: store.constructor.bun,
     order: store.order.order,
     name: store.order.name,
     isLoading: store.order.isLoading,
+    orderModal: store.popup.orderModal
   }));
 
-  const rundBun = React.useMemo(() => {
-    const buns = ingredients.filter((ingredient) => ingredient.type === "bun");
-    return buns[Math.floor(Math.random() * buns.length)];
-  }, [ingredients]);
+  const [{isHover}, dropTarget] = useDrop({
+    accept: 'ingredients',
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+  }),
+    drop(ingredient) {
+        onDropHandler(ingredient);
+    }
+})
 
-  const ingredientsSort = React.useMemo(() => {
-    const arr = ingredients.filter(
-      (ingredient, index) =>
-        ingredient.type !== "bun" &&
-        index < Math.floor(Math.random() * ingredients.length)
-    );
-    arr.map((item) => dispatch({ price: item.price }));
-    dispatch({ price: rundBun.price * 2 });
-    return arr;
-  }, [ingredients]);
+const onDropHandler = (ingredient) => {
+  const uniqueID = nanoid();
+  ingredient.type !== 'bun' ? dispatch(addIngredient(ingredient, uniqueID)) : dispatch(addBun(ingredient, uniqueID))
+}
 
-  const inbgredientsId = React.useMemo(() => {
-    const componentId = { ingredients: [] };
-    componentId["ingredients"] = ingredientsSort.map(
-      (ingredient) => ingredient._id
-    );
-    return componentId;
-  }, [ingredients]);
+  // const rundBun = React.useMemo(() => {
+  //   const buns = ingredients.filter((ingredient) => ingredient.type === "bun");
+  //   return buns[Math.floor(Math.random() * buns.length)];
+  // }, [ingredients]);
+
+  // const ingredientsSort = React.useMemo(() => {
+  //   const arr = ingredients.filter(
+  //     (ingredient, index) =>
+  //       ingredient.type !== "bun" &&
+  //       index < Math.floor(Math.random() * ingredients.length)
+  //   );
+  //   return arr;
+  // }, [ingredients]);
+
+  // const inbgredientsId = React.useMemo(() => {
+  //     const componentId = { ingredients: [] };
+  //   componentId["ingredients"] = ingredients.map(
+  //     (ingredient) => ingredient._id
+  //   );
+  //   return componentId;
+  // }, [ingredients]);
 
   return (
-    <section className={`${section} pt-25`}>
-      <div className={`ml-9 mb-4`}>
+    <section className={`${section} pt-25`} >
+
+      <div className={`${abracadabra}`} ref={dropTarget}></div>
+      {bun ? <div className={`ml-9 mb-4`}>
         <ConstructorElement
-          key={rundBun._id}
+          key={bun._id}
           type="top"
           isLocked={true}
-          text={`${rundBun.name} (верх)`}
-          price={rundBun.price}
-          thumbnail={rundBun.image_mobile}
+          text={`${bun.name} (верх)`}
+          price={bun.price}
+          thumbnail={bun.image_mobile}
         />
-      </div>
-      <ul className={ingredientsScrollBox}>
-        {ingredientsSort.map((ingredient) => (
+      </div> : <p>Положите булочку</p>}
+      {filling ? <ul className={ingredientsScrollBox}>
+        {filling.map((ingredient) => (
           <li className={`${ingridientBox} mb-4`} key={ingredient._id}>
             <DragIcon type="primary" />
             <ConstructorElement
@@ -80,35 +94,36 @@ const BurgerConstructor = () => {
             />
           </li>
         ))}
-      </ul>
-      <div className={`ml-9 mt-4`}>
+      </ul> : <p>Без ингридиентов не вкусно</p>}
+      {bun > 0 ? <div className={`ml-9 mt-4`}>
         <ConstructorElement
-          key={`${rundBun._id} duble`}
+          key={`${bun._id} duble`}
           type="bottom"
           isLocked={true}
-          text={`${rundBun.name} (низ)`}
-          price={rundBun.price}
-          thumbnail={rundBun.image_mobile}
+          text={`${bun.name} (низ)`}
+          price={bun.price}
+          thumbnail={bun.image_mobile}
         />
-      </div>
+      </div> : <p>Положите булочку</p>}
       <div className={`${info} mt-10 mr-4`}>
         <p className="text text_type_digits-medium mr-10">
-          {orderSum.orderSum}&ensp;
+          {0}&ensp;
           <CurrencyIcon type="primary" />
         </p>
         <Button
           type="primary"
           size="large"
           onClick={() => {
-            setIsOpened(true);
-            postOrder(inbgredientsId);
+            console.log(filling)
+            //dispatch(postOrder(inbgredientsId));
+            dispatch(handleWievPopup(ORDER_MODAL));
           }}
         >
           Оформить заказ
         </Button>
       </div>
       {!isLoading && (
-        <Modal isOpened={isOpened} onClose={() => setIsOpened(false)}>
+        <Modal isOpened={orderModal} onClose={() => dispatch(handleWievPopup(ORDER_MODAL))}>
           <OrderDetails order={order} name={name}/>
         </Modal>
       )}

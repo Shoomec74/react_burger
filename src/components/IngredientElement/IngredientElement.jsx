@@ -5,13 +5,22 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import { useDrag } from "react-dnd";
 
 const IngredientElement = ({ ingredient, countIngredient, onClick }) => {
   const { ingredientBox, image, count, name } = ingredientElementStyles;
 
+  const [{ opacity }, dragRef] = useDrag({
+    type: 'ingredients',
+    item: ingredient,
+    collect: monitor => ({
+      opacity: monitor.isDragging() ? 0.2 : 1,
+    })
+  });
+
   return (
     <>
-    <li className={`${ingredientBox} mr-6 ml-4`}  onClick={onClick}>
+    <li className={`${ingredientBox} mr-6 ml-4`}  onClick={onClick} style={{opacity}} ref={dragRef}>
       <img
         className={`${image} ml-4 mr-4`}
         src={ingredient.image_large}

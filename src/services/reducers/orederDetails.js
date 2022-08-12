@@ -12,7 +12,7 @@ const initialState = {
   order: 0
 }
 
-const burgerConstructorReducer = (state = initialState, action) => {
+const orderDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
     case POST_ORDER: {
       return {
@@ -43,4 +43,4 @@ const burgerConstructorReducer = (state = initialState, action) => {
   }
 }
 
-export default burgerConstructorReducer;
+export default orderDetailsReducer;

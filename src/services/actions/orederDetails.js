@@ -7,7 +7,6 @@ import {
 import { checkResponse } from "../../utils/utils.js";
 
 function postOrder(burgerId) {
-  console.log(burgerId)
   return function (dispatch) {
     dispatch({ type: POST_ORDER });
     fetch(`${BASE_API_URL}/orders`, {
@@ -19,7 +18,6 @@ function postOrder(burgerId) {
     })
       .then(checkResponse)
       .then((data) => {
-        console.log(data);
         dispatch({
           type: POST_ORDER_SUCCESS,
           order: data.order.number,
