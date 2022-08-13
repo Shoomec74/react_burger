@@ -7,22 +7,24 @@ import {
 
 const initialState = {
   bun: [],
-  filling: []
-}
+  filling: [],
+};
 
 const burgerConstructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_BUN: {
+      console.log(action, state);
       return {
         ...state,
         bun: action.payLoad,
       };
     }
     case ADD_INGREDIENT: {
-      console.log(action)
-      return { ...state, filling: [...state.filling, action.payload] }
+      console.log(action, state);
+      return { ...state, filling: [...state.filling, action.payLoad] };
     }
     case REMOVE_INGREDIENT: {
+      console.log(action)
       return {
         ...state,
         filling: [...state.filling].filter(
@@ -31,6 +33,7 @@ const burgerConstructorReducer = (state = initialState, action) => {
       };
     }
     case SWAP_INGREDIENT: {
+      console.log(action)
       const newState = [...state.filling];
       const prevIngredient = newState.splice(
         action.payLoad.hoverIndex,

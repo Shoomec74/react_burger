@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import burgerConstructorStyles from "./burgerConstructor.module.css";
 import {
   ConstructorElement,
@@ -12,119 +12,129 @@ import { useSelector, useDispatch } from "react-redux";
 import postOrder from "../../services/actions/orederDetails";
 import { ORDER_MODAL } from "../../utils/constants";
 import { handleWievPopup } from "../../services/actions/modals";
-import { addIngredient, addBun } from "../../services/actions/burgerConstructor";
+import {
+  addIngredient,
+  addBun,
+} from "../../services/actions/burgerConstructor";
 import { useDrop } from "react-dnd";
 import { nanoid } from "nanoid";
+import ConstructorItem from "./ConstructorItem/ConstructorItem";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
 
 const BurgerConstructor = () => {
   const [totalPrice, setTotalPrice] = React.useState(0);
 
   const dispatch = useDispatch();
 
-  const { ingredientsScrollBox, section, ingridientBox, info, abracadabra } = burgerConstructorStyles;
+  const { ingredientsScrollBox, section, info } = burgerConstructorStyles;
 
-  const {filling, bun, order, name, isLoading, orderModal} = useSelector(store => ({
-    filling: store.constructor.filling,
-    bun: store.constructor.bun,
-    order: store.order.order,
-    name: store.order.name,
-    isLoading: store.order.isLoading,
-    orderModal: store.popup.orderModal
-  }));
+  const { bun, filling, order, name, isLoading, orderModal } = useSelector(
+    (store) => ({
+      bun: store.burgerConstructor.bun,
+      filling: store.burgerConstructor.filling,
+      order: store.order.order,
+      name: store.order.name,
+      isLoading: store.order.isLoading,
+      orderModal: store.popup.orderModal,
+    })
+  );
 
-  const [{isHover}, dropTarget] = useDrop({
-    accept: 'ingredients',
-    collect: monitor => ({
-      isHover: monitor.isOver(),
-  }),
+
+  useEffect(() => {
+    const total = filling.reduce((sum, item) => sum + item.price, bun.length !== 0 ? (bun.price * 2) : 0);
+    setTotalPrice(total);
+}, [bun, filling])
+
+
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "ingredients",
     drop(ingredient) {
-        onDropHandler(ingredient);
-    }
-})
+      onDropHandler(ingredient);
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver() ? 0.2 : 1,
+    }),
+  });
 
-const onDropHandler = (ingredient) => {
-  const uniqueID = nanoid();
-  ingredient.type !== 'bun' ? dispatch(addIngredient(ingredient, uniqueID)) : dispatch(addBun(ingredient, uniqueID))
-}
+  const onDropHandler = (ingredient) => {
+    const uniqueID = nanoid();
+    ingredient.type !== "bun"
+      ? dispatch(addIngredient(ingredient, uniqueID))
+      : dispatch(addBun(ingredient, uniqueID));
+  };
 
-  // const rundBun = React.useMemo(() => {
-  //   const buns = ingredients.filter((ingredient) => ingredient.type === "bun");
-  //   return buns[Math.floor(Math.random() * buns.length)];
-  // }, [ingredients]);
-
-  // const ingredientsSort = React.useMemo(() => {
-  //   const arr = ingredients.filter(
-  //     (ingredient, index) =>
-  //       ingredient.type !== "bun" &&
-  //       index < Math.floor(Math.random() * ingredients.length)
-  //   );
-  //   return arr;
-  // }, [ingredients]);
-
-  // const inbgredientsId = React.useMemo(() => {
-  //     const componentId = { ingredients: [] };
-  //   componentId["ingredients"] = ingredients.map(
-  //     (ingredient) => ingredient._id
-  //   );
-  //   return componentId;
-  // }, [ingredients]);
+  const inbgredientsId = React.useMemo(() => {
+    const componentId = { ingredients: [] };
+    componentId["ingredients"] = filling.map((ingredient) => ingredient._id);
+    return componentId;
+  }, [filling]);
 
   return (
-    <section className={`${section} pt-25`} >
-
-      <div className={`${abracadabra}`} ref={dropTarget}></div>
-      {bun ? <div className={`ml-9 mb-4`}>
-        <ConstructorElement
-          key={bun._id}
-          type="top"
-          isLocked={true}
-          text={`${bun.name} (верх)`}
-          price={bun.price}
-          thumbnail={bun.image_mobile}
-        />
-      </div> : <p>Положите булочку</p>}
-      {filling ? <ul className={ingredientsScrollBox}>
-        {filling.map((ingredient) => (
-          <li className={`${ingridientBox} mb-4`} key={ingredient._id}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text={ingredient.name}
-              price={ingredient.price}
-              thumbnail={ingredient.image_mobile}
+    <section className={`${section} pt-25`} ref={dropTarget}>
+      {bun.length !== 0 ? (
+        <div className={`ml-9 mb-4`}>
+          <ConstructorElement
+            key={bun.uniqueID}
+            type="top"
+            isLocked={true}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image_mobile}
+          />
+        </div>
+      ) : (
+        <p>Положите булочку</p>
+      )}
+      {filling.length !== 0 ? (
+        <ul className={ingredientsScrollBox}>
+          {filling.map((ingredient, index) => (
+            <ConstructorItem
+              ingredient={ingredient}
+              index={index}
+              key={ingredient.uniqueID}
             />
-          </li>
-        ))}
-      </ul> : <p>Без ингридиентов не вкусно</p>}
-      {bun > 0 ? <div className={`ml-9 mt-4`}>
-        <ConstructorElement
-          key={`${bun._id} duble`}
-          type="bottom"
-          isLocked={true}
-          text={`${bun.name} (низ)`}
-          price={bun.price}
-          thumbnail={bun.image_mobile}
-        />
-      </div> : <p>Положите булочку</p>}
+          ))}
+        </ul>
+      ) : (
+        <p>Без ингридиентов не вкусно</p>
+      )}
+      {bun.length !== 0 ? (
+        <div className={`ml-9 mt-4`}>
+          <ConstructorElement
+            key={`${bun.uniqueID} duble`}
+            type="bottom"
+            isLocked={true}
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image_mobile}
+          />
+        </div>
+      ) : (
+        <p>Положите булочку</p>
+      )}
       <div className={`${info} mt-10 mr-4`}>
         <p className="text text_type_digits-medium mr-10">
-          {0}&ensp;
+          {totalPrice}&ensp;
           <CurrencyIcon type="primary" />
         </p>
         <Button
           type="primary"
-          size="large"
+          size="medium"
           onClick={() => {
-            console.log(filling)
-            //dispatch(postOrder(inbgredientsId));
+            dispatch(postOrder(inbgredientsId));
             dispatch(handleWievPopup(ORDER_MODAL));
           }}
+          disabled={!(bun.length !== 0 && filling.length !== 0)}
         >
-          Оформить заказ
+          {isLoading ? 'Оформляем...' : 'Оформить заказ'}
         </Button>
       </div>
       {!isLoading && (
-        <Modal isOpened={orderModal} onClose={() => dispatch(handleWievPopup(ORDER_MODAL))}>
-          <OrderDetails order={order} name={name}/>
+        <Modal
+          isOpened={orderModal}
+          onClose={() => dispatch(handleWievPopup(ORDER_MODAL))}
+        >
+          <OrderDetails order={order} name={name} />
         </Modal>
       )}
     </section>

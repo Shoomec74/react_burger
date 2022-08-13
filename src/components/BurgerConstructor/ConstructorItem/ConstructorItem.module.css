@@ -1,0 +1,11 @@
+.ingridientBox {
+  display    : flex;
+  align-items: center;
+  column-gap : 13px;
+  box-sizing : border-box;
+  width      : 100%;
+}
+
+.isHover{
+border: 5px solid red;
+}

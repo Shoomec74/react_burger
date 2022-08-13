@@ -1,14 +1,14 @@
 import { combineReducers } from "redux";
-import burgerIngredientsReducer from "./burgerIngredients";
-import burgerConstructorReducer from "./burgerConstructor";
-import orderDetailsReducer from "./orederDetails";
-import modalsReducers from "./modals";
+import burgerIngredientsReducer from "./burgerIngredients.js";
+import burgerConstructorReducer from "./burgerConstructor.js";
+import orderDetailsReducer from "./orederDetails.js";
+import modalsReducer from "./modals.js";
 
 const rootReducer = combineReducers({
   ingredients: burgerIngredientsReducer,
-  constructor: burgerConstructorReducer,
   order: orderDetailsReducer,
-  popup: modalsReducers,
+  popup: modalsReducer,
+  burgerConstructor: burgerConstructorReducer,
 });
 
 export default rootReducer;

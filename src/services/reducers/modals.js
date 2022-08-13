@@ -6,7 +6,7 @@ const initialState = {
   ingredient: null
 }
 
-const modalsReducers = (state = initialState, action) => {
+const modalsReducer = (state = initialState, action) => {
   switch (action.type) {
     case INGREDIENT_MODAL: {
       return {
@@ -25,4 +25,4 @@ const modalsReducers = (state = initialState, action) => {
   }
 }
 
-export default modalsReducers;
+export default modalsReducer;
