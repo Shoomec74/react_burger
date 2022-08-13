@@ -1,25 +1,26 @@
 import React from "react";
 import burgerIngredientsStyles from "./burgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientElement from "../IngredientElement/IngredientElement.jsx";
+import IngredientElement from "./IngredientElement/IngredientElement.jsx";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { useSelector, useDispatch } from "react-redux";
 import { useInView } from "react-intersection-observer";
 import { INGREDIENT_MODAL } from "../../utils/constants.js";
 import { handleWievPopup } from "../../services/actions/modals";
-import { useDrag } from "react-dnd";
 
 const BurgerIngredients = () => {
   const { section, ingredientsScrollBox, ingredientsTypeBox } =
     burgerIngredientsStyles;
   const [current, setCurrent] = React.useState("bun");
   const dispatch = useDispatch();
-  const { ingredients, ingredientModal, ingredientItem } = useSelector((store) => ({
-    ingredients: store.ingredients.ingredients,
-    ingredientModal: store.popup.ingredientModal,
-    ingredientItem: store.popup.ingredient,
-  }));
+  const { ingredients, ingredientModal, ingredientItem } = useSelector(
+    (store) => ({
+      ingredients: store.ingredients.ingredients,
+      ingredientModal: store.popup.ingredientModal,
+      ingredientItem: store.popup.ingredient,
+    })
+  );
 
   const [bunRef, bunInView] = useInView({
     threshold: 0.1,
@@ -97,7 +98,6 @@ const BurgerIngredients = () => {
                 <IngredientElement
                   key={ingredient._id}
                   ingredient={ingredient}
-                  countIngredient={ingredient.__v}
                   onClick={() => {
                     dispatch(handleWievPopup(INGREDIENT_MODAL, ingredient));
                   }}
@@ -183,7 +183,7 @@ export default BurgerIngredients;
 //       <h2 className="text text_type_main-medium pt-10 pb-6">Начинки</h2>
 //     )}
 //     <div className={ingredientsScrollBox} >
-//       <ul className={ingredientsTypeBox} onAnimationEnd={() => setManifestation(0)} manifestation={manifestation}>
+//       <ul className={ingredientsTypeBox} onAnimationEnd={() => setManifestation(0)} manifestation={manifestation} ref={mainRef}>
 //         {ingredients.map(
 //           (ingredient) =>
 //             ingredient.type.includes(current) && (
@@ -191,14 +191,16 @@ export default BurgerIngredients;
 //                 key={ingredient._id}
 //                 ingredient={ingredient}
 //                 countIngredient={ingredient.__v}
-//                 onClick={() => {setIsOpened(true); setIngredientItem(ingredient)}}
+//                 onClick={() => {
+//                  dispatch(handleWievPopup(INGREDIENT_MODAL, ingredient));
+//                  }}
 //               />
 //             )
 //         )}
 //       </ul>
 //     </div>
 //     {isOpened &&
-//     <Modal isOpened={isOpened} onClose={() => setIsOpened(false)}>
+//     <Modal isOpened={isOpened} onClose={() => dispatch(handleWievPopup(INGREDIENT_MODAL, null))}>
 //       <IngredientDetails ingredient={ingredientItem}>
 //         Детали ингридиента
 //       </IngredientDetails>

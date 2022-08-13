@@ -1,10 +1,10 @@
-import {INGREDIENT_MODAL, ORDER_MODAL} from '../../utils/constants.js'
+import { INGREDIENT_MODAL, ORDER_MODAL } from "../../utils/constants.js";
 
 const initialState = {
   ingredientModal: false,
   orderModal: false,
-  ingredient: null
-}
+  ingredient: null,
+};
 
 const modalsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -12,17 +12,18 @@ const modalsReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientModal: !state.ingredientModal,
-        ingredient: action.payload
-      }
+        ingredient: action.payload,
+      };
     }
     case ORDER_MODAL: {
       return {
         ...state,
-        orderModal: !state.orderModal
-      }
+        orderModal: !state.orderModal,
+      };
     }
-    default: return state
+    default:
+      return state;
   }
-}
+};
 
 export default modalsReducer;

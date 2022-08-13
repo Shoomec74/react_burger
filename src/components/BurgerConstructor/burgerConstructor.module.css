@@ -2,7 +2,7 @@
   max-width: 600px;
   width    : 100%;
   max-height: 912px;
-  overflow : hidden;
+
 }
 
 .ingredientsScrollBox {
@@ -10,6 +10,12 @@
   flex-direction: column;
   overflow-y: scroll;
   max-height    : 464px;
+}
+
+.isHover {
+  border: 1px solid transparent;
+  border-image: linear-gradient(to bottom right, #DC2903 , #F4F955, #0625F9);
+  border-image-slice: 1;
 }
 
 .ingredientsScrollBox::-webkit-scrollbar {

@@ -3,6 +3,7 @@ import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
   SWAP_INGREDIENT,
+  REFRESH_CONSTRUCTOR,
 } from "../../utils/constants.js";
 
 const initialState = {
@@ -13,18 +14,15 @@ const initialState = {
 const burgerConstructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_BUN: {
-      console.log(action, state);
       return {
         ...state,
         bun: action.payLoad,
       };
     }
     case ADD_INGREDIENT: {
-      console.log(action, state);
       return { ...state, filling: [...state.filling, action.payLoad] };
     }
     case REMOVE_INGREDIENT: {
-      console.log(action)
       return {
         ...state,
         filling: [...state.filling].filter(
@@ -33,18 +31,19 @@ const burgerConstructorReducer = (state = initialState, action) => {
       };
     }
     case SWAP_INGREDIENT: {
-      console.log(action)
       const newState = [...state.filling];
-      const prevIngredient = newState.splice(
-        action.payLoad.hoverIndex,
-        1,
-        action.payLoad.ingredient
+      newState.splice(
+        action.payLoad.dragIndex,
+        0,
+        newState.splice(action.payLoad.hoverIndex, 1)[0]
       );
-      newState.splice(action.payLoad.dragIndex, 1, prevIngredient[0]);
       return {
         ...state,
         filling: newState,
       };
+    }
+    case REFRESH_CONSTRUCTOR: {
+      return initialState;
     }
     default: {
       return state;

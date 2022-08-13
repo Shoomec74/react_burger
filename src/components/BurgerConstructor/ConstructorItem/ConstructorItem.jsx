@@ -13,8 +13,11 @@ import { useDispatch } from "react-redux";
 
 function ConstructorItem({ ingredient, index }) {
   const dispatch = useDispatch();
+
   const ingredientRef = useRef(null);
+
   const { ingridientBox } = constructorStyles;
+
   const { name, price, image_mobile } = ingredient;
 
   const [{ isDragging }, drag] = useDrag({
@@ -25,7 +28,7 @@ function ConstructorItem({ ingredient, index }) {
     }),
   });
 
-  const opacity = isDragging ? 0.5 : 1;
+  //const opacity = isDragging ? 1 : 1;
 
   const [{ isHover }, drop] = useDrop({
     accept: "ingredients",
@@ -51,10 +54,10 @@ function ConstructorItem({ ingredient, index }) {
 
   return (
     <li
-      className={`${ingridientBox} mb-4`}
+      className={`${ingridientBox} ${isHover ? constructorStyles.isHover : ""} mb-4`}
       key={ingredient.uniqueID}
       ref={ingredientRef}
-      style={{ opacity }}
+      //style={{ opacity }}
       draggable
     >
       <DragIcon type="primary" />

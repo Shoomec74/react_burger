@@ -8,9 +8,9 @@ const initialState = {
   success: false,
   error: null,
   isLoading: false,
-  name: '',
-  order: 0
-}
+  name: "",
+  order: 0,
+};
 
 const orderDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -18,7 +18,7 @@ const orderDetailsReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
-      }
+      };
     }
     case POST_ORDER_SUCCESS: {
       return {
@@ -26,21 +26,21 @@ const orderDetailsReducer = (state = initialState, action) => {
         isLoading: false,
         success: action.success,
         name: action.name,
-        order: action.order
-      }
+        order: action.order,
+      };
     }
     case POST_ORDER_FAILED: {
       return {
         ...state,
         isLoading: false,
         success: false,
-        error: action.error
-      }
+        error: action.error,
+      };
     }
     default: {
       return state;
     }
   }
-}
+};
 
 export default orderDetailsReducer;

@@ -20,7 +20,7 @@
 .link {
   color          : inherit;
   text-decoration: none;
-  transition: opacity .5s ease-in-out;
+  transition     : opacity .5s ease-in-out;
 }
 
 .link:hover {

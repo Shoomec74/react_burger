@@ -3,14 +3,13 @@ import burgerConstructorStyles from "./burgerConstructor.module.css";
 import {
   ConstructorElement,
   CurrencyIcon,
-  DragIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal.jsx";
 import OrderDetails from "../OrderDetails/OrderDetails.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import postOrder from "../../services/actions/orederDetails";
-import { ORDER_MODAL } from "../../utils/constants";
+import { ORDER_MODAL, REFRESH_CONSTRUCTOR } from "../../utils/constants";
 import { handleWievPopup } from "../../services/actions/modals";
 import {
   addIngredient,
@@ -19,7 +18,6 @@ import {
 import { useDrop } from "react-dnd";
 import { nanoid } from "nanoid";
 import ConstructorItem from "./ConstructorItem/ConstructorItem";
-import { isDisabled } from "@testing-library/user-event/dist/utils";
 
 const BurgerConstructor = () => {
   const [totalPrice, setTotalPrice] = React.useState(0);
@@ -39,7 +37,6 @@ const BurgerConstructor = () => {
     })
   );
 
-
   useEffect(() => {
     const total = filling.reduce((sum, item) => sum + item.price, bun.length !== 0 ? (bun.price * 2) : 0);
     setTotalPrice(total);
@@ -47,21 +44,21 @@ const BurgerConstructor = () => {
 
 
   const [{ isHover }, dropTarget] = useDrop({
-    accept: "ingredients",
+    accept: "ingredient",
     drop(ingredient) {
       onDropHandler(ingredient);
     },
     collect: (monitor) => ({
-      isHover: monitor.isOver() ? 0.2 : 1,
+      isHover: monitor.isOver(),
     }),
   });
 
   const onDropHandler = (ingredient) => {
     const uniqueID = nanoid();
-    ingredient.type !== "bun"
-      ? dispatch(addIngredient(ingredient, uniqueID))
-      : dispatch(addBun(ingredient, uniqueID));
-  };
+    ingredient.type === "bun"
+      ? dispatch(addBun(ingredient, uniqueID))
+      : dispatch(addIngredient(ingredient, uniqueID));
+  }
 
   const inbgredientsId = React.useMemo(() => {
     const componentId = { ingredients: [] };
@@ -70,7 +67,7 @@ const BurgerConstructor = () => {
   }, [filling]);
 
   return (
-    <section className={`${section} pt-25`} ref={dropTarget}>
+    <section className={`${section} ${isHover ? burgerConstructorStyles.isHover : ""} pt-25`} ref={dropTarget}>
       {bun.length !== 0 ? (
         <div className={`ml-9 mb-4`}>
           <ConstructorElement
@@ -83,7 +80,7 @@ const BurgerConstructor = () => {
           />
         </div>
       ) : (
-        <p>Положите булочку</p>
+        <p className="text text_type_main-medium mt-4 mb-4">Положите булочку</p>
       )}
       {filling.length !== 0 ? (
         <ul className={ingredientsScrollBox}>
@@ -96,7 +93,7 @@ const BurgerConstructor = () => {
           ))}
         </ul>
       ) : (
-        <p>Без ингридиентов не вкусно</p>
+        <p className="text text_type_main-medium">Без ингридиентов не вкусно</p>
       )}
       {bun.length !== 0 ? (
         <div className={`ml-9 mt-4`}>
@@ -110,7 +107,7 @@ const BurgerConstructor = () => {
           />
         </div>
       ) : (
-        <p>Положите булочку</p>
+        <p className="text text_type_main-medium mt-4 mb-4">Положите булочку</p>
       )}
       <div className={`${info} mt-10 mr-4`}>
         <p className="text text_type_digits-medium mr-10">
@@ -132,7 +129,10 @@ const BurgerConstructor = () => {
       {!isLoading && (
         <Modal
           isOpened={orderModal}
-          onClose={() => dispatch(handleWievPopup(ORDER_MODAL))}
+          onClose={() => {
+            dispatch(handleWievPopup(ORDER_MODAL))
+            dispatch({type: REFRESH_CONSTRUCTOR})
+          }}
         >
           <OrderDetails order={order} name={name} />
         </Modal>

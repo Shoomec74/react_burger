@@ -24,15 +24,15 @@ const burgerIngredientsReducer = (state = initialState, action) => {
         ...state,
         ingredients: action.data.data,
         isLoading: false,
-        success: action.success
+        success: action.success,
       };
     }
     case GET_INGREDIENTS_FAILED: {
       return {
         ...state,
         isLoading: false,
-        error: action.error
-      }
+        error: action.error,
+      };
     }
     default: {
       return state;
