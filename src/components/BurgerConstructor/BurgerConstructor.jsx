@@ -38,10 +38,12 @@ const BurgerConstructor = () => {
   );
 
   useEffect(() => {
-    const total = filling.reduce((sum, item) => sum + item.price, bun.length !== 0 ? (bun.price * 2) : 0);
+    const total = filling.reduce(
+      (sum, item) => sum + item.price,
+      bun.length !== 0 ? bun.price * 2 : 0
+    );
     setTotalPrice(total);
-}, [bun, filling])
-
+  }, [bun, filling]);
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
@@ -58,7 +60,7 @@ const BurgerConstructor = () => {
     ingredient.type === "bun"
       ? dispatch(addBun(ingredient, uniqueID))
       : dispatch(addIngredient(ingredient, uniqueID));
-  }
+  };
 
   const inbgredientsId = React.useMemo(() => {
     const componentId = { ingredients: [] };
@@ -67,7 +69,12 @@ const BurgerConstructor = () => {
   }, [filling]);
 
   return (
-    <section className={`${section} ${isHover ? burgerConstructorStyles.isHover : ""} pt-25`} ref={dropTarget}>
+    <section
+      className={`${section} ${
+        isHover ? burgerConstructorStyles.isHover : ""
+      } pt-25`}
+      ref={dropTarget}
+    >
       {bun.length !== 0 ? (
         <div className={`ml-9 mb-4`}>
           <ConstructorElement
@@ -123,15 +130,15 @@ const BurgerConstructor = () => {
           }}
           disabled={!(bun.length !== 0 && filling.length !== 0)}
         >
-          {isLoading ? 'Оформляем...' : 'Оформить заказ'}
+          {isLoading ? "Оформляем..." : "Оформить заказ"}
         </Button>
       </div>
       {!isLoading && (
         <Modal
           isOpened={orderModal}
           onClose={() => {
-            dispatch(handleWievPopup(ORDER_MODAL))
-            dispatch({type: REFRESH_CONSTRUCTOR})
+            dispatch(handleWievPopup(ORDER_MODAL));
+            dispatch({ type: REFRESH_CONSTRUCTOR });
           }}
         >
           <OrderDetails order={order} name={name} />

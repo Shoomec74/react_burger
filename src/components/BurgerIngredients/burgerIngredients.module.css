@@ -49,3 +49,7 @@
   border-radius   : 10px;
   /* закругления плашки */
 }
+
+.tabs {
+  display: flex;
+}

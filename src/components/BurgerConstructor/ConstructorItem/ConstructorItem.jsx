@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import PropTypes from "prop-types";
 import constructorStyles from "./ConstructorItem.module.css";
 import {
   ConstructorElement,
@@ -10,6 +11,7 @@ import {
   removeIngredient,
 } from "../../../services/actions/burgerConstructor";
 import { useDispatch } from "react-redux";
+import { ingredientType } from "../../../utils/types";
 
 function ConstructorItem({ ingredient, index }) {
   const dispatch = useDispatch();
@@ -54,7 +56,9 @@ function ConstructorItem({ ingredient, index }) {
 
   return (
     <li
-      className={`${ingridientBox} ${isHover ? constructorStyles.isHover : ""} mb-4`}
+      className={`${ingridientBox} ${
+        isHover ? constructorStyles.isHover : ""
+      } mb-4`}
       key={ingredient.uniqueID}
       ref={ingredientRef}
       //style={{ opacity }}
@@ -70,5 +74,10 @@ function ConstructorItem({ ingredient, index }) {
     </li>
   );
 }
+
+ConstructorItem.propTypes = {
+  ingredient: ingredientType.isRequired,
+  index: PropTypes.number.isRequired,
+};
 
 export default ConstructorItem;

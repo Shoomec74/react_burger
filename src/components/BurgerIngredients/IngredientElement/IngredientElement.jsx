@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import ingredientElementStyles from "./largeIngredientView.module.css";
 import {
   Counter,
@@ -7,16 +7,23 @@ import {
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
+import { ingredientType } from "../../../utils/types";
 
 const IngredientElement = ({ ingredient, onClick }) => {
   const { ingredientBox, image, count, name } = ingredientElementStyles;
+  const [allIngredients, setAllIngredienst] = useState([]);
 
-  const { filling } = useSelector((store) => ({
+  const { filling, bun } = useSelector((store) => ({
     filling: store.burgerConstructor.filling,
+    bun: store.burgerConstructor.bun,
   }));
 
+  useMemo(() => {
+    setAllIngredienst(filling.concat(bun));
+  }, [filling, bun]);
+
   const findDuplicates = (ingredient) =>
-    filling.filter((item) => item.name === ingredient.name);
+    allIngredients.filter((item) => item.name === ingredient.name);
 
   const [{ opacity }, dragRef] = useDrag({
     type: "ingredient",
@@ -39,8 +46,15 @@ const IngredientElement = ({ ingredient, onClick }) => {
           src={ingredient.image_large}
           alt={ingredient.name}
         />
-        {findDuplicates(ingredient).length > 0 && (
+        {findDuplicates(ingredient).length > 0 && ingredient.type !== "bun" ? (
           <Counter count={findDuplicates(ingredient).length} size="default" />
+        ) : (
+          findDuplicates(ingredient).length > 0 && (
+            <Counter
+              count={findDuplicates(ingredient).length * 2}
+              size="default"
+            />
+          )
         )}
         <p className={`text text_type_digits-default mb-1 mt-1 ${count}`}>
           {ingredient.price}&ensp;
@@ -55,8 +69,7 @@ const IngredientElement = ({ ingredient, onClick }) => {
 };
 
 IngredientElement.propTypes = {
-  ingredient: PropTypes.object,
-  countIngredient: PropTypes.number,
+  ingredient: ingredientType.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
