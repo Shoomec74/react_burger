@@ -18,3 +18,11 @@
   padding-left : 112px;
   padding-right: 289px;
 }
+
+.header1280 {
+  max-width       : 1270px;
+  min-height      : 88px;
+  background-color: #1C1C21;
+  color           : white;
+  margin          : 0 auto;
+}

@@ -8,6 +8,8 @@ import getIngredients from "../../services/actions/burgerIngredients";
 import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { useMediaQuery } from 'react-responsive';
+import AppHeader1280 from "../AppHeader/Responcive/AppHeader1280/AppHeader1280";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -23,9 +25,29 @@ const App = () => {
     success: store.ingredients.success,
   }));
 
+  const isDesktop = useMediaQuery({
+    query: "(min-width: 1280px)"
+  });
+
+  const isTablet = useMediaQuery({
+    query: "(max-width: 1224px)"
+  });
+
+  const isMobile = useMediaQuery({
+    query: "(max-width: 786px)"
+  });
+
+  const isPortrait = useMediaQuery({
+    query: "(orientation: portrait)"
+  });
+
+  const isRetina = useMediaQuery({
+    query: "(max-resolution: 300dpi)"
+  });
+
   return !isLoading ? (
     <div className={page}>
-      <AppHeader />
+      {isDesktop ? <AppHeader /> : <AppHeader1280 />}
       <main className={content}>
         {success && (
           <DndProvider backend={HTML5Backend}>
