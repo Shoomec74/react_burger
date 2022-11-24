@@ -8,12 +8,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { useInView } from "react-intersection-observer";
 import { INGREDIENT_MODAL } from "../../utils/constants.js";
 import { handleWievPopup } from "../../services/actions/modals";
+import { useHistory, useLocation, Link, Route } from "react-router-dom";
 
 const BurgerIngredients = () => {
   const { section, ingredientsScrollBox, ingredientsTypeBox, tabs } =
     burgerIngredientsStyles;
   const [current, setCurrent] = React.useState("bun");
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+  const background = location.state?.background;
+
   const { ingredients, ingredientModal, ingredientItem } = useSelector(
     (store) => ({
       ingredients: store.ingredients.ingredients,
@@ -60,6 +65,11 @@ const BurgerIngredients = () => {
     handleTabScroll();
   }, [bunInView, sauceInView, mainInView]);
 
+  const handlerCloseModal = React.useCallback(() => {
+    dispatch(handleWievPopup(INGREDIENT_MODAL, null))
+    history.replace({ pathname: "/" });
+  }, [dispatch]);
+
   return (
     <section className={`${section} mr-10`}>
       <h1 className="text text_type_main-large pt-10 pb-5">Соберите бургер</h1>
@@ -86,7 +96,6 @@ const BurgerIngredients = () => {
           Начинки
         </Tab>
       </div>
-
       <div className={ingredientsScrollBox}>
         <h2 className="text text_type_main-medium pt-10 pb-6" id="buns">
           Булки
@@ -143,14 +152,16 @@ const BurgerIngredients = () => {
         </ul>
       </div>
       {ingredientModal && (
-        <Modal
-          isOpened={ingredientModal}
-          onClose={() => dispatch(handleWievPopup(INGREDIENT_MODAL, null))}
-        >
-          <IngredientDetails ingredient={ingredientItem}>
-            Детали ингридиента
-          </IngredientDetails>
-        </Modal>
+        //<Route path="/ingredients/:id">
+          <Modal
+            isOpened={ingredientModal}
+            onClose={handlerCloseModal}
+          >
+            <IngredientDetails ingredient={ingredientItem}>
+              Детали ингридиента
+            </IngredientDetails>
+          </Modal>
+       // </Route>
       )}
     </section>
   );
@@ -158,7 +169,7 @@ const BurgerIngredients = () => {
 
 export default BurgerIngredients;
 
-//-- МНЕ ТАК НРАВИТСЯ БОЛЬШЕ --//
+//--  --//
 // return (
 //   <section className={`${section} mr-10`}>
 //     <h1 className="text text_type_main-large pt-10 pb-5">Соберите бургер</h1>

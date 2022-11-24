@@ -8,11 +8,17 @@ import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 import { ingredientType } from "../../../utils/types";
+import {
+  useHistory,
+  useLocation,
+  Link
+} from "react-router-dom";
 
 const IngredientElement = ({ ingredient, onClick }) => {
-  const { ingredientBox, image, count, name } = ingredientElementStyles;
+  const { ingredientBox, image, count, name, link } = ingredientElementStyles;
   const [allIngredients, setAllIngredienst] = useState([]);
-
+  const location = useLocation();
+  //const background = location.state?.background;
   const { filling, bun } = useSelector((store) => ({
     filling: store.burgerConstructor.filling,
     bun: store.burgerConstructor.bun,
@@ -21,7 +27,6 @@ const IngredientElement = ({ ingredient, onClick }) => {
   useMemo(() => {
     setAllIngredienst(filling.concat(bun));
   }, [filling, bun]);
-
   const findDuplicates = (ingredient) =>
     allIngredients.filter((item) => item.name === ingredient.name);
 
@@ -41,6 +46,7 @@ const IngredientElement = ({ ingredient, onClick }) => {
         style={{ opacity }}
         ref={dragRef}
       >
+        <Link className={link} to={{pathname: `/ingredients/${ingredient._id}`, state: { background: location }}}>
         <img
           className={`${image} ml-4 mr-4`}
           src={ingredient.image_large}
@@ -63,6 +69,7 @@ const IngredientElement = ({ ingredient, onClick }) => {
         <p className={`${name} text text_type_main-default`}>
           {ingredient.name}
         </p>
+        </Link>
       </li>
     </>
   );

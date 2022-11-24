@@ -1,0 +1,30 @@
+.popup {
+  display        : flex;
+  height         : calc(100vh - 128px);
+  justify-items  : center;
+  align-items    : center;
+  justify-content: center;
+  flex-direction : column;
+}
+
+.nutritionalValues {
+  width          : 516px;
+  display        : flex;
+  align-items    : center;
+  justify-content: space-between;
+  align-self     : center;
+}
+
+.nutritionalValue {
+  text-align: center;
+}
+
+.image {
+  width : 480px;
+  height: 240px;
+  margin: 0 auto;
+}
+
+.name {
+  text-align: center;
+}
