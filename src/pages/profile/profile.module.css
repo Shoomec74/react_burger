@@ -1,34 +1,34 @@
 .profilePage {
-  display: flex;
-  height: calc(100vh - 128px);
-  justify-items: center;
-  align-items: center;
+  display        : flex;
+  height         : calc(100vh - 128px);
+  justify-items  : center;
+  align-items    : center;
   justify-content: center;
 }
 
 .form {
-  display: flex;
-    width: 480px;
-    max-width: 480px;
-    flex-direction: column;
-    align-items: center;
+  display       : flex;
+  width         : 480px;
+  max-width     : 480px;
+  flex-direction: column;
+  align-items   : center;
 }
 
-.link{
+.link {
   text-decoration: none;
-  width: 100%;
-  height: 64px;
+  width          : 100%;
+  height         : 64px;
 }
 
-.activeLink{
+.activeLink {
   color          : #F2F2F3;
   text-decoration: none;
 }
 
-.navigation{
-  width: 320px;
-  display: flex;
-  flex-direction: column;
+.navigation {
+  width          : 320px;
+  display        : flex;
+  flex-direction : column;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items    : flex-start;
 }

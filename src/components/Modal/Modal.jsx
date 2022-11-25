@@ -13,12 +13,12 @@ function Modal({ isOpened, onClose, children }) {
       if (evt.key === "Escape") {
         onClose();
       }
-    };
-    if(isOpened){
+    }
+    if (isOpened) {
       document.addEventListener("keydown", closeByEscape);
-    return () => {
-      document.removeEventListener("keydown", closeByEscape);
-    };
+      return () => {
+        document.removeEventListener("keydown", closeByEscape);
+      };
     }
   }, [isOpened]);
 
@@ -38,10 +38,10 @@ function Modal({ isOpened, onClose, children }) {
   );
 }
 
-Modal.propTypes ={
+Modal.propTypes = {
   isOpened: PropTypes.bool,
   onClose: PropTypes.func,
-  children: PropTypes.element
-}
+  children: PropTypes.element,
+};
 
 export default Modal;

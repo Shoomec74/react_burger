@@ -9,7 +9,7 @@ import {
   UPDATE_USER_TOKEN_FALED,
   UPDATE_USER_INFO_REQUEST,
   UPDATE_USER_INFO_SUCCESS,
-  UPDATE_USER_INFO_FALED
+  UPDATE_USER_INFO_FALED,
 } from "../../utils/constants.js";
 import { checkResponse } from "../../utils/utils.js";
 import { setCookie, getCookie } from "../utils.js";
@@ -29,7 +29,7 @@ const getUserInfo = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${getCookie('token')}`,
+        Authorization: `Bearer ${getCookie("token")}`,
       },
     })
       .then(checkResponse)
@@ -88,7 +88,7 @@ const updateUserInfo = (formData) => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${getCookie('token')}`,
+        Authorization: `Bearer ${getCookie("token")}`,
       },
       body: JSON.stringify(formData),
     })
@@ -97,7 +97,7 @@ const updateUserInfo = (formData) => {
         dispatch({
           type: UPDATE_USER_INFO_SUCCESS,
           user: res.user,
-          formFieldPassword: formData.password
+          formFieldPassword: formData.password,
         });
       })
       .catch((error) =>
@@ -108,7 +108,5 @@ const updateUserInfo = (formData) => {
       );
   };
 };
-
-
 
 export { getUserInfo, setFormsValue, updateUserToken, updateUserInfo };

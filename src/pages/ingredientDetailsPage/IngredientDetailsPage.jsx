@@ -6,9 +6,7 @@ import {
 } from "react-router-dom";
 
 function IngredientDetailsPage({ ingredients, children }) {
-  const {popup, nutritionalValues, nutritionalValue, image, name} = ingredientDetailsPageStyles;
-
-  //const ingredients = useSelector((store) => store.ingredients.ingredients);
+  const {ingredientDetailsPage, nutritionalValues, nutritionalValue, image, name} = ingredientDetailsPageStyles;
   const { id } = useParams();
   const ingredient = ingredients.find(({ _id }) => _id === id);
 
@@ -17,7 +15,7 @@ function IngredientDetailsPage({ ingredients, children }) {
   }
 
   return (
-    <div className={popup}>
+    <div className={ingredientDetailsPage}>
       <h2 className="text text_type_main-large mt-10 mr-10 ml-10">{children}</h2>
       <img className={image} src={ingredient.image_large} alt={ingredient.name} />
       <h3 className={`${name} text text_type_main-medium mt-4 mb-8`}>{ingredient.name}</h3>

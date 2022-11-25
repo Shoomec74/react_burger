@@ -75,9 +75,6 @@ const App = () => {
             )}
           </main>
         </Route>
-        <ProtectedRoute path="/profile" exact>
-          <Profile />
-        </ProtectedRoute>
         <Route path="/login" exact>
           <Login />
         </Route>
@@ -95,6 +92,9 @@ const App = () => {
             Детали ингридиента
           </IngredientDetailsPage>
         </Route>
+        <ProtectedRoute path="/profile">
+          <Profile />
+        </ProtectedRoute>
         <Route>
           <Page404 />
         </Route>

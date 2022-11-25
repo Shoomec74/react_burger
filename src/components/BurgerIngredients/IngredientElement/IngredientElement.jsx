@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import ingredientElementStyles from "./largeIngredientView.module.css";
 import {
   Counter,
@@ -8,17 +8,12 @@ import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 import { useSelector } from "react-redux";
 import { ingredientType } from "../../../utils/types";
-import {
-  useHistory,
-  useLocation,
-  Link
-} from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 const IngredientElement = ({ ingredient, onClick }) => {
   const { ingredientBox, image, count, name, link } = ingredientElementStyles;
   const [allIngredients, setAllIngredienst] = useState([]);
   const location = useLocation();
-  //const background = location.state?.background;
   const { filling, bun } = useSelector((store) => ({
     filling: store.burgerConstructor.filling,
     bun: store.burgerConstructor.bun,
@@ -46,29 +41,36 @@ const IngredientElement = ({ ingredient, onClick }) => {
         style={{ opacity }}
         ref={dragRef}
       >
-        <Link className={link} to={{pathname: `/ingredients/${ingredient._id}`, state: { background: location }}}>
-        <img
-          className={`${image} ml-4 mr-4`}
-          src={ingredient.image_large}
-          alt={ingredient.name}
-        />
-        {findDuplicates(ingredient).length > 0 && ingredient.type !== "bun" ? (
-          <Counter count={findDuplicates(ingredient).length} size="default" />
-        ) : (
-          findDuplicates(ingredient).length > 0 && (
-            <Counter
-              count={findDuplicates(ingredient).length * 2}
-              size="default"
-            />
-          )
-        )}
-        <p className={`text text_type_digits-default mb-1 mt-1 ${count}`}>
-          {ingredient.price}&ensp;
-          <CurrencyIcon type="primary" />
-        </p>
-        <p className={`${name} text text_type_main-default`}>
-          {ingredient.name}
-        </p>
+        <Link
+          className={link}
+          to={{
+            pathname: `/ingredients/${ingredient._id}`,
+            state: { background: location },
+          }}
+        >
+          <img
+            className={`${image} ml-4 mr-4`}
+            src={ingredient.image_large}
+            alt={ingredient.name}
+          />
+          {findDuplicates(ingredient).length > 0 &&
+          ingredient.type !== "bun" ? (
+            <Counter count={findDuplicates(ingredient).length} size="default" />
+          ) : (
+            findDuplicates(ingredient).length > 0 && (
+              <Counter
+                count={findDuplicates(ingredient).length * 2}
+                size="default"
+              />
+            )
+          )}
+          <p className={`text text_type_digits-default mb-1 mt-1 ${count}`}>
+            {ingredient.price}&ensp;
+            <CurrencyIcon type="primary" />
+          </p>
+          <p className={`${name} text text_type_main-default`}>
+            {ingredient.name}
+          </p>
         </Link>
       </li>
     </>

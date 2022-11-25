@@ -26,16 +26,16 @@ const BurgerConstructor = () => {
 
   const { ingredientsScrollBox, section, info } = burgerConstructorStyles;
 
-  const { bun, filling, order, name, isLoading, orderModal } = useSelector(
-    (store) => ({
+  const { bun, filling, order, name, isLoading, orderModal, isLogin } =
+    useSelector((store) => ({
       bun: store.burgerConstructor.bun,
       filling: store.burgerConstructor.filling,
       order: store.order.order,
       name: store.order.name,
       isLoading: store.order.isLoading,
       orderModal: store.popup.orderModal,
-    })
-  );
+      isLogin: store.authorization.isLogin,
+    }));
 
   useEffect(() => {
     const total = filling.reduce(
@@ -128,7 +128,7 @@ const BurgerConstructor = () => {
             dispatch(postOrder(inbgredientsId));
             dispatch(handleWievPopup(ORDER_MODAL));
           }}
-          disabled={!(bun.length !== 0 && filling.length !== 0)}
+          disabled={!(bun.length !== 0 && filling.length !== 0) || !isLogin}
         >
           {isLoading ? "Оформляем..." : "Оформить заказ"}
         </Button>

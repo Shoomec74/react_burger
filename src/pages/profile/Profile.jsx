@@ -10,22 +10,21 @@ import {
   Route,
   useLocation,
   useHistory,
-  Redirect,
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserInfo } from "../../services/actions/user.js";
 import { signOut } from "../../services/actions/authorization.js";
-import { getCookie } from "../../services/utils";
-import { Orders } from "../../pages"
+import { Orders } from "../../pages";
 
 export function Profile() {
   const { profilePage, form, link, activeLink, navigation } = profileStyles;
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const background = location.state?.background;
-  const cookie = getCookie("token");
-  const user = useSelector((store) => store.userInfo.user);
+  const { user, isLoading } = useSelector((store) => ({
+    user: store.userInfo.user,
+    isLoading: store.userInfo.isLoading,
+  }));
   const [formData, setFormData] = useState({
     name: user.name,
     email: user.email,
@@ -52,9 +51,17 @@ export function Profile() {
   };
 
   const handlerOnClick = useCallback(() => {
-    history.replace({ pathname: "/login" });
     dispatch(signOut(refreshToken));
-  }, [dispatch]);
+  }, []);
+
+  const resetForm = (e) => {
+    e.preventDefault();
+    setFormData({
+      name: user.name,
+      email: user.email,
+      password: user.password,
+    });
+  };
 
   return (
     <div className={profilePage}>
@@ -62,7 +69,7 @@ export function Profile() {
         <NavLink
           to="/profile"
           exact
-          className={`${link} text text_type_main-medium`}
+          className={`${link} text text_type_main-medium text_color_inactive`}
           activeClassName={activeLink}
         >
           ПРОФИЛЬ
@@ -82,13 +89,13 @@ export function Profile() {
           activeClassName={activeLink}
           onClick={handlerOnClick}
         >
-          ВЫХОД
+          {isLoading ? "ПОДОЖДИТЕ..." : "ВЫХОД"}
         </NavLink>
         <p className="text text_type_main-default text_color_inactive">
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>
-      <Switch location={background || location}>
+      <Switch>
         <Route path="/profile/orders" exact>
           <Orders />
         </Route>
@@ -128,11 +135,15 @@ export function Profile() {
               />
             </div>
             <div>
-              <Button type="secondary" size="medium">
+              <Button type="secondary" size="medium" onClick={resetForm}>
                 Отмена
               </Button>
-              <Button type="primary" size="medium" disabled={!isFormByChanged}>
-                Сохранить
+              <Button
+                type="primary"
+                size="medium"
+                disabled={!isFormByChanged || isLoading}
+              >
+                {isLoading ? "Сохранение..." : "Сохранить"}
               </Button>
             </div>
           </form>

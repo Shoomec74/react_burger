@@ -16,12 +16,16 @@ export function Register() {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const { name, email, password } = useSelector(
-    (store) => (store.registerUser.form)
-  );
+  const { name, email, password, isLoading } = useSelector((store) => ({
+    name: store.registerUser.form.name,
+    email: store.registerUser.form.email,
+    password: store.registerUser.form.password,
+    isLoading: store.registerUser.isLoading,
+  }));
 
   const onChange = (e) => {
     dispatch(setRegisterFormValue(e.target.name, e.target.value));
+    console.log(name, email, password);
   };
 
   const handlerSubmit = (e) => {
@@ -30,7 +34,7 @@ export function Register() {
   };
 
   if (getCookie("token")) {
-    return (<Redirect to={location.state?.from || '/'} />)
+    return <Redirect to={location.state?.from || "/"} />;
   }
 
   return (
@@ -66,8 +70,14 @@ export function Register() {
             name={"password"}
           ></PasswordInput>
         </div>
-        <Button type="primary" size="medium">
-          Зарегистрироваться
+        <Button
+          type="primary"
+          size="medium"
+          disabled={
+            isLoading || !(name !== "" && email !== "" && password !== "")
+          }
+        >
+          {isLoading ? "Подождите..." : "Зарегистрироваться"}
         </Button>
       </form>
       <p className="text text_type_main-default text_color_inactive mb-4 mt-20">

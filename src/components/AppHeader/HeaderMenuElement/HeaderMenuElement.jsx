@@ -10,10 +10,11 @@ const HeaderMenuElement = (props) => {
       <NavLink className={link} to={props.path} activeClassName={activeLink}>
         <p
           className={`${title} ${
-            props.text === "default" ?
-                "text text_type_main-default"
+            props.text === "default"
+              ? "text text_type_main-default"
               : "text text_type_main-default text_color_inactive"
-          }`}>
+          }`}
+        >
           {props.children}
         </p>
       </NavLink>

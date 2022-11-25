@@ -7,7 +7,7 @@
 }
 
 .isHover {
-  border: 1px solid transparent;
-  border-image: linear-gradient(to bottom right, #DC2903 , #F4F955, #0625F9);
+  border            : 1px solid transparent;
+  border-image      : linear-gradient(to bottom right, #DC2903, #F4F955, #0625F9);
   border-image-slice: 1;
 }

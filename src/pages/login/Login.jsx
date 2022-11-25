@@ -16,9 +16,10 @@ export function Login() {
   const dispatch = useDispatch();
   const cookie = getCookie("token");
   const location = useLocation();
-  const { email, password} = useSelector((store) => ({
+  const { email, password, isLoading } = useSelector((store) => ({
     email: store.authorization.form.email,
     password: store.authorization.form.password,
+    isLoading: store.authorization.isLoading,
   }));
 
   const onChange = (e) => {
@@ -56,8 +57,12 @@ export function Login() {
             onChange={onChange}
           ></PasswordInput>
         </div>
-        <Button type="primary" size="medium">
-          Войти
+        <Button
+          type="primary"
+          size="medium"
+          disabled={isLoading || !(email !== "" && password !== "")}
+        >
+          {isLoading ? "Подождите" : "Войти"}
         </Button>
       </form>
       <p className="text text_type_main-default text_color_inactive mb-4 mt-20">

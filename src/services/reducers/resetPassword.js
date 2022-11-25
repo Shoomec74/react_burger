@@ -18,7 +18,6 @@ const initialState = {
     password: "",
   },
   form: {
-    name: "",
     email: "",
     password: "",
     token: "",

@@ -12,13 +12,15 @@ import { resetPassword } from "../../services/actions/resetPassword.js";
 import { getCookie } from "../../services/utils";
 
 export function ResetPassword() {
-  const { loginPage, form, link } = resetPasswordStyles;
-  const { password, token, isPasswordRecovery, isPasswordRelevant } = useSelector((store) => ({
-    password: store.resetPassword.form.password,
-    token: store.resetPassword.form.token,
-    isPasswordRecovery: store.resetPassword.isPasswordRecovery,
-    isPasswordRelevant: store.resetPassword.isPasswordRelevant,
-  }));
+  const { resetPasswordPage, form, link } = resetPasswordStyles;
+  const { password, token, isPasswordRecovery, isPasswordRelevant, isLoading } =
+    useSelector((store) => ({
+      password: store.resetPassword.form.password,
+      token: store.resetPassword.form.token,
+      isPasswordRecovery: store.resetPassword.isPasswordRecovery,
+      isPasswordRelevant: store.resetPassword.isPasswordRelevant,
+      isLoading: store.resetPassword.isLoading,
+    }));
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -33,17 +35,14 @@ export function ResetPassword() {
 
   if (getCookie("token")) {
     return <Redirect to={location.state?.from || "/"} />;
-  }
-  else if(isPasswordRelevant){
+  } else if (isPasswordRelevant) {
     history.replace({ pathname: "/login" });
-  }
-  else if (!isPasswordRecovery) {
+  } else if (!isPasswordRecovery) {
     history.replace({ pathname: "/forgot-password" });
   }
 
-
   return (
-    <div className={loginPage}>
+    <div className={resetPasswordPage}>
       <form className={form} onSubmit={handlerSubmit}>
         <h1 className="text text_type_main-medium mb-6">
           Восстановление пароля
@@ -67,8 +66,12 @@ export function ResetPassword() {
             onChange={onChange}
           />
         </div>
-        <Button type="primary" size="medium">
-          Сохранить
+        <Button
+          type="primary"
+          size="medium"
+          disabled={isLoading || !(password !== "" && token !== "")}
+        >
+          {isLoading ? "Подождите..." : "Сохранить"}
         </Button>
       </form>
       <p className="text text_type_main-default text_color_inactive mt-20">

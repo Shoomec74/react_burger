@@ -7,17 +7,18 @@ import {
 import { Link, Redirect, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setResetFormValue } from "../../services/actions/resetPassword.js";
-import {forgotPassword} from '../../services/actions/resetPassword.js';
+import { forgotPassword } from "../../services/actions/resetPassword.js";
 import { getCookie } from "../../services/utils";
 
 export function ForgotPassword() {
-  const { loginPage, form, link } = forgotPasswordStyles;
+  const { forgotPasswordPage, form, link } = forgotPasswordStyles;
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const { email, isPasswordRecovery } = useSelector((store) => ({
+  const { email, isPasswordRecovery, isLoading } = useSelector((store) => ({
     email: store.resetPassword.form.email,
     isPasswordRecovery: store.resetPassword.isPasswordRecovery,
+    isLoading: store.resetPassword.isLoading,
   }));
 
   const onChange = (e) => {
@@ -27,17 +28,16 @@ export function ForgotPassword() {
   const handlerSubmit = (e) => {
     e.preventDefault();
     dispatch(forgotPassword(email));
-  }
+  };
 
-  if(getCookie('token')){
-    return (<Redirect to={location.state?.from || '/'} />)
-  }
-  else if(isPasswordRecovery){
+  if (getCookie("token")) {
+    return <Redirect to={location.state?.from || "/"} />;
+  } else if (isPasswordRecovery) {
     history.replace({ pathname: "/reset-password" });
   }
 
   return (
-    <div className={loginPage}>
+    <div className={forgotPasswordPage}>
       <form className={form} onSubmit={handlerSubmit}>
         <h1 className="text text_type_main-medium mb-6">
           Восстановление пароля
@@ -53,8 +53,12 @@ export function ForgotPassword() {
             onChange={onChange}
           />
         </div>
-        <Button type="primary" size="medium">
-          Восстановить
+        <Button
+          type="primary"
+          size="medium"
+          disabled={isLoading || !(email !== "")}
+        >
+          {isLoading ? "Подождите..." : "Восстановить"}
         </Button>
       </form>
       <p className="text text_type_main-default text_color_inactive mt-20">

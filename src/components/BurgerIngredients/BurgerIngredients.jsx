@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useInView } from "react-intersection-observer";
 import { INGREDIENT_MODAL } from "../../utils/constants.js";
 import { handleWievPopup } from "../../services/actions/modals";
-import { useHistory, useLocation, Link, Route } from "react-router-dom";
+import { useHistory, useLocation} from "react-router-dom";
 
 const BurgerIngredients = () => {
   const { section, ingredientsScrollBox, ingredientsTypeBox, tabs } =
@@ -16,8 +16,6 @@ const BurgerIngredients = () => {
   const [current, setCurrent] = React.useState("bun");
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
-  const background = location.state?.background;
 
   const { ingredients, ingredientModal, ingredientItem } = useSelector(
     (store) => ({
