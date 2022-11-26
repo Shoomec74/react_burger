@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import loginStyles from "./login.module.css";
 import {
   Button,
@@ -8,26 +7,25 @@ import {
 import { Link, Redirect, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../services/actions/authorization.js";
-import { setLoginFormValue } from "../../services/actions/authorization.js";
 import { getCookie } from "../../services/utils";
+import useForm from "../../hooks/useForm/useForm";
 
 export function Login() {
   const { loginPage, form, link } = loginStyles;
   const dispatch = useDispatch();
   const cookie = getCookie("token");
   const location = useLocation();
-  const { email, password, isLoading } = useSelector((store) => ({
-    email: store.authorization.form.email,
-    password: store.authorization.form.password,
+  const { isLoading } = useSelector((store) => ({
     isLoading: store.authorization.isLoading,
+    isLogin: store.authorization.isLogin,
   }));
-
-  const onChange = (e) => {
-    dispatch(setLoginFormValue(e.target.name, e.target.value));
-  };
+  const initialValuesForm = { email: "", password: "" };
+  const { values, handleChange, setValues } = useForm(initialValuesForm);
+  const { email, password } = values;
 
   const handlerSubmit = (e) => {
     e.preventDefault();
+    setValues(initialValuesForm);
     dispatch(signIn(email, password));
   };
 
@@ -47,14 +45,14 @@ export function Login() {
             placeholder={"E-mail"}
             icon={"undefined"}
             size={"default"}
-            onChange={onChange}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-6">
           <PasswordInput
             value={password}
             name={"password"}
-            onChange={onChange}
+            onChange={handleChange}
           ></PasswordInput>
         </div>
         <Button

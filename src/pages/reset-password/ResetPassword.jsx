@@ -6,30 +6,30 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation, useHistory, Redirect } from "react-router-dom";
-import { setResetFormValue } from "../../services/actions/resetPassword.js";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPassword } from "../../services/actions/resetPassword.js";
 import { getCookie } from "../../services/utils";
+import useForm from "../../hooks/useForm/useForm.jsx";
 
 export function ResetPassword() {
   const { resetPasswordPage, form, link } = resetPasswordStyles;
-  const { password, token, isPasswordRecovery, isPasswordRelevant, isLoading } =
-    useSelector((store) => ({
-      password: store.resetPassword.form.password,
-      token: store.resetPassword.form.token,
+  const { isPasswordRecovery, isPasswordRelevant, isLoading } = useSelector(
+    (store) => ({
       isPasswordRecovery: store.resetPassword.isPasswordRecovery,
       isPasswordRelevant: store.resetPassword.isPasswordRelevant,
       isLoading: store.resetPassword.isLoading,
-    }));
+    })
+  );
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const onChange = (e) => {
-    dispatch(setResetFormValue(e.target.name, e.target.value));
-  };
+  const initialValuesForm = { password: "", token: "" };
+  const { values, handleChange, setValues } = useForm(initialValuesForm);
+  const { password, token } = values;
 
   const handlerSubmit = (e) => {
     e.preventDefault();
+    setValues(initialValuesForm);
     dispatch(resetPassword(password, token));
   };
 
@@ -50,7 +50,7 @@ export function ResetPassword() {
         <div className="mb-6">
           <PasswordInput
             placeholder={"Введите новый пароль"}
-            onChange={onChange}
+            onChange={handleChange}
             value={password}
             name={"password"}
           ></PasswordInput>
@@ -63,7 +63,7 @@ export function ResetPassword() {
             name={"token"}
             value={token}
             size={"default"}
-            onChange={onChange}
+            onChange={handleChange}
           />
         </div>
         <Button

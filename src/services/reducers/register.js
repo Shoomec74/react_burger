@@ -2,18 +2,12 @@ import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FALED,
-  SET_REGISTER_FORM_VALUE,
 } from "../../utils/constants.js";
 
 const initialState = {
   isRegisterUser: false,
   isLoading: false,
   user: {
-    name: "",
-    email: "",
-    password: "",
-  },
-  form: {
     name: "",
     email: "",
     password: "",
@@ -34,12 +28,6 @@ const registerUserReduser = (state = initialState, action) => {
         ...state,
         isRegisterUser: true,
         user: action.user,
-        form: {
-          ...state.form,
-          email: "",
-          password: "",
-          name: "",
-        },
         isLoading: false,
       };
     }
@@ -49,15 +37,6 @@ const registerUserReduser = (state = initialState, action) => {
         registerFailed: true,
         error: action.error,
         isLoading: false,
-      };
-    }
-    case SET_REGISTER_FORM_VALUE: {
-      return {
-        ...state,
-        form: {
-          ...state.form,
-          [action.fieldForm]: action.valueFieldForm,
-        },
       };
     }
     default:

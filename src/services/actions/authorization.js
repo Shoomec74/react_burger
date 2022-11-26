@@ -3,26 +3,19 @@ import {
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FALED,
-  SET_LOGIN_FORM_VALUE,
   LOGOUT_USER_REQUEST,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FALED,
 } from "../../utils/constants.js";
 import { setCookie, deleteCookie } from "../utils.js";
-import { checkResponse } from "../../utils/utils.js";
-
-const setLoginFormValue = (fieldForm, valueFieldForm) => ({
-  type: SET_LOGIN_FORM_VALUE,
-  fieldForm,
-  valueFieldForm,
-});
+import { request } from "../../utils/utils.js";
 
 const signIn = (email, password) => {
   return (dispatch) => {
     dispatch({
       type: LOGIN_USER_REQUEST,
     });
-    fetch(`${BASE_API_AUTH}/login`, {
+    request(`${BASE_API_AUTH}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +25,6 @@ const signIn = (email, password) => {
         password,
       }),
     })
-      .then(checkResponse)
       .then((res) => {
         const accessToken = res.accessToken.split("Bearer ")[1];
         const refreshToken = res.refreshToken;
@@ -57,14 +49,13 @@ const signOut = (refreshToken) => {
     dispatch({
       type: LOGOUT_USER_REQUEST,
     });
-    fetch(`${BASE_API_AUTH}/logout`, {
+    request(`${BASE_API_AUTH}/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ token: refreshToken }),
     })
-      .then(checkResponse)
       .then((res) => {
         deleteCookie("token");
         localStorage.removeItem("refreshToken");
@@ -81,4 +72,4 @@ const signOut = (refreshToken) => {
   };
 };
 
-export { signIn, setLoginFormValue, signOut };
+export { signIn, signOut };

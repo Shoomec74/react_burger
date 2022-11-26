@@ -2,7 +2,7 @@
 export const BASE_API_URL = "https://norma.nomoreparties.space/api";
 
 //-- Базовый эндпоинт к серверу для авторизации --//
-export const BASE_API_AUTH = "https://norma.nomoreparties.space/api/auth";
+export const BASE_API_AUTH = `${BASE_API_URL}/auth`;
 
 //-- actions для компонента BurgerIngredients --//
 export const GET_INGREDIENTS = "GET_INGREDIENTS";
@@ -29,13 +29,11 @@ export const REFRESH_CONSTRUCTOR = "REFRESH_CONSTRUCTOR";
 export const REGISTER_USER_REQUEST = 'REGISTER_USER_REQUEST';
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
 export const REGISTER_USER_FALED = 'REGISTER_USER_FALED';
-export const SET_REGISTER_FORM_VALUE = 'SET_RESET_FORM_VALUE';
 
 //-- actions для получения данных о пользователе --//
 export const GET_USER_INFO_REQUEST = 'GET_USER_INFO_REQUEST';
 export const GET_USER_INFO_SUCCESS = 'GET_USER_INFO_SUCCESS';
 export const GET_USER_INFO_FALED = 'GET_USER_INFO_FALED';
-export const SET_USER_FORM_VALUE = 'SET_USER_FORM_VALUE';
 export const UPDATE_USER_TOKEN_REQUEST = 'UPDATE_USER_TOKEN_REQUEST';
 export const UPDATE_USER_TOKEN_SUCCES = 'UPDATE_USER_TOKEN_SUCCES';
 export const UPDATE_USER_TOKEN_FALED = 'UPDATE_USER_TOKEN_FALED';
@@ -47,7 +45,6 @@ export const UPDATE_USER_INFO_FALED = 'UPDATE_USER_INFO_FALED';
 export const LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_FALED = 'LOGIN_USER_FALED';
-export const SET_LOGIN_FORM_VALUE = 'SET_LOGIN_FORM_VALUE';
 export const LOGOUT_USER_REQUEST = 'LOGOUT_USER_REQUEST'
 export const LOGOUT_USER_SUCCESS ='LOGOUT_USER_SUCCESS'
 export const LOGOUT_USER_FALED ='LOGOUT_USER_FALED'
@@ -61,5 +58,4 @@ export const FORGOT_USER_PASSWORD_FALED = 'FORGOT_USER_PASSWORD_FALED';
 export const RESET_USER_PASSWORD_REQUEST = 'RESET_USER_PASSWORD_REQUEST';
 export const RESET_USER_PASSWORD_SUCCESS = 'RESET_USER_PASSWORD_SUCCESS';
 export const RESET_USER_PASSWORD_FALED = 'RESET_USER_PASSWORD_FALED';
-export const SET_RESET_FORM_VALUE = 'SET_RESET_FORM_VALUE';
 

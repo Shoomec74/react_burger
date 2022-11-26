@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import burgerConstructorStyles from "./burgerConstructor.module.css";
 import {
   ConstructorElement,
@@ -18,15 +18,17 @@ import {
 import { useDrop } from "react-dnd";
 import { nanoid } from "nanoid";
 import ConstructorItem from "./ConstructorItem/ConstructorItem";
+import { useHistory } from "react-router-dom";
+import { getCookie } from "../../services/utils";
 
 const BurgerConstructor = () => {
   const [totalPrice, setTotalPrice] = React.useState(0);
-
+  const history = useHistory();
   const dispatch = useDispatch();
-
+  const cookie = getCookie("token");
   const { ingredientsScrollBox, section, info } = burgerConstructorStyles;
 
-  const { bun, filling, order, name, isLoading, orderModal, isLogin } =
+  const { bun, filling, order, name, isLoading, orderModal } =
     useSelector((store) => ({
       bun: store.burgerConstructor.bun,
       filling: store.burgerConstructor.filling,
@@ -34,7 +36,6 @@ const BurgerConstructor = () => {
       name: store.order.name,
       isLoading: store.order.isLoading,
       orderModal: store.popup.orderModal,
-      isLogin: store.authorization.isLogin,
     }));
 
   useEffect(() => {
@@ -61,6 +62,15 @@ const BurgerConstructor = () => {
       ? dispatch(addBun(ingredient, uniqueID))
       : dispatch(addIngredient(ingredient, uniqueID));
   };
+
+  const handlerCreateOrder = () => {
+    if(!cookie){
+      history.replace({ pathname: "/login" });
+      return;
+    }
+    dispatch(postOrder(inbgredientsId));
+    dispatch(handleWievPopup(ORDER_MODAL));
+  }
 
   const inbgredientsId = React.useMemo(() => {
     const componentId = { ingredients: [] };
@@ -124,11 +134,8 @@ const BurgerConstructor = () => {
         <Button
           type="primary"
           size="medium"
-          onClick={() => {
-            dispatch(postOrder(inbgredientsId));
-            dispatch(handleWievPopup(ORDER_MODAL));
-          }}
-          disabled={!(bun.length !== 0 && filling.length !== 0) || !isLogin}
+          onClick={handlerCreateOrder}
+          disabled={!(bun.length !== 0 && filling.length !== 0)}
         >
           {isLoading ? "Оформляем..." : "Оформить заказ"}
         </Button>

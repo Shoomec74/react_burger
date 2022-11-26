@@ -8,28 +8,31 @@ import {
 import { Link, useLocation, useHistory, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../../services/actions/register.js";
-import { setRegisterFormValue } from "../../services/actions/register.js";
 import { getCookie } from "../../services/utils";
+import useForm from "../../hooks/useForm/useForm";
 
 export function Register() {
   const { registerPage, form, link } = registerStyles;
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const { name, email, password, isLoading } = useSelector((store) => ({
-    name: store.registerUser.form.name,
-    email: store.registerUser.form.email,
-    password: store.registerUser.form.password,
+
+  const { isLoading } = useSelector((store) => ({
     isLoading: store.registerUser.isLoading,
   }));
 
-  const onChange = (e) => {
-    dispatch(setRegisterFormValue(e.target.name, e.target.value));
-    console.log(name, email, password);
+  const initialValuesForm = {
+    name: "",
+    email: "",
+    password: "",
   };
+
+  const { values, handleChange, setValues } = useForm(initialValuesForm);
+  const { name, email, password } = values;
 
   const handlerSubmit = (e) => {
     e.preventDefault();
+    setValues(initialValuesForm);
     dispatch(registerUser(name, email, password));
   };
 
@@ -49,7 +52,7 @@ export function Register() {
             name={"name"}
             size={"default"}
             value={name}
-            onChange={onChange}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-6">
@@ -60,12 +63,12 @@ export function Register() {
             name={"email"}
             size={"default"}
             value={email}
-            onChange={onChange}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-6">
           <PasswordInput
-            onChange={onChange}
+            onChange={handleChange}
             value={password}
             name={"password"}
           ></PasswordInput>

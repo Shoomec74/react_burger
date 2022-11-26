@@ -5,7 +5,6 @@ import {
   RESET_USER_PASSWORD_REQUEST,
   RESET_USER_PASSWORD_SUCCESS,
   RESET_USER_PASSWORD_FALED,
-  SET_RESET_FORM_VALUE,
 } from "../../utils/constants.js";
 
 const initialState = {
@@ -16,11 +15,6 @@ const initialState = {
     name: "",
     email: "",
     password: "",
-  },
-  form: {
-    email: "",
-    password: "",
-    token: "",
   },
   error: null,
 };
@@ -66,15 +60,6 @@ const resetPasswordReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
-      };
-    }
-    case SET_RESET_FORM_VALUE: {
-      return {
-        ...state,
-        form: {
-          ...state.form,
-          [action.fieldForm]: action.valueFieldForm,
-        },
       };
     }
     default:

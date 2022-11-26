@@ -4,15 +4,14 @@ import {
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_SUCCESS,
 } from "../../utils/constants.js";
-import { checkResponse } from "../../utils/utils.js";
+import { request } from "../../utils/utils.js";
 
 function getIngredients() {
   return function (dispatch) {
     dispatch({
       type: GET_INGREDIENTS,
     });
-    fetch(`${BASE_API_URL}/ingredients`)
-      .then(checkResponse)
+    request(`${BASE_API_URL}/ingredients`)
       .then((res) =>
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,

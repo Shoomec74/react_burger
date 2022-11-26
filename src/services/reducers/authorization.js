@@ -2,7 +2,6 @@ import {
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FALED,
-  SET_LOGIN_FORM_VALUE,
   LOGOUT_USER_REQUEST,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FALED,
@@ -13,10 +12,6 @@ const initialState = {
   isLogin: false,
   user: {
     name: "",
-    email: "",
-    password: "",
-  },
-  form: {
     email: "",
     password: "",
   },
@@ -49,15 +44,6 @@ const authorizationReducer = (state = initialState, action) => {
         },
         error: action.error,
         isLoading: false,
-      };
-    }
-    case SET_LOGIN_FORM_VALUE: {
-      return {
-        ...state,
-        form: {
-          ...state.form,
-          [action.fieldForm]: action.valueFieldForm,
-        },
       };
     }
     case LOGOUT_USER_REQUEST: {

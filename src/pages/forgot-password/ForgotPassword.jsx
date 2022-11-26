@@ -6,27 +6,27 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setResetFormValue } from "../../services/actions/resetPassword.js";
 import { forgotPassword } from "../../services/actions/resetPassword.js";
 import { getCookie } from "../../services/utils";
+import useForm from "../../hooks/useForm/useForm";
 
 export function ForgotPassword() {
   const { forgotPasswordPage, form, link } = forgotPasswordStyles;
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const { email, isPasswordRecovery, isLoading } = useSelector((store) => ({
-    email: store.resetPassword.form.email,
+  const { isPasswordRecovery, isLoading } = useSelector((store) => ({
     isPasswordRecovery: store.resetPassword.isPasswordRecovery,
     isLoading: store.resetPassword.isLoading,
   }));
 
-  const onChange = (e) => {
-    dispatch(setResetFormValue(e.target.name, e.target.value));
-  };
+  const initialValuesForm = { email: ""};
+  const { values, handleChange, setValues } = useForm(initialValuesForm);
+  const { email } = values;
 
   const handlerSubmit = (e) => {
     e.preventDefault();
+    setValues(initialValuesForm)
     dispatch(forgotPassword(email));
   };
 
@@ -50,7 +50,7 @@ export function ForgotPassword() {
             placeholder={"Укажите E-mail"}
             icon={"undefined"}
             size={"default"}
-            onChange={onChange}
+            onChange={handleChange}
           />
         </div>
         <Button

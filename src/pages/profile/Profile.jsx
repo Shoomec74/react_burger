@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useMemo, useCallback } from "react";
 import profileStyles from "./profile.module.css";
 import {
   Button,
@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUserInfo } from "../../services/actions/user.js";
 import { signOut } from "../../services/actions/authorization.js";
 import { Orders } from "../../pages";
+import useForm from "../../hooks/useForm/useForm";
 
 export function Profile() {
   const { profilePage, form, link, activeLink, navigation } = profileStyles;
@@ -25,29 +26,24 @@ export function Profile() {
     user: store.userInfo.user,
     isLoading: store.userInfo.isLoading,
   }));
-  const [formData, setFormData] = useState({
-    name: user.name,
-    email: user.email,
-    password: user.password,
-  });
+
+  const { values, handleChange, setValues } = useForm(user);
+  const { name, email, password } = values;
+
   const refreshToken = localStorage.getItem("refreshToken");
 
-  const onChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   const isFormByChanged = useMemo(() => {
-    for (const key in formData) {
-      if (formData[key] !== user[key]) {
+    for (const key in values) {
+      if (values[key] !== user[key]) {
         return true;
       }
     }
     return false;
-  }, [formData]);
+  }, [values]);
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUserInfo(formData));
+    dispatch(updateUserInfo(values));
   };
 
   const handlerOnClick = useCallback(() => {
@@ -56,11 +52,7 @@ export function Profile() {
 
   const resetForm = (e) => {
     e.preventDefault();
-    setFormData({
-      name: user.name,
-      email: user.email,
-      password: user.password,
-    });
+    setValues(user);
   };
 
   return (
@@ -107,9 +99,9 @@ export function Profile() {
                 placeholder={"Имя"}
                 icon={"EditIcon"}
                 name={"name"}
-                value={formData.name}
+                value={name}
                 size={"default"}
-                onChange={onChange}
+                onChange={handleChange}
               />
             </div>
             <div className="mb-6">
@@ -118,9 +110,9 @@ export function Profile() {
                 placeholder={"Логин"}
                 icon={"EditIcon"}
                 name={"email"}
-                value={formData.email}
+                value={email}
                 size={"default"}
-                onChange={onChange}
+                onChange={handleChange}
               />
             </div>
             <div className="mb-6">
@@ -128,10 +120,10 @@ export function Profile() {
                 type={"password"}
                 placeholder={"Пароль"}
                 name={"password"}
-                value={formData.password}
+                value={password}
                 icon={"EditIcon"}
                 size={"default"}
-                onChange={onChange}
+                onChange={handleChange}
               />
             </div>
             <div>
