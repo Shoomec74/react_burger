@@ -25,8 +25,8 @@ export function Login() {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    setValues(initialValuesForm);
     dispatch(signIn(email, password));
+    setValues(initialValuesForm);
   };
 
   if (cookie) {

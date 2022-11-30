@@ -26,8 +26,8 @@ export function ForgotPassword() {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    setValues(initialValuesForm)
     dispatch(forgotPassword(email));
+    setValues(initialValuesForm);
   };
 
   if (getCookie("token")) {

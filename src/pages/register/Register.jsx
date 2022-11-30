@@ -32,11 +32,12 @@ export function Register() {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    setValues(initialValuesForm);
     dispatch(registerUser(name, email, password));
+    setValues(initialValuesForm);
   };
 
   if (getCookie("token")) {
+    // Если объект state не является undefined, вернём пользователя назад.
     return <Redirect to={location.state?.from || "/"} />;
   }
 
