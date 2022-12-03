@@ -28,15 +28,16 @@ const BurgerConstructor = () => {
   const cookie = getCookie("token");
   const { ingredientsScrollBox, section, info } = burgerConstructorStyles;
 
-  const { bun, filling, order, name, isLoading, orderModal } =
-    useSelector((store) => ({
+  const { bun, filling, order, name, isLoading, orderModal } = useSelector(
+    (store) => ({
       bun: store.burgerConstructor.bun,
       filling: store.burgerConstructor.filling,
       order: store.order.order,
       name: store.order.name,
       isLoading: store.order.isLoading,
       orderModal: store.popup.orderModal,
-    }));
+    })
+  );
 
   useEffect(() => {
     const total = filling.reduce(
@@ -64,13 +65,13 @@ const BurgerConstructor = () => {
   };
 
   const handlerCreateOrder = () => {
-    if(!cookie){
+    if (!cookie) {
       history.replace({ pathname: "/login" });
       return;
     }
     dispatch(postOrder(inbgredientsId));
     dispatch(handleWievPopup(ORDER_MODAL));
-  }
+  };
 
   const inbgredientsId = React.useMemo(() => {
     const componentId = { ingredients: [] };

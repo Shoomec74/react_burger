@@ -105,4 +105,4 @@ const userInfoReduser = (state = initialState, action) => {
   }
 };
 
-export { userInfoReduser };
+export default userInfoReduser;

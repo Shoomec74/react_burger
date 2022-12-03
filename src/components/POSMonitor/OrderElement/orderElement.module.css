@@ -1,0 +1,67 @@
+.orderInfoBox {
+  border-radius   : 40px;
+  background-color: #1c1c21;
+  margin-bottom   : 16px;
+  padding         : 24px;
+  box-shadow      : 0px 4px 8px rgba(0, 0, 0, .04), 0px 0px 2px rgba(0, 0, 0, .06), 0px 0px 1px rgba(0, 0, 0, .04);
+}
+
+.orderId {
+  display        : flex;
+  justify-content: space-between;
+}
+
+.orderStructure {
+  height         : 64px;
+  position       : relative;
+  display        : flex;
+  justify-content: flex-end;
+  align-items    : center;
+}
+
+.border {
+  position     : absolute;
+  top          : 0;
+  left         : 0;
+  border-radius: 100%;
+  background   : linear-gradient(to right, rgba(128, 26, 178, 1), rgba(76, 76, 255, 1));
+  padding      : 2px;
+}
+
+.item {
+  width           : 64px;
+  height          : 64px;
+  border-radius   : 100%;
+  background-color: #131316;
+  box-sizing      : border-box;
+}
+
+.img {
+  width     : 100%;
+  height    : 100%;
+  object-fit: cover;
+}
+
+.hideIngredients {
+  position : absolute;
+  top      : 50%;
+  left     : 50%;
+  transform: translate(-50%, -50%);
+  color    : white;
+}
+
+.hideIngredientsBackground {
+  width           : 64px;
+  height          : 54px;
+  border-radius   : 100%;
+  position        : absolute;
+  top             : 50%;
+  left            : 50%;
+  transform       : translate(-50%, -50%);
+  background-color: #131316;
+  opacity         : .8;
+}
+
+.totalPrice {
+  display: flex;
+}

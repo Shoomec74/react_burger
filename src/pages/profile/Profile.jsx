@@ -14,7 +14,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserInfo } from "../../services/actions/user.js";
 import { signOut } from "../../services/actions/authorization.js";
-import { Orders } from "../../pages";
+import { ProfileOrders } from "../../pages";
 import useForm from "../../hooks/useForm/useForm";
 
 export function Profile() {
@@ -89,7 +89,7 @@ export function Profile() {
       </nav>
       <Switch>
         <Route path="/profile/orders" exact>
-          <Orders />
+          <ProfileOrders />
         </Route>
         <Route path="/profile" exact>
           <form className={form} onSubmit={handlerSubmit}>

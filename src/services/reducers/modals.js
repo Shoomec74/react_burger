@@ -1,9 +1,17 @@
-import { INGREDIENT_MODAL, ORDER_MODAL } from "../../utils/constants.js";
+import {
+  INGREDIENT_MODAL,
+  ORDER_MODAL,
+  FEED_MODAL,
+  PROFILE_MODAL,
+} from "../../utils/constants.js";
 
 const initialState = {
   ingredientModal: false,
   orderModal: false,
   ingredient: null,
+  order: null,
+  feedModal: false,
+  profileModal: false,
 };
 
 const modalsReducer = (state = initialState, action) => {
@@ -19,6 +27,20 @@ const modalsReducer = (state = initialState, action) => {
       return {
         ...state,
         orderModal: !state.orderModal,
+      };
+    }
+    case FEED_MODAL: {
+      return {
+        ...state,
+        feedModal: !state.feedModal,
+        order: action.payload,
+      };
+    }
+    case PROFILE_MODAL: {
+      return {
+        ...state,
+        profileModal: !state.profileModal,
+        order: action.payload,
       };
     }
     default:

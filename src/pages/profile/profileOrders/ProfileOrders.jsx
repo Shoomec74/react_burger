@@ -1,32 +1,32 @@
 import React, { useEffect } from "react";
-import feedStyles from "./feed.module.css";
+import profileOrdersStyles from "./profileOrders.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  wsFeedConnectionOpen,
+  wsMyOrdersConnectionOpen,
   wsConnectionClosed,
-} from "../../services/actions/webSocket";
-import POSMonitor from "../../components/POSMonitor/POSMonitor";
-import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+} from "../../../services/actions/webSocket";
+import POSMonitor from "../../../components/POSMonitor/POSMonitor";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
-export function Feed() {
-  const { feedPage } = feedStyles;
+export const ProfileOrders = () => {
+  const { pageOrders } = profileOrdersStyles;
   const dispatch = useDispatch();
   const { isMessage } = useSelector((store) => ({
     isMessage: store.webSocket.isMessage,
   }));
 
   useEffect(() => {
-    dispatch(wsFeedConnectionOpen());
+    dispatch(wsMyOrdersConnectionOpen());
     return () => {
       dispatch(wsConnectionClosed());
     };
   }, [dispatch]);
 
   return isMessage ? (
-    <div className={feedPage}>
+    <div className={pageOrders}>
       <POSMonitor />
     </div>
   ) : (
     <LoadingSpinner />
   );
-}
+};

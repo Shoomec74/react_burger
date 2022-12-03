@@ -1,8 +1,8 @@
 import React from "react";
 import spinerStyles from "./loadingSpinner.module.css";
 
-function LoadingSpinner() {
-  const { spinnerContainer, spinner, spinnerBlur} = spinerStyles;
+const LoadingSpinner = () => {
+  const { spinnerContainer, spinner, spinnerBlur } = spinerStyles;
   return (
     <div className={spinnerContainer}>
       <div className={spinner}>
@@ -13,6 +13,6 @@ function LoadingSpinner() {
       </div>
     </div>
   );
-}
+};
 
 export default LoadingSpinner;

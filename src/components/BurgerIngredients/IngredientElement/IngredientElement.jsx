@@ -22,6 +22,7 @@ const IngredientElement = ({ ingredient, onClick }) => {
   useMemo(() => {
     setAllIngredienst(filling.concat(bun));
   }, [filling, bun]);
+
   const findDuplicates = (ingredient) =>
     allIngredients.filter((item) => item.name === ingredient.name);
 

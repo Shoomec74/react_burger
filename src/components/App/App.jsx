@@ -24,6 +24,8 @@ import {
   Page404,
   Profile,
   IngredientDetailsPage,
+  Feed,
+  OrderInfoPage,
 } from "../../pages";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { deleteCookie, getCookie } from "../../services/utils";
@@ -87,11 +89,20 @@ const App = () => {
         <Route path="/reset-password" exact>
           <ResetPassword />
         </Route>
+        <Route path="/feed" exact>
+          <Feed />
+        </Route>
+        <Route path="/feed/:id" exact>
+          <OrderInfoPage />
+        </Route>
         <Route path="/ingredients/:id" exact>
           <IngredientDetailsPage ingredients={ingredients}>
             Детали ингридиента
           </IngredientDetailsPage>
         </Route>
+        <ProtectedRoute path="/profile/orders/:id">
+          <OrderInfoPage />
+        </ProtectedRoute>
         <ProtectedRoute path="/profile">
           <Profile />
         </ProtectedRoute>

@@ -1,0 +1,34 @@
+.section {
+  max-width : 600px;
+  max-height: 912px;
+  width     : 100%;
+  height    : 100%;
+}
+
+.feedScrollBox {
+  max-width: 600px;
+  overflow : auto;
+  height   : 756px;
+}
+
+.feedScrollBox::-webkit-scrollbar {
+  width: 8px;
+  /* ширина скроллбара */
+}
+
+.feedScrollBox::-webkit-scrollbar-track {
+  background: #2F2F37;
+  /* цвет скроллбара */
+}
+
+.feedScrollBox::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+  /* цвет плашки */
+  border-radius   : 10px;
+  /* закругления плашки */
+}
+
+.link {
+  text-decoration: none;
+  color          : inherit;
+}

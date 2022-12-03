@@ -3,19 +3,36 @@ import { getCookie } from "../utils";
 export const socketMiddleware = (wsUrl, wsActions) => {
   return (store) => {
     let socket = null;
-    const accessToken = getCookie('token');
-
     return (next) => (action) => {
       const { dispatch } = store;
       const { type, payload } = action;
-      const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } =
-        wsActions;
-      if (type === wsInit) {
-        socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
+      const { feed, orders } = wsUrl;
+      const accessToken = getCookie("token");
+      const {
+        wsFeedInit,
+        wsOrdersInit,
+        wsSendMessage,
+        onOpen,
+        onClose,
+        onError,
+        onMessage,
+      } = wsActions;
+
+      if (type === wsFeedInit) {
+        socket = new WebSocket(`${feed}`);
+      } else if (type === wsOrdersInit) {
+        socket = new WebSocket(`${orders}?token=${accessToken}`);
       }
+
       if (socket) {
         socket.onopen = (event) => {
-          dispatch({ type: onOpen, payload: event });
+          dispatch({
+            type: onOpen,
+            payload: {
+              event: event,
+              whoIsConnected: type === wsFeedInit ? true : false,
+            },
+          });
         };
 
         socket.onerror = (event) => {
@@ -26,7 +43,6 @@ export const socketMiddleware = (wsUrl, wsActions) => {
           const { data } = event;
           const parsedData = JSON.parse(data);
           const { success, ...restParsedData } = parsedData;
-
           dispatch({ type: onMessage, payload: restParsedData });
         };
 
@@ -35,11 +51,10 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         };
 
         if (type === wsSendMessage) {
-          const message = { ...payload, token: getCookie('token') };
+          const message = { ...payload, token: getCookie("token") };
           socket.send(JSON.stringify(message));
         }
       }
-
       next(action);
     };
   };

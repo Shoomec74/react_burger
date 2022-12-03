@@ -4,20 +4,12 @@ import "./index.css";
 import "./vendor/normalize.css";
 import App from "./components/App/App.jsx";
 import reportWebVitals from "./reportWebVitals";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { legacy_createStore as createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import {
   BrowserRouter as Router,
   // @ts-ignore
 } from "react-router-dom";
-import rootReducer from "./services/reducers/index.js";
-import thunk from "redux-thunk";
-
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-);
+import store from "./services/store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
