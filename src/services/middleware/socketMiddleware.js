@@ -1,27 +1,16 @@
 import { getCookie } from "../utils";
 
 export const socketMiddleware = (wsUrl, wsActions) => {
+  const accessToken = getCookie("token");
   return (store) => {
     let socket = null;
     return (next) => (action) => {
       const { dispatch } = store;
       const { type, payload } = action;
-      const { feed, orders } = wsUrl;
-      const accessToken = getCookie("token");
-      const {
-        wsFeedInit,
-        wsOrdersInit,
-        wsSendMessage,
-        onOpen,
-        onClose,
-        onError,
-        onMessage,
-      } = wsActions;
+      const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } =  wsActions;
 
-      if (type === wsFeedInit) {
-        socket = new WebSocket(`${feed}`);
-      } else if (type === wsOrdersInit) {
-        socket = new WebSocket(`${orders}?token=${accessToken}`);
+      if (type === wsInit) {
+        socket = new WebSocket(`${wsUrl}${payload}`);
       }
 
       if (socket) {
@@ -30,7 +19,9 @@ export const socketMiddleware = (wsUrl, wsActions) => {
             type: onOpen,
             payload: {
               event: event,
-              whoIsConnected: type === wsFeedInit ? true : false,
+              whoIsConnected: event.currentTarget.url.includes("all")
+                ? true
+                : false,
             },
           });
         };
@@ -51,7 +42,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         };
 
         if (type === wsSendMessage) {
-          const message = { ...payload, token: getCookie("token") };
+          const message = { ...payload, token: accessToken };
           socket.send(JSON.stringify(message));
         }
       }
