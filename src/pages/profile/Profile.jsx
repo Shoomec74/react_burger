@@ -46,9 +46,10 @@ export function Profile() {
     dispatch(updateUserInfo(values));
   };
 
-  const handlerOnClick = useCallback(() => {
+  const handlerOnClick = (e) => {
+    e.preventDefault();
     dispatch(signOut(refreshToken));
-  }, []);
+  }
 
   const resetForm = (e) => {
     e.preventDefault();

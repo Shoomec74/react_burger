@@ -34,6 +34,7 @@ const wsReducer = (state = initialState, action) => {
         ...state,
         wsConnected: false,
         isMessage: false,
+        feedConnected: false,
       };
 
     case WS_GET_ORDERS:

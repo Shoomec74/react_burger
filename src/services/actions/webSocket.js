@@ -1,6 +1,5 @@
 import {
-  WS_FEED_CONNECTION_START,
-  WS_ORDERS_CONNECTION_START,
+  WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
@@ -13,15 +12,10 @@ export const wsConnectionSuccess = () => {
   };
 };
 
-export const wsFeedConnectionOpen = () => {
+export const wsConnectionOpen = (enpoint) => {
   return {
-    type: WS_FEED_CONNECTION_START,
-  };
-};
-
-export const wsMyOrdersConnectionOpen = () => {
-  return {
-    type: WS_ORDERS_CONNECTION_START,
+    type: WS_CONNECTION_START,
+    payload: enpoint,
   };
 };
 

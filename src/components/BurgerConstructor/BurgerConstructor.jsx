@@ -69,15 +69,19 @@ const BurgerConstructor = () => {
       history.replace({ pathname: "/login" });
       return;
     }
+    console.log(inbgredientsId);
     dispatch(postOrder(inbgredientsId));
     dispatch(handleWievPopup(ORDER_MODAL));
   };
 
-  const inbgredientsId = React.useMemo(() => {
+  let inbgredientsId = React.useMemo(() => {
     const componentId = { ingredients: [] };
     componentId["ingredients"] = filling.map((ingredient) => ingredient._id);
+    for (let i = 0; i < 2; i++) {
+      componentId.ingredients.push(bun._id);
+    }
     return componentId;
-  }, [filling]);
+  }, [filling, bun]);
 
   return (
     <section
@@ -136,7 +140,7 @@ const BurgerConstructor = () => {
           type="primary"
           size="medium"
           onClick={handlerCreateOrder}
-          disabled={!(bun.length !== 0 && filling.length !== 0)}
+          disabled={!(bun.length !== 0 && filling.length !== 0) || isLoading}
         >
           {isLoading ? "Оформляем..." : "Оформить заказ"}
         </Button>

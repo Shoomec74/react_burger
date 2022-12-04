@@ -19,7 +19,6 @@ function postOrder(burgerIds, accessToken) {
       body: JSON.stringify(burgerIds),
     })
       .then((data) => {
-        console.log(data);
         dispatch({
           type: POST_ORDER_SUCCESS,
           order: data.order.number,

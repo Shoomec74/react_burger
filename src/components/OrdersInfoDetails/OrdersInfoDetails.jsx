@@ -1,6 +1,5 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useMemo } from "react";
-import propTypes from "prop-types";
 import ordersInfoDetailSstyles from "./ordersInfoDetails.module.css";
 import { useSelector } from "react-redux";
 import { nanoid } from "nanoid";
@@ -20,15 +19,17 @@ const OrdersInfoDetails = ({ order }) => {
     img,
     totalInfo,
   } = ordersInfoDetailSstyles;
-  const ingredients = useSelector((store) => store.ingredients.ingredients);
+  const { ingredientsRedux } = useSelector((store) => ({
+    ingredientsRedux: store.ingredients.ingredients,
+  }));
 
   const orderIngredientsData = useMemo(() => {
     return order.ingredients.map((id) => {
-      return ingredients.find((item) => {
+      return ingredientsRedux.find((item) => {
         return id === item._id;
       });
     });
-  }, [ingredients, order]);
+  }, [ingredientsRedux, order]);
 
   const orderTotalPrice = useMemo(() => {
     return orderIngredientsData.reduce((sum, item) => {

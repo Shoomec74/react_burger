@@ -17,7 +17,7 @@ const OrderElement = ({ order }) => {
     hideIngredientsBackground,
     totalPrice,
   } = orderElementStyles;
-  const MAX_FILLING_VIEW = 7;
+  const MAX_FILLING_VIEW = 6;
   const VALUE_SHIFT_TO_LEFT = 48;
   const { ingredients } = useSelector((store) => ({
     ingredients: store.ingredients.ingredients,

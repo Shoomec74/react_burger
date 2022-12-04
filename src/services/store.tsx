@@ -9,8 +9,7 @@ import { socketMiddleware } from "./middleware/socketMiddleware";
 import thunk from "redux-thunk";
 
 import {
-  WS_FEED_CONNECTION_START,
-  WS_ORDERS_CONNECTION_START,
+  WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
@@ -18,14 +17,10 @@ import {
   WS_GET_ORDERS,
 } from "../utils/constants.js";
 
-const wsUrl = {
-  feed: "wss://norma.nomoreparties.space/orders/all",
-  orders: "wss://norma.nomoreparties.space/orders",
-};
+const wsUrl = "wss://norma.nomoreparties.space/orders";
 
 const wsActions = {
-  wsFeedInit: WS_FEED_CONNECTION_START,
-  wsOrdersInit: WS_ORDERS_CONNECTION_START,
+  wsInit: WS_CONNECTION_START,
   wsSendMessage: WS_SEND_MESSAGE,
   onOpen: WS_CONNECTION_SUCCESS,
   onClose: WS_CONNECTION_CLOSED,

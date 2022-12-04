@@ -23,7 +23,7 @@ const POSMonitor = () => {
   }));
 
   const handlerCloseModal = useCallback(() => {
-    dispatch(handleWievPopup(FEED_MODAL, null));
+    dispatch(handleWievPopup(FEED_MODAL));
     history.goBack();
   }, [dispatch]);
 
