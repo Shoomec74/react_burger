@@ -16,6 +16,7 @@ import { updateUserInfo } from "../../services/actions/user.js";
 import { signOut } from "../../services/actions/authorization.js";
 import { ProfileOrders } from "../../pages";
 import useForm from "../../hooks/useForm/useForm";
+import { wsConnectionClosed } from "../../services/actions/webSocket";
 
 export function Profile() {
   const { profilePage, form, link, activeLink, navigation } = profileStyles;
@@ -48,6 +49,7 @@ export function Profile() {
 
   const handlerOnClick = (e) => {
     e.preventDefault();
+    dispatch(wsConnectionClosed());
     dispatch(signOut(refreshToken));
   }
 

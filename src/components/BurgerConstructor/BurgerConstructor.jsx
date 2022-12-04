@@ -69,7 +69,6 @@ const BurgerConstructor = () => {
       history.replace({ pathname: "/login" });
       return;
     }
-    console.log(inbgredientsId);
     dispatch(postOrder(inbgredientsId));
     dispatch(handleWievPopup(ORDER_MODAL));
   };
