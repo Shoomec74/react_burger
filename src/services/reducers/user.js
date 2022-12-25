@@ -8,7 +8,7 @@ import {
   UPDATE_USER_INFO_REQUEST,
   UPDATE_USER_INFO_SUCCESS,
   UPDATE_USER_INFO_FALED,
-} from "../../utils/constants.js";
+} from "../../utils/constants.ts";
 
 const initialState = {
   isPasswordRelevant: false,

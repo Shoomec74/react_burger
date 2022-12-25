@@ -2,7 +2,7 @@ import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FALED,
-} from "../../utils/constants.js";
+} from "../../utils/constants.ts";
 
 const initialState = {
   isRegisterUser: false,

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLocation, Link, useHistory } from "react-router-dom";
 import { nanoid } from "nanoid";
 import Modal from "../Modal/Modal";
-import { FEED_MODAL } from "../../utils/constants.js";
+import { FEED_MODAL } from "../../utils/constants.ts";
 import { handleWievPopup } from "../../services/actions/modals";
 import OrdersInfoDetails from "../OrdersInfoDetails/OrdersInfoDetails";
 import StatsOrders from "./StatsOrders/StatsOrders";

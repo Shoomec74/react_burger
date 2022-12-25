@@ -3,8 +3,8 @@ import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FALED,
-} from "../../utils/constants.js";
-import { setCookie } from "../utils.js";
+} from "../../utils/constants.ts";
+import { setCookie } from "../utils.ts";
 import { request } from "../../utils/utils.js";
 
 const registerUser = (name, email, password) => {

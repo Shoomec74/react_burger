@@ -6,7 +6,7 @@ import {
   RESET_USER_PASSWORD_REQUEST,
   RESET_USER_PASSWORD_SUCCESS,
   RESET_USER_PASSWORD_FALED,
-} from "../../utils/constants.js";
+} from "../../utils/constants.ts";
 import { request } from "../../utils/utils.js";
 
 const forgotPassword = (email) => {

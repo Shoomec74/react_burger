@@ -9,9 +9,9 @@ import {
   UPDATE_USER_INFO_REQUEST,
   UPDATE_USER_INFO_SUCCESS,
   UPDATE_USER_INFO_FALED,
-} from "../../utils/constants.js";
+} from "../../utils/constants.ts";
 import { request } from "../../utils/utils.js";
-import { setCookie, getCookie } from "../utils.js";
+import { setCookie, getCookie } from "../utils.ts";
 
 const getUserInfo = () => {
   return (dispatch) => {

@@ -3,7 +3,7 @@ import {
   ADD_INGREDIENT,
   REMOVE_INGREDIENT,
   SWAP_INGREDIENT,
-} from "../../utils/constants.js";
+} from "../../utils/constants.ts";
 
 const addBun = (bun, uniqueID) => ({
   type: ADD_BUN,

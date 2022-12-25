@@ -3,7 +3,7 @@ import {
   ORDER_MODAL,
   FEED_MODAL,
   PROFILE_MODAL,
-} from "../../utils/constants.js";
+} from "../../utils/constants.ts";
 
 const initialState = {
   ingredientModal: false,

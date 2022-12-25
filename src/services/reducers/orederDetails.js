@@ -2,7 +2,7 @@ import {
   POST_ORDER,
   POST_ORDER_FAILED,
   POST_ORDER_SUCCESS,
-} from "../../utils/constants.js";
+} from "../../utils/constants.ts";
 
 const initialState = {
   success: false,

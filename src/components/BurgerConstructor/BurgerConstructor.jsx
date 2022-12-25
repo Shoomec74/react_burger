@@ -9,7 +9,7 @@ import Modal from "../Modal/Modal.jsx";
 import OrderDetails from "../OrderDetails/OrderDetails.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import postOrder from "../../services/actions/orederDetails";
-import { ORDER_MODAL, REFRESH_CONSTRUCTOR } from "../../utils/constants";
+import { ORDER_MODAL, REFRESH_CONSTRUCTOR } from "../../utils/constants.ts";
 import { handleWievPopup } from "../../services/actions/modals";
 import {
   addIngredient,

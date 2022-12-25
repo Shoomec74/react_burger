@@ -3,7 +3,7 @@ import {
   GET_INGREDIENTS,
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_SUCCESS,
-} from "../../utils/constants.js";
+} from "../../utils/constants.ts";
 import { request } from "../../utils/utils.js";
 
 function getIngredients() {

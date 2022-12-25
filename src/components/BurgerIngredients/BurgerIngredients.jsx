@@ -6,7 +6,7 @@ import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { useSelector, useDispatch } from "react-redux";
 import { useInView } from "react-intersection-observer";
-import { INGREDIENT_MODAL } from "../../utils/constants.js";
+import { INGREDIENT_MODAL } from "../../utils/constants.ts";
 import { handleWievPopup } from "../../services/actions/modals";
 import { useHistory } from "react-router-dom";
 

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import headerStyles from "./appHeader.module.css";
 import {
   Logo,

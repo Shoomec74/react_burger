@@ -6,8 +6,8 @@ import {
   LOGOUT_USER_REQUEST,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FALED,
-} from "../../utils/constants.js";
-import { setCookie, deleteCookie } from "../utils.js";
+} from "../../utils/constants.ts";
+import { setCookie, deleteCookie } from "../utils.ts";
 import { request } from "../../utils/utils.js";
 
 const signIn = (email, password) => {

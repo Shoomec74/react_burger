@@ -28,7 +28,7 @@ import {
   OrderInfoPage,
 } from "../../pages";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
-import { deleteCookie, getCookie } from "../../services/utils";
+import { deleteCookie, getCookie } from "../../services/utils.ts";
 
 const App = () => {
   const dispatch = useDispatch();

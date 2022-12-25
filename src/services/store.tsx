@@ -15,9 +15,9 @@ import {
   WS_CONNECTION_CLOSED,
   WS_SEND_MESSAGE,
   WS_GET_ORDERS,
-} from "../utils/constants.js";
+} from "../utils/constants";
 
-const wsUrl = "wss://norma.nomoreparties.space/orders";
+const wsUrl: string = "wss://norma.nomoreparties.space/orders";
 
 const wsActions = {
   wsInit: WS_CONNECTION_START,

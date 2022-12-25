@@ -5,7 +5,7 @@ import {
   LOGOUT_USER_REQUEST,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FALED,
-} from "../../utils/constants.js";
+} from "../../utils/constants.ts";
 
 const initialState = {
   isLoading: false,

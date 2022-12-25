@@ -4,7 +4,7 @@ import {
   REMOVE_INGREDIENT,
   SWAP_INGREDIENT,
   REFRESH_CONSTRUCTOR,
-} from "../../utils/constants.js";
+} from "../../utils/constants.ts";
 
 const initialState = {
   bun: [],

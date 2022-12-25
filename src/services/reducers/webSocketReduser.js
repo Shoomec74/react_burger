@@ -3,7 +3,7 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_ORDERS,
-} from "../../utils/constants.js";
+} from "../../utils/constants.ts";
 
 const initialState = {
   wsConnected: false,

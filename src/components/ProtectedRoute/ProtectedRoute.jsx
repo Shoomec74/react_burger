@@ -1,5 +1,5 @@
 import { Redirect, Route } from 'react-router-dom';
-import { getCookie } from '../../services/utils.js';
+import { getCookie } from '../../services/utils.ts';
 
 function ProtectedRoute({ children, ...rest }) {
   return <Route {...rest} render={

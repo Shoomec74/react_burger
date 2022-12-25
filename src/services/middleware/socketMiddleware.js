@@ -1,4 +1,4 @@
-import { getCookie } from "../utils";
+import { getCookie } from "../utils.ts";
 
 export const socketMiddleware = (wsUrl, wsActions) => {
   const accessToken = getCookie("token");

@@ -2,7 +2,7 @@ import {
   GET_INGREDIENTS,
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_SUCCESS,
-} from "../../utils/constants.js";
+} from "../../utils/constants.ts";
 
 const initialState = {
   success: false,
