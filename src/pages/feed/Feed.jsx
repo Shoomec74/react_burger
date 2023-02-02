@@ -25,7 +25,7 @@ export function Feed() {
 
   return isMessage ? (
     <div className={feedPage}>
-      <POSMonitor />
+      {/* <POSMonitor /> */}
     </div>
   ) : (
     <LoadingSpinner />

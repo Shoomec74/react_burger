@@ -8,8 +8,8 @@ function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-const checkResponse = (res : Response) => {
-  res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
+const checkResponse = (res : any) => {
+  return res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
 }
 
 function request(url: string, options: RequestOptions) {

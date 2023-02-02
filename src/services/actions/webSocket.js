@@ -32,6 +32,7 @@ export const wsConnectionClosed = () => {
 };
 
 export const wsGetMessage = (order) => {
+  console.log(order)
   return {
     type: WS_GET_ORDERS,
     payload: order,
