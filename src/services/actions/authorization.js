@@ -8,7 +8,7 @@ import {
   LOGOUT_USER_FALED,
 } from "../../utils/constants.ts";
 import { setCookie, deleteCookie } from "../utils.ts";
-import { request } from "../../utils/utils.js";
+import { request } from "../../utils/utils.ts";
 
 const signIn = (email, password) => {
   return (dispatch) => {

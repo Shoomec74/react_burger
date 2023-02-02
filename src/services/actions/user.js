@@ -10,7 +10,7 @@ import {
   UPDATE_USER_INFO_SUCCESS,
   UPDATE_USER_INFO_FALED,
 } from "../../utils/constants.ts";
-import { request } from "../../utils/utils.js";
+import { request } from "../../utils/utils.ts";
 import { setCookie, getCookie } from "../utils.ts";
 
 const getUserInfo = () => {

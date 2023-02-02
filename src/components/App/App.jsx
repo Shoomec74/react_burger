@@ -1,6 +1,6 @@
 import React from "react";
 import appStyles from "./app.module.css";
-import AppHeader from "../AppHeader/AppHeader.jsx";
+import AppHeader from "../AppHeader/AppHeader.tsx";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients.jsx";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor.jsx";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner.jsx";

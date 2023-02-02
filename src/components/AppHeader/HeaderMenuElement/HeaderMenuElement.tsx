@@ -1,9 +1,14 @@
 import React from "react";
 import headerMenuElementStyles from "./headerMenuElement.module.css";
-import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
-const HeaderMenuElement = (props) => {
+interface Props {
+  text: string,
+  children: React.ReactNode,
+  path: string,
+}
+
+const HeaderMenuElement : React.FC<Props> = (props) => {
   const { element, title, link, activeLink } = headerMenuElementStyles;
   return (
     <li className={`${element} pl-5 pr-5`}>
@@ -20,11 +25,6 @@ const HeaderMenuElement = (props) => {
       </NavLink>
     </li>
   );
-};
-
-HeaderMenuElement.propTypes = {
-  text: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
 };
 
 export default HeaderMenuElement;

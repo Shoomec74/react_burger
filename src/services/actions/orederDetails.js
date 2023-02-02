@@ -4,7 +4,7 @@ import {
   POST_ORDER_FAILED,
   POST_ORDER_SUCCESS,
 } from "../../utils/constants.ts";
-import { request } from "../../utils/utils.js";
+import { request } from "../../utils/utils.ts";
 import { getCookie } from "../utils.ts";
 
 function postOrder(burgerIds, accessToken) {

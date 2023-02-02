@@ -5,7 +5,7 @@ import {
   REGISTER_USER_FALED,
 } from "../../utils/constants.ts";
 import { setCookie } from "../utils.ts";
-import { request } from "../../utils/utils.js";
+import { request } from "../../utils/utils.ts";
 
 const registerUser = (name, email, password) => {
   return (dispatch) => {

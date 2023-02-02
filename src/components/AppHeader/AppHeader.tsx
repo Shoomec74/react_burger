@@ -9,7 +9,7 @@ import {
 import HeaderMenuElement from "./HeaderMenuElement/HeaderMenuElement";
 import { useLocation } from "react-router-dom";
 
-const AppHeader = () => {
+const AppHeader: React.FC = ()  => {
   const { header, menu, logo } = headerStyles;
   const location = useLocation();
 
@@ -54,3 +54,4 @@ const AppHeader = () => {
 };
 
 export default AppHeader;
+

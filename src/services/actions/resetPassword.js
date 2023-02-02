@@ -7,7 +7,7 @@ import {
   RESET_USER_PASSWORD_SUCCESS,
   RESET_USER_PASSWORD_FALED,
 } from "../../utils/constants.ts";
-import { request } from "../../utils/utils.js";
+import { request } from "../../utils/utils.ts";
 
 const forgotPassword = (email) => {
   return (dispatch) => {

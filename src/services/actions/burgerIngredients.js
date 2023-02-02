@@ -4,7 +4,7 @@ import {
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_SUCCESS,
 } from "../../utils/constants.ts";
-import { request } from "../../utils/utils.js";
+import { request } from "../../utils/utils.ts";
 
 function getIngredients() {
   return function (dispatch) {

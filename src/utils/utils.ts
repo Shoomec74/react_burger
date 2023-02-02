@@ -1,17 +1,23 @@
-function delay(ms) {
+interface RequestOptions {
+  method : string
+  headers : Record<string, string>
+  body ?: any
+}
+
+function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-const checkResponse = (res) => {
+const checkResponse = (res : Response) => {
   res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
 }
 
-function request(url, options) {
+function request(url: string, options: RequestOptions) {
   // принимает два аргумента: урл и объект опций, как и `fetch`
   return fetch(url, options).then(checkResponse);
 }
 
-const formatDate = (date) => {
+const formatDate = (date: Date) => {
   const formatter = new Intl.DateTimeFormat("ru", {
     hour: "numeric",
     minute: "numeric",
@@ -22,9 +28,10 @@ const formatDate = (date) => {
 
   const today = new Date();
 
-  function diffSubtract(dayOne, dayTwo) {
+  function diffSubtract(dayOne: any, dayTwo: any) {
     return Math.ceil((dayOne - dayTwo) / 86400000);
   }
+
 
   let dayQty = diffSubtract(today, dateOfOrder);
 
@@ -35,7 +42,7 @@ const formatDate = (date) => {
     timeZone: "Europe/Moscow",
   });
 
-  const formatDay = (dateOfOrder, dayQty) => {
+  const formatDay = (dateOfOrder: any, dayQty: any) => {
     if (formatterForFay.format(today) === formatterForFay.format(dateOfOrder)) {
       return "Cегодня";
     }
