@@ -3,11 +3,12 @@ import {
   GET_INGREDIENTS,
   GET_INGREDIENTS_FAILED,
   GET_INGREDIENTS_SUCCESS,
-} from "../../utils/constants.ts";
-import { request } from "../../utils/utils.ts";
+} from "../../utils/constants";
+import { request } from "../../utils/utils";
+import { IGetIngredients } from "../types";
 
-function getIngredients() {
-  return function (dispatch) {
+function getIngredients(): (dispatch: any) => void {
+  return function (dispatch) : void {
     dispatch({
       type: GET_INGREDIENTS,
     });

@@ -3,7 +3,7 @@ import appStyles from "./app.module.css";
 import AppHeader from "../AppHeader/AppHeader.tsx";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients.jsx";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor.jsx";
-import LoadingSpinner from "../LoadingSpinner/LoadingSpinner.jsx";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner.tsx";
 import getIngredients from "../../services/actions/burgerIngredients";
 import { getUserInfo, updateUserToken } from "../../services/actions/user.js";
 import { useDispatch, useSelector } from "react-redux";

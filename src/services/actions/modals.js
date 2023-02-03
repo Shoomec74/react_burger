@@ -4,3 +4,4 @@ export function handleWievPopup(namePopup, payload) {
     payload: payload,
   };
 }
+

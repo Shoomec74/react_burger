@@ -4,8 +4,13 @@ import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { nanoid } from "nanoid";
 import { formatDate } from "../../../utils/utils";
+import { IOrder } from "../../../types";
 
-const OrderElement = ({ order }) => {
+interface IProps {
+  order: IOrder
+}
+
+const OrderElement: React.FC<IProps> = ({ order }) => {
   const {
     orderInfoBox,
     orderId,
@@ -33,7 +38,7 @@ const OrderElement = ({ order }) => {
 
   const orderTotalPrice = useMemo(() => {
     return orderIngredientsData.reduce((sum, item) => {
-      if (item && item.type === "bun") {
+      if (item?.type === "bun") {
         return (sum += item.price * 2);
       }
       return (sum += item ? item.price : 0);
@@ -59,7 +64,7 @@ const OrderElement = ({ order }) => {
             key={uniqueID}
           >
             <div className={item}>
-              <img className={img} src={el.image_mobile} alt={el.name} />
+              <img className={img} src={el?.image_mobile} alt={el?.name} />
               <div className={hideIngredientsBackground}></div>
               <p className={`text text_type_main-default ${hideIngredients}`}>
                 +{orderIngredientsData.length - MAX_FILLING_VIEW}
@@ -78,7 +83,7 @@ const OrderElement = ({ order }) => {
             key={uniqueID}
           >
             <div className={item}>
-              <img className={img} src={el.image_mobile} alt={el.name} />
+              <img className={img} src={el?.image_mobile} alt={el?.name} />
             </div>
           </div>
         );

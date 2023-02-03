@@ -5,7 +5,7 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../Modal/Modal.jsx";
+import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails.jsx";
 import { useSelector, useDispatch } from "react-redux";
 import postOrder from "../../services/actions/orederDetails";

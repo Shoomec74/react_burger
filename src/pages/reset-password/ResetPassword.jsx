@@ -9,7 +9,7 @@ import { Link, useLocation, useHistory, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPassword } from "../../services/actions/resetPassword.js";
 import { getCookie } from "../../services/utils";
-import useForm from "../../hooks/useForm/useForm.jsx";
+import useForm from "../../hooks/useForm/useForm";
 
 export function ResetPassword() {
   const { resetPasswordPage, form, link } = resetPasswordStyles;

@@ -12,12 +12,12 @@ const checkResponse = (res : any) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
 }
 
-function request(url: string, options: RequestOptions) {
+function request(url: string, options?: RequestOptions) {
   // принимает два аргумента: урл и объект опций, как и `fetch`
   return fetch(url, options).then(checkResponse);
 }
 
-const formatDate = (date: Date) => {
+const formatDate = (date: string) => {
   const formatter = new Intl.DateTimeFormat("ru", {
     hour: "numeric",
     minute: "numeric",

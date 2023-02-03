@@ -8,11 +8,11 @@ import {
 import POSMonitor from "../../components/POSMonitor/POSMonitor";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
-export function Feed() {
+export const Feed: React.FC = () =>{
   const { feedPage } = feedStyles;
   const dispatch = useDispatch();
   const wsFeedEndpoint = "/all";
-  const { isMessage } = useSelector((store) => ({
+  const { isMessage } = useSelector((store: any) => ({
     isMessage: store.webSocket.isMessage,
   }));
 
@@ -25,7 +25,7 @@ export function Feed() {
 
   return isMessage ? (
     <div className={feedPage}>
-      {/* <POSMonitor /> */}
+      <POSMonitor />
     </div>
   ) : (
     <LoadingSpinner />

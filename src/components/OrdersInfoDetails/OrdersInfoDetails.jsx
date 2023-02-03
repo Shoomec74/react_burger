@@ -33,7 +33,7 @@ const OrdersInfoDetails = ({ order }) => {
 
   const orderTotalPrice = useMemo(() => {
     return orderIngredientsData.reduce((sum, item) => {
-      if (item.type === "bun") {
+      if (item?.type === "bun") {
         return (sum += item.price * 2);
       }
       return (sum += item ? item.price : 0);
