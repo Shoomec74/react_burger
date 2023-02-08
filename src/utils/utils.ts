@@ -1,16 +1,16 @@
 interface RequestOptions {
-  method : string
-  headers : Record<string, string>
-  body ?: any
+  method: string;
+  headers: Record<string, string>;
+  body?: string;
 }
 
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-const checkResponse = (res : any) => {
+const checkResponse = (res: any) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
-}
+};
 
 function request(url: string, options?: RequestOptions) {
   // принимает два аргумента: урл и объект опций, как и `fetch`
@@ -31,7 +31,6 @@ const formatDate = (date: string) => {
   function diffSubtract(dayOne: any, dayTwo: any) {
     return Math.ceil((dayOne - dayTwo) / 86400000);
   }
-
 
   let dayQty = diffSubtract(today, dateOfOrder);
 

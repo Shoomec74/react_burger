@@ -1,19 +1,20 @@
 import React, { useRef } from "react";
-import PropTypes from "prop-types";
 import constructorStyles from "./ConstructorItem.module.css";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag, useDrop } from "react-dnd";
-import {
-  swapIngredient,
-  removeIngredient,
-} from "../../../services/actions/burgerConstructor";
-import { useDispatch } from "react-redux";
-import { ingredientType } from "../../../utils/types";
+import { useDispatch } from "../../../services/actions-types/hooks";
+import * as ACTION_TYPES from "../../../utils/constants";
+import { IDNDIngredient } from "../../../types";
 
-function ConstructorItem({ ingredient, index }) {
+interface Props {
+  ingredient: IDNDIngredient;
+  index: number;
+}
+
+const ConstructorItem: React.FC<Props> = ({ ingredient, index }) => {
   const dispatch = useDispatch();
 
   const ingredientRef = useRef(null);
@@ -34,13 +35,16 @@ function ConstructorItem({ ingredient, index }) {
 
   const [{ isHover }, drop] = useDrop({
     accept: "ingredients",
-    hover(ingredient) {
+    hover(ingredient: IDNDIngredient) {
       if (!ingredientRef.current) {
         return;
       }
       const dragIndex = ingredient.index;
       const hoverIndex = index;
-      dispatch(swapIngredient(dragIndex, hoverIndex, ingredient));
+      dispatch({
+        type: ACTION_TYPES.SWAP_INGREDIENT,
+        payload: { hoverIndex: hoverIndex, dragIndex: dragIndex },
+      });
       ingredient.index = hoverIndex;
     },
     collect: (monitor) => ({
@@ -50,8 +54,8 @@ function ConstructorItem({ ingredient, index }) {
 
   drag(drop(ingredientRef));
 
-  const deleteIngridient = (uniqueID) => {
-    dispatch(removeIngredient(uniqueID));
+  const deleteIngridient = (uniqueID: string) => {
+    dispatch({ type: ACTION_TYPES.REMOVE_INGREDIENT, payload: uniqueID });
   };
 
   return (
@@ -73,11 +77,6 @@ function ConstructorItem({ ingredient, index }) {
       />
     </li>
   );
-}
-
-ConstructorItem.propTypes = {
-  ingredient: ingredientType.isRequired,
-  index: PropTypes.number.isRequired,
 };
 
 export default ConstructorItem;

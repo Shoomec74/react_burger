@@ -8,10 +8,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import HeaderMenuElement from "./HeaderMenuElement/HeaderMenuElement";
 import { useLocation } from "react-router-dom";
+import { TLocation } from "../../types";
 
 const AppHeader: React.FC = ()  => {
   const { header, menu, logo } = headerStyles;
-  const location = useLocation();
+  const location = useLocation<TLocation>();
 
   return (
     <header className={`${header} mt-10`}>

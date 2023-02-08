@@ -1,3 +1,4 @@
+import { TIngredientResponse } from "../../types/data";
 import {
   BASE_API_URL,
   GET_INGREDIENTS,
@@ -5,10 +6,21 @@ import {
   GET_INGREDIENTS_SUCCESS,
 } from "../../utils/constants";
 import { request } from "../../utils/utils";
-import { IGetIngredients } from "../types";
+
+export interface IGetIngredients {
+  readonly type:
+    | typeof GET_INGREDIENTS
+    | typeof GET_INGREDIENTS_SUCCESS
+    | typeof GET_INGREDIENTS_FAILED;
+  readonly data: TIngredientResponse;
+  readonly success: boolean;
+  readonly error: Error;
+}
+
+export type TActionBurgerIngredients = IGetIngredients;
 
 function getIngredients(): (dispatch: any) => void {
-  return function (dispatch) : void {
+  return function (dispatch): void {
     dispatch({
       type: GET_INGREDIENTS,
     });

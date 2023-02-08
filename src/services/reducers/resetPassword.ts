@@ -5,9 +5,22 @@ import {
   RESET_USER_PASSWORD_REQUEST,
   RESET_USER_PASSWORD_SUCCESS,
   RESET_USER_PASSWORD_FALED,
-} from "../../utils/constants.ts";
+} from "../../utils/constants";
+import { TActionResetPassword } from "../actions/resetPassword";
 
-const initialState = {
+type TResetPasswordState = {
+  isLoading: boolean,
+  isPasswordRecovery: boolean,
+  isPasswordRelevant: boolean,
+  user: {
+    name: string,
+    email: string,
+    password: string,
+  },
+  error: null | Error,
+}
+
+const initialState: TResetPasswordState = {
   isLoading: false,
   isPasswordRecovery: false,
   isPasswordRelevant: false,
@@ -19,7 +32,7 @@ const initialState = {
   error: null,
 };
 
-const resetPasswordReducer = (state = initialState, action) => {
+const resetPasswordReducer = (state = initialState, action: TActionResetPassword) => {
   switch (action.type) {
     case FORGOT_USER_PASSWORD_REQUEST: {
       return {

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import burgerIngredientsStyles from "./burgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientElement from "./IngredientElement/IngredientElement.jsx";
+import IngredientElement from "./IngredientElement/IngredientElement.js";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/actions-types/hooks";
 import { useInView } from "react-intersection-observer";
 import { INGREDIENT_MODAL } from "../../utils/constants.ts";
 import { handleWievPopup } from "../../services/actions/modals";
@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom";
 const BurgerIngredients = () => {
   const { section, ingredientsScrollBox, ingredientsTypeBox, tabs } =
     burgerIngredientsStyles;
-  const [current, setCurrent] = React.useState("bun");
+  const [current, setCurrent] = useState("bun");
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -53,7 +53,7 @@ const BurgerIngredients = () => {
     }
   };
 
-  const handleButtonClick = (tab) => {
+  const handleButtonClick = (tab: any) => {
     setCurrent(tab);
     const element = document.getElementById(tab);
     if (element) element.scrollIntoView({ behavior: "smooth" });
@@ -63,7 +63,7 @@ const BurgerIngredients = () => {
     handleTabScroll();
   }, [bunInView, sauceInView, mainInView]);
 
-  const handlerCloseModal = React.useCallback(() => {
+  const handlerCloseModal = useCallback(() => {
     dispatch(handleWievPopup(INGREDIENT_MODAL, null))
     history.replace({ pathname: "/" });
   }, [dispatch]);
@@ -122,7 +122,6 @@ const BurgerIngredients = () => {
                 <IngredientElement
                   key={ingredient._id}
                   ingredient={ingredient}
-                  countIngredient={ingredient.__v}
                   onClick={() => {
                     dispatch(handleWievPopup(INGREDIENT_MODAL, ingredient));
                   }}
@@ -140,7 +139,6 @@ const BurgerIngredients = () => {
                 <IngredientElement
                   key={ingredient._id}
                   ingredient={ingredient}
-                  countIngredient={ingredient.__v}
                   onClick={() => {
                     dispatch(handleWievPopup(INGREDIENT_MODAL, ingredient));
                   }}

@@ -2,9 +2,18 @@ import {
   POST_ORDER,
   POST_ORDER_FAILED,
   POST_ORDER_SUCCESS,
-} from "../../utils/constants.ts";
+} from "../../utils/constants";
+import { TActionOrederDetails } from "../actions/orederDetails";
 
-const initialState = {
+type TOrederDetailsState = {
+  success: boolean;
+  error: null | Error;
+  isLoading: boolean;
+  name: string;
+  order: number;
+};
+
+const initialState: TOrederDetailsState = {
   success: false,
   error: null,
   isLoading: false,
@@ -12,7 +21,7 @@ const initialState = {
   order: 0,
 };
 
-const orderDetailsReducer = (state = initialState, action) => {
+const orderDetailsReducer = (state = initialState, action: TActionOrederDetails) => {
   switch (action.type) {
     case POST_ORDER: {
       return {

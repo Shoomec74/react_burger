@@ -1,3 +1,4 @@
+import { TUser } from "../../types/index";
 import {
   LOGIN_USER_REQUEST,
   LOGIN_USER_SUCCESS,
@@ -5,9 +6,17 @@ import {
   LOGOUT_USER_REQUEST,
   LOGOUT_USER_SUCCESS,
   LOGOUT_USER_FALED,
-} from "../../utils/constants.ts";
+} from "../../utils/constants";
+import { TActionAuthorization } from "../actions/authorization";
 
-const initialState = {
+type TAuthorizationState = {
+  isLoading: boolean;
+  isLogin: boolean;
+  user: TUser;
+  error: Error | null;
+};
+
+const initialState: TAuthorizationState = {
   isLoading: false,
   isLogin: false,
   user: {
@@ -18,7 +27,7 @@ const initialState = {
   error: null,
 };
 
-const authorizationReducer = (state = initialState, action) => {
+const authorizationReducer = (state = initialState, action: TActionAuthorization) => {
   switch (action.type) {
     case LOGIN_USER_REQUEST: {
       return {
@@ -37,11 +46,6 @@ const authorizationReducer = (state = initialState, action) => {
     case LOGIN_USER_FALED: {
       return {
         ...state,
-        form: {
-          ...state.form,
-          email: "",
-          password: "",
-        },
         error: action.error,
         isLoading: false,
       };

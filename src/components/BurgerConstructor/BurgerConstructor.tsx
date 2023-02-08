@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import burgerConstructorStyles from "./burgerConstructor.module.css";
 import {
   ConstructorElement,
@@ -7,49 +7,50 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails.jsx";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "../../services/actions-types/hooks";
 import postOrder from "../../services/actions/orederDetails";
-import { ORDER_MODAL, REFRESH_CONSTRUCTOR } from "../../utils/constants.ts";
-import { handleWievPopup } from "../../services/actions/modals";
-import {
-  addIngredient,
-  addBun,
-} from "../../services/actions/burgerConstructor";
+import { REFRESH_CONSTRUCTOR } from "../../utils/constants";
+import * as ACTION_TYPES from "../../utils/constants";
 import { useDrop } from "react-dnd";
 import { nanoid } from "nanoid";
 import ConstructorItem from "./ConstructorItem/ConstructorItem";
 import { useHistory } from "react-router-dom";
 import { getCookie } from "../../services/utils";
+import { IDNDIngredient, IIngredient, TLocation } from "../../types";
 
-const BurgerConstructor = () => {
-  const [totalPrice, setTotalPrice] = React.useState(0);
-  const history = useHistory();
+const BurgerConstructor: React.FC = () => {
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const history = useHistory<TLocation>();
   const dispatch = useDispatch();
   const cookie = getCookie("token");
   const { ingredientsScrollBox, section, info } = burgerConstructorStyles;
 
-  const { bun, filling, order, name, isLoading, orderModal } = useSelector(
+  const { bun, filling, order, name, isLoading, modalDisplay } = useSelector(
     (store) => ({
       bun: store.burgerConstructor.bun,
       filling: store.burgerConstructor.filling,
       order: store.order.order,
       name: store.order.name,
       isLoading: store.order.isLoading,
-      orderModal: store.popup.orderModal,
+      modalDisplay: store.popup.modalDisplay,
     })
   );
 
+  const bunIngredient = useMemo(() => {
+    return bun[0];
+  }, [bun]);
+
   useEffect(() => {
     const total = filling.reduce(
-      (sum, item) => sum + item.price,
-      bun.length !== 0 ? bun.price * 2 : 0
+      (sum: number, item: IIngredient) => sum + item.price,
+      bun.length !== 0 ? bunIngredient.price * 2 : 0
     );
     setTotalPrice(total);
   }, [bun, filling]);
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(ingredient) {
+    drop(ingredient: IDNDIngredient) {
       onDropHandler(ingredient);
     },
     collect: (monitor) => ({
@@ -57,11 +58,17 @@ const BurgerConstructor = () => {
     }),
   });
 
-  const onDropHandler = (ingredient) => {
+  const onDropHandler = (ingredient: IDNDIngredient) => {
     const uniqueID = nanoid();
     ingredient.type === "bun"
-      ? dispatch(addBun(ingredient, uniqueID))
-      : dispatch(addIngredient(ingredient, uniqueID));
+      ? dispatch({
+          type: ACTION_TYPES.ADD_BUN,
+          payload: { ...ingredient, uniqueID },
+        })
+      : dispatch({
+          type: ACTION_TYPES.ADD_INGREDIENT,
+          payload: { ...ingredient, uniqueID },
+        });
   };
 
   const handlerCreateOrder = () => {
@@ -70,14 +77,23 @@ const BurgerConstructor = () => {
       return;
     }
     dispatch(postOrder(inbgredientsId));
-    dispatch(handleWievPopup(ORDER_MODAL));
+    dispatch({
+      type: ACTION_TYPES.SHOW_MODAL,
+      typeModal: 'orderModal',
+    });
   };
 
-  let inbgredientsId = React.useMemo(() => {
-    const componentId = { ingredients: [] };
-    componentId["ingredients"] = filling.map((ingredient) => ingredient._id);
+  type TInbgredientsId = {
+    ingredients: Array<string>;
+  };
+
+  let inbgredientsId = useMemo<TInbgredientsId>(() => {
+    const componentId: TInbgredientsId = { ingredients: [] };
+    componentId["ingredients"] = filling.map(
+      (ingredient: IDNDIngredient) => ingredient._id
+    );
     for (let i = 0; i < 2; i++) {
-      componentId.ingredients.push(bun._id);
+      componentId.ingredients.push(bunIngredient._id);
     }
     return componentId;
   }, [filling, bun]);
@@ -92,12 +108,12 @@ const BurgerConstructor = () => {
       {bun.length !== 0 ? (
         <div className={`ml-9 mb-4`}>
           <ConstructorElement
-            key={bun.uniqueID}
+            key={bunIngredient.uniqueID}
             type="top"
             isLocked={true}
-            text={`${bun.name} (верх)`}
-            price={bun.price}
-            thumbnail={bun.image_mobile}
+            text={`${bunIngredient.name} (верх)`}
+            price={bunIngredient.price}
+            thumbnail={bunIngredient.image_mobile}
           />
         </div>
       ) : (
@@ -105,7 +121,7 @@ const BurgerConstructor = () => {
       )}
       {filling.length !== 0 ? (
         <ul className={ingredientsScrollBox}>
-          {filling.map((ingredient, index) => (
+          {filling.map((ingredient: IDNDIngredient, index: number) => (
             <ConstructorItem
               ingredient={ingredient}
               index={index}
@@ -119,12 +135,12 @@ const BurgerConstructor = () => {
       {bun.length !== 0 ? (
         <div className={`ml-9 mt-4`}>
           <ConstructorElement
-            key={`${bun.uniqueID} duble`}
+            key={`${bunIngredient.uniqueID} duble`}
             type="bottom"
             isLocked={true}
-            text={`${bun.name} (низ)`}
-            price={bun.price}
-            thumbnail={bun.image_mobile}
+            text={`${bunIngredient.name} (низ)`}
+            price={bunIngredient.price}
+            thumbnail={bunIngredient.image_mobile}
           />
         </div>
       ) : (
@@ -146,9 +162,11 @@ const BurgerConstructor = () => {
       </div>
       {!isLoading && (
         <Modal
-          isOpened={orderModal}
+          isOpened={modalDisplay}
           onClose={() => {
-            dispatch(handleWievPopup(ORDER_MODAL));
+            dispatch({
+              type: ACTION_TYPES.HIDE_MODAL,
+            });
             dispatch({ type: REFRESH_CONSTRUCTOR });
           }}
         >
@@ -160,3 +178,18 @@ const BurgerConstructor = () => {
 };
 
 export default BurgerConstructor;
+
+//Как типизировать компонент из библиотеки Яндекса? Пробовал обновить библиотеку в консоле появляется следующее:
+
+// npm WARN using --force Recommended protections disabled.
+// npm ERR! code ENOENT
+// npm ERR! syscall open
+// npm ERR! path C:\react-developer-burger-ui-components/package.json
+// npm ERR! errno -4058
+// npm ERR! enoent ENOENT: no such file or directory, open 'C:\react-developer-burger-ui-components\package.json'
+// npm ERR! enoent This is related to npm not being able to find a file.
+// npm ERR! enoent
+// npm ERR! A complete log of this run can be found in:
+// npm ERR!     C:\Users\79634\AppData\Local\npm-cache\_logs\2023-02-07T17_54_19_323Z-debug-0.log
+
+// Почему из стора не приходит попап? Все приходит кроме стейта по модалкам. Пишет popup: never;

@@ -1,11 +1,22 @@
+import { TFeed } from "../../types/data";
 import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_ORDERS,
-} from "../../utils/constants.ts";
+} from "../../utils/constants";
+import { TActionsWS } from "../actions/webSocket";
 
-const initialState = {
+type TWSState = {
+  wsConnected: boolean,
+  orders: Array<TFeed>,
+  total: number,
+  totalToday: number,
+  isMessage: boolean,
+  feedConnected: boolean,
+}
+
+const initialState: TWSState = {
   wsConnected: false,
   orders: [],
   total: 0,
@@ -14,13 +25,13 @@ const initialState = {
   feedConnected: false,
 };
 
-const wsReducer = (state = initialState, action) => {
+const wsReducer = (state = initialState, action: TActionsWS) => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {
         ...state,
         wsConnected: true,
-        feedConnected: action.payload.whoIsConnected,
+        feedConnected: action.whoIsConnected,
       };
 
     case WS_CONNECTION_ERROR:

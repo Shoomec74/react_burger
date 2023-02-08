@@ -16,10 +16,11 @@ import {
   WS_SEND_MESSAGE,
   WS_GET_ORDERS,
 } from "../utils/constants";
+import { TSocketMiddlewareActions } from "../types";
 
 const wsUrl: string = "wss://norma.nomoreparties.space/orders";
 
-const wsActions = {
+const wsActions: TSocketMiddlewareActions = {
   wsInit: WS_CONNECTION_START,
   wsSendMessage: WS_SEND_MESSAGE,
   onOpen: WS_CONNECTION_SUCCESS,

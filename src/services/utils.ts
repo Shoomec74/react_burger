@@ -9,7 +9,7 @@ const getCookie = (name: string): string | undefined => {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-function setCookie(name: string, value: string, props: any): void {
+function setCookie(name: string, value: string, props?: any): void {
   props = props || {};
   let exp = props.expires;
   console.log()

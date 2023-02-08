@@ -2,11 +2,8 @@ import React from "react";
 import ingredientDetailsStyles from "./ingredientDetails.module.css";
 import PropTypes from "prop-types";
 
-
-
 const IngredientDetails = ({ ingredient, children }) => {
-  const { popup, nutritionalValues, nutritionalValue, image, name } =
-    ingredientDetailsStyles;
+  const { popup, nutritionalValues, nutritionalValue, image, name } = ingredientDetailsStyles;
 
   return (
     <div className={popup}>

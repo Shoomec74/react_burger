@@ -1,9 +1,11 @@
-import { getCookie } from "../utils.ts";
+import { getCookie } from "../utils";
+import { Middleware, MiddlewareAPI } from "redux";
+import { TSocketMiddlewareActions } from "../../types";
 
-export const socketMiddleware = (wsUrl, wsActions) => {
+export const socketMiddleware = (wsUrl: string, wsActions: TSocketMiddlewareActions): Middleware => {
   const accessToken = getCookie("token");
-  return (store) => {
-    let socket = null;
+  return (store: MiddlewareAPI) => {
+    let socket: WebSocket | null = null;
     return (next) => (action) => {
       const { dispatch } = store;
       const { type, payload } = action;
@@ -19,7 +21,10 @@ export const socketMiddleware = (wsUrl, wsActions) => {
             type: onOpen,
             payload: {
               event: event,
-              whoIsConnected: event.currentTarget.url.includes("all")
+              // whoIsConnected: event.currentTarget.url.includes("all")
+              //   ? true
+              //   : false,
+              whoIsConnected: document.URL.includes("all")
                 ? true
                 : false,
             },

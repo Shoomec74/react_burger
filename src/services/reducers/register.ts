@@ -2,9 +2,21 @@ import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FALED,
-} from "../../utils/constants.ts";
+} from "../../utils/constants";
+import { TActionregister } from "../actions/register";
 
-const initialState = {
+type TRegisterState = {
+  isRegisterUser: boolean,
+  isLoading: boolean,
+  user: {
+    name: string,
+    email: string,
+    password: string,
+  },
+  error: null | Error,
+}
+
+const initialState: TRegisterState = {
   isRegisterUser: false,
   isLoading: false,
   user: {
@@ -15,7 +27,7 @@ const initialState = {
   error: null,
 };
 
-const registerUserReduser = (state = initialState, action) => {
+const registerUserReduser = (state = initialState, action: TActionregister) => {
   switch (action.type) {
     case REGISTER_USER_REQUEST: {
       return {

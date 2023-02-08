@@ -6,10 +6,27 @@ import {
   RESET_USER_PASSWORD_REQUEST,
   RESET_USER_PASSWORD_SUCCESS,
   RESET_USER_PASSWORD_FALED,
-} from "../../utils/constants.ts";
-import { request } from "../../utils/utils.ts";
+} from "../../utils/constants";
+import { request } from "../../utils/utils";
+import { AppDispatch, AppThunk } from "../actions-types";
 
-const forgotPassword = (email) => {
+export interface IForgotPassword {
+  readonly type: typeof FORGOT_USER_PASSWORD_REQUEST | typeof FORGOT_USER_PASSWORD_SUCCESS | typeof FORGOT_USER_PASSWORD_FALED;
+  readonly isUserRegistered: boolean;
+  readonly error: Error;
+}
+
+export interface IResetPassword {
+  readonly type: typeof RESET_USER_PASSWORD_REQUEST | typeof RESET_USER_PASSWORD_SUCCESS | typeof RESET_USER_PASSWORD_FALED;
+  readonly isPasswordRelevant: boolean;
+  error: Error;
+}
+
+export type TActionResetPassword =
+  | IForgotPassword
+  | IResetPassword;
+
+function forgotPassword(email: string): (dispatch: any) => void {
   return (dispatch) => {
     dispatch({
       type: FORGOT_USER_PASSWORD_REQUEST,
@@ -36,7 +53,7 @@ const forgotPassword = (email) => {
   };
 };
 
-const resetPassword = (password, token) => {
+function resetPassword(password: string, token: string): (dispatch:any) => void {
   return (dispatch) => {
     dispatch({
       type: RESET_USER_PASSWORD_REQUEST,

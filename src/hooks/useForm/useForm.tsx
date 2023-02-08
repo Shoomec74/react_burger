@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-interface Form {
+export interface Form {
   email?: string,
   password?: string,
   name?: string,

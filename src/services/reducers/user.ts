@@ -8,9 +8,25 @@ import {
   UPDATE_USER_INFO_REQUEST,
   UPDATE_USER_INFO_SUCCESS,
   UPDATE_USER_INFO_FALED,
-} from "../../utils/constants.ts";
+} from "../../utils/constants";
+import { TActionUser } from "../actions/user";
 
-const initialState = {
+type TUserState = {
+  isPasswordRelevant: boolean,
+  isUserRegistered: boolean,
+  registerFailed: boolean,
+  registerRequest: boolean,
+  isLoading: boolean,
+  isJwtExpired: boolean,
+  user: {
+    name: string,
+    email: string,
+    password: string,
+  },
+  error: null | Error,
+}
+
+const initialState: TUserState = {
   isPasswordRelevant: false,
   isUserRegistered: false,
   registerFailed: true,
@@ -25,7 +41,7 @@ const initialState = {
   error: null,
 };
 
-const userInfoReduser = (state = initialState, action) => {
+const userInfoReduser = (state = initialState, action: TActionUser) => {
   switch (action.type) {
     case GET_USER_INFO_REQUEST: {
       return {
@@ -39,8 +55,8 @@ const userInfoReduser = (state = initialState, action) => {
         isLogin: action.user.success,
         user: {
           ...state.user,
-          name: action.user.name,
-          email: action.user.email,
+          name: action.user.user.name,
+          email: action.user.user.email,
           password: "",
         },
         isLoading: false,
@@ -87,8 +103,8 @@ const userInfoReduser = (state = initialState, action) => {
         ...state,
         user: {
           ...state.user,
-          name: action.user.name,
-          email: action.user.email,
+          name: action.user.user.name,
+          email: action.user.user.email,
         },
         isLoading: false,
       };

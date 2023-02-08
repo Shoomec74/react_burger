@@ -1,19 +1,23 @@
 import React, { useMemo, useState } from "react";
-import ingredientElementStyles from "./largeIngredientView.module.css";
+import ingredientElementStyles from "./ingredientElement.module.css";
 import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
-import { ingredientType } from "../../../utils/types";
+import { useSelector } from "../../../services/actions-types/hooks";
 import { useLocation, Link } from "react-router-dom";
+import { IIngredient, TLocation } from "../../../types";
 
-const IngredientElement = ({ ingredient, onClick }) => {
+interface Props {
+  ingredient: IIngredient;
+  onClick: () => void;
+}
+
+const IngredientElement: React.FC<Props> = ({ ingredient, onClick }) => {
   const { ingredientBox, image, count, name, link } = ingredientElementStyles;
-  const [allIngredients, setAllIngredienst] = useState([]);
-  const location = useLocation();
+  const [allIngredients, setAllIngredienst] = useState<Array<IIngredient>>([]);
+  const location = useLocation<TLocation>();
   const { filling, bun } = useSelector((store) => ({
     filling: store.burgerConstructor.filling,
     bun: store.burgerConstructor.bun,
@@ -23,7 +27,7 @@ const IngredientElement = ({ ingredient, onClick }) => {
     setAllIngredienst(filling.concat(bun));
   }, [filling, bun]);
 
-  const findDuplicates = (ingredient) =>
+  const findDuplicates = (ingredient: IIngredient) =>
     allIngredients.filter((item) => item.name === ingredient.name);
 
   const [{ opacity }, dragRef] = useDrag({
@@ -76,11 +80,6 @@ const IngredientElement = ({ ingredient, onClick }) => {
       </li>
     </>
   );
-};
-
-IngredientElement.propTypes = {
-  ingredient: ingredientType.isRequired,
-  onClick: PropTypes.func.isRequired,
 };
 
 export default IngredientElement;

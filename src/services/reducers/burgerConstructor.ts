@@ -4,19 +4,26 @@ import {
   REMOVE_INGREDIENT,
   SWAP_INGREDIENT,
   REFRESH_CONSTRUCTOR,
-} from "../../utils/constants.ts";
+} from "../../utils/constants";
+import { IDNDIngredient, IIngredient } from "../../types";
+import { TActionsBurgerConstructor } from "../actions/burgerConstructor";
 
-const initialState = {
+type TBurgerConstructorState = {
+    bun: Array<IDNDIngredient>;
+    filling: Array<IDNDIngredient>;
+}
+
+const initialState: TBurgerConstructorState = {
   bun: [],
   filling: [],
 };
 
-const burgerConstructorReducer = (state = initialState, action) => {
+const burgerConstructorReducer = (state = initialState, action: TActionsBurgerConstructor) => {
   switch (action.type) {
     case ADD_BUN: {
       return {
         ...state,
-        bun: action.payLoad,
+        bun: [action.payLoad],
       };
     }
     case ADD_INGREDIENT: {
@@ -26,7 +33,7 @@ const burgerConstructorReducer = (state = initialState, action) => {
       return {
         ...state,
         filling: [...state.filling].filter(
-          (item) => item.uniqueID !== action.payLoad
+          (item: IDNDIngredient) => item.uniqueID !== action.payLoad
         ),
       };
     }

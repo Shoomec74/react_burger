@@ -1,3 +1,5 @@
+import { Form } from "../../hooks/useForm/useForm";
+import { TUserResponse } from "../../types/data";
 import {
   BASE_API_AUTH,
   GET_USER_INFO_REQUEST,
@@ -9,11 +11,40 @@ import {
   UPDATE_USER_INFO_REQUEST,
   UPDATE_USER_INFO_SUCCESS,
   UPDATE_USER_INFO_FALED,
-} from "../../utils/constants.ts";
-import { request } from "../../utils/utils.ts";
-import { setCookie, getCookie } from "../utils.ts";
+} from "../../utils/constants";
+import { request } from "../../utils/utils";
+import { AppDispatch, AppThunk } from "../actions-types";
+import { setCookie, getCookie } from "../utils";
 
-const getUserInfo = () => {
+export interface IGetUserInfo {
+  readonly type:
+    | typeof GET_USER_INFO_REQUEST
+    | typeof GET_USER_INFO_SUCCESS
+    | typeof GET_USER_INFO_FALED;
+  readonly user: TUserResponse;
+  readonly error: Error;
+}
+
+export interface IUpdateUserToken {
+  readonly type:
+    | typeof UPDATE_USER_TOKEN_REQUEST
+    | typeof UPDATE_USER_TOKEN_SUCCES
+    | typeof UPDATE_USER_TOKEN_FALED;
+  readonly error: Error;
+}
+
+export interface IUpdateUserInfo {
+  readonly type:
+    | typeof UPDATE_USER_INFO_REQUEST
+    | typeof UPDATE_USER_INFO_SUCCESS
+    | typeof UPDATE_USER_INFO_FALED;
+  readonly user: TUserResponse;
+  readonly error: Error;
+}
+
+export type TActionUser = IGetUserInfo | IUpdateUserToken | IUpdateUserInfo;
+
+function getUserInfo(): (dispatch:any) =>void {
   return (dispatch) => {
     dispatch({
       type: GET_USER_INFO_REQUEST,
@@ -40,7 +71,7 @@ const getUserInfo = () => {
   };
 };
 
-const updateUserToken = (refreshToken) => {
+function updateUserToken(refreshToken: string): (dispatch:any) => void {
   return (dispatch) => {
     dispatch({
       type: UPDATE_USER_TOKEN_REQUEST,
@@ -70,7 +101,7 @@ const updateUserToken = (refreshToken) => {
   };
 };
 
-const updateUserInfo = (formData) => {
+function updateUserInfo(formData: Form): (dispatch:any) => void {
   return (dispatch) => {
     dispatch({
       type: UPDATE_USER_INFO_REQUEST,
@@ -87,7 +118,7 @@ const updateUserInfo = (formData) => {
         dispatch({
           type: UPDATE_USER_INFO_SUCCESS,
           user: res.user,
-          formFieldPassword: formData.password,
+          // formFieldPassword: formData.password,
         });
       })
       .catch((error) =>

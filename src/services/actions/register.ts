@@ -3,12 +3,22 @@ import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FALED,
-} from "../../utils/constants.ts";
-import { setCookie } from "../utils.ts";
-import { request } from "../../utils/utils.ts";
+} from "../../utils/constants";
+import { setCookie } from "../utils";
+import { request } from "../../utils/utils";
+import { AppDispatch, AppThunk } from "../actions-types";
+import { TUser } from "../../types/index";
 
-const registerUser = (name, email, password) => {
-  return (dispatch) => {
+export interface IRegister {
+  readonly type: typeof REGISTER_USER_REQUEST | typeof REGISTER_USER_SUCCESS | typeof REGISTER_USER_FALED;
+  readonly user?: TUser;
+  readonly error?: Error;
+}
+
+export type TActionregister = IRegister;
+
+const registerUser: AppThunk = (name: string, email: string, password: string) => {
+  return (dispatch: AppDispatch) => {
     dispatch({
       type: REGISTER_USER_REQUEST,
     });
