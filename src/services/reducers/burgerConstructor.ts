@@ -5,7 +5,7 @@ import {
   SWAP_INGREDIENT,
   REFRESH_CONSTRUCTOR,
 } from "../../utils/constants";
-import { IDNDIngredient, IIngredient } from "../../types";
+import { IDNDIngredient } from "../../types";
 import { TActionsBurgerConstructor } from "../actions/burgerConstructor";
 
 type TBurgerConstructorState = {

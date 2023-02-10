@@ -1,20 +1,17 @@
-import React, {useState} from 'react';
+import React, { ChangeEvent, useState } from "react";
 
-export interface Form {
-  email?: string,
-  password?: string,
-  name?: string,
-  token?: string
+export type TForm = {
+  [key: string]: string;
 }
 
-function useForm(inputValues : Form ) {
-  const [values, setValues] = useState<Form>({});
+function useForm(inputValues: TForm) {
+  const [values, setValues] = useState(inputValues);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const {value, name} = event.target;
-    setValues({[name]: value, ...values});
+  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const { value, name } = event.target;
+    setValues({ [name]: value, ...values });
   };
-  return {values, handleChange, setValues};
+  return { values, handleChange, setValues };
 }
 
 export default useForm;

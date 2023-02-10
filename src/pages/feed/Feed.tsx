@@ -1,14 +1,11 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import feedStyles from "./feed.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  wsConnectionOpen,
-  wsConnectionClosed,
-} from "../../services/actions/webSocket";
+import { useDispatch, useSelector } from "../../services/actions-types/hooks";
+import * as ACTION_TYPES from "../../utils/constants";
 import POSMonitor from "../../components/POSMonitor/POSMonitor";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
-export const Feed: React.FC = () =>{
+export const Feed: FC = () => {
   const { feedPage } = feedStyles;
   const dispatch = useDispatch();
   const wsFeedEndpoint = "/all";
@@ -17,9 +14,12 @@ export const Feed: React.FC = () =>{
   }));
 
   useEffect(() => {
-    dispatch(wsConnectionOpen(wsFeedEndpoint));
+    dispatch({
+      type: ACTION_TYPES.WS_CONNECTION_START,
+      payload: wsFeedEndpoint,
+    });
     return () => {
-      dispatch(wsConnectionClosed());
+      dispatch({ type: ACTION_TYPES.WS_CONNECTION_CLOSED });
     };
   }, [dispatch]);
 
@@ -30,4 +30,4 @@ export const Feed: React.FC = () =>{
   ) : (
     <LoadingSpinner />
   );
-}
+};

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { FC, useMemo, useState } from "react";
 import ingredientElementStyles from "./ingredientElement.module.css";
 import {
   Counter,
@@ -14,7 +14,7 @@ interface Props {
   onClick: () => void;
 }
 
-const IngredientElement: React.FC<Props> = ({ ingredient, onClick }) => {
+const IngredientElement: FC<Props> = ({ ingredient, onClick }) => {
   const { ingredientBox, image, count, name, link } = ingredientElementStyles;
   const [allIngredients, setAllIngredienst] = useState<Array<IIngredient>>([]);
   const location = useLocation<TLocation>();

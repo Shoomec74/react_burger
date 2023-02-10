@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import headerStyles from "./appHeader.module.css";
 import {
   Logo,
@@ -10,7 +10,7 @@ import HeaderMenuElement from "./HeaderMenuElement/HeaderMenuElement";
 import { useLocation } from "react-router-dom";
 import { TLocation } from "../../types";
 
-const AppHeader: React.FC = ()  => {
+const AppHeader: FC = ()  => {
   const { header, menu, logo } = headerStyles;
   const location = useLocation<TLocation>();
 

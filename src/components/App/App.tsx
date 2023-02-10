@@ -1,12 +1,12 @@
-import React from "react";
+import React, { FC } from "react";
 import appStyles from "./app.module.css";
-import AppHeader from "../AppHeader/AppHeader.tsx";
-import BurgerIngredients from "../BurgerIngredients/BurgerIngredients.jsx";
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor.jsx";
-import LoadingSpinner from "../LoadingSpinner/LoadingSpinner.tsx";
+import AppHeader from "../AppHeader/AppHeader";
+import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
+import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import getIngredients from "../../services/actions/burgerIngredients";
-import { getUserInfo, updateUserToken } from "../../services/actions/user.js";
-import { useDispatch, useSelector } from "react-redux";
+import { getUserInfo, updateUserToken } from "../../services/actions/user";
+import { useDispatch, useSelector } from "../../services/actions-types/hooks";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import {
@@ -27,17 +27,20 @@ import {
   Feed,
   OrderInfoPage,
 } from "../../pages";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
-import { deleteCookie, getCookie } from "../../services/utils.ts";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import { deleteCookie, getCookie } from "../../services/utils";
+import { TLocation } from "../../types";
 
-const App = () => {
+
+
+const App: FC = () => {
   const dispatch = useDispatch();
   const cookie = getCookie("token");
   const refreshToken = localStorage.getItem("refreshToken");
   const history = useHistory();
-  const location = useLocation();
-  const background = location.state?.background;
-  const { isExact } = useParams();
+  const location = useLocation<TLocation>();
+  // const background = location.state?.background;
+  const { isExact } : any = useParams();
   const { page, content } = appStyles;
   const { isLoading, success, isJwtExpired, ingredients } = useSelector(
     (store) => ({
@@ -50,9 +53,9 @@ const App = () => {
 
   React.useEffect(() => {
     dispatch(getIngredients());
-    if (!isExact) {
-      history.push(location.path);
-    }
+    // if (!isExact) {
+    //   history.push(location.pathname);
+    // }
   }, []);
 
   React.useEffect(() => {

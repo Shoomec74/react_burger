@@ -1,9 +1,13 @@
-import React from "react";
+import React, { FC } from "react";
 import orderDetailsStyles from "./orderDetails.module.css";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 
-const OrderDetails = ({ order, name }) => {
+interface IProps {
+  order: number;
+  name: string;
+}
+
+const OrderDetails: FC<IProps> = ({ order, name }) => {
   const { popup, gradientItem, gradientItemTwo, status, icon } =
     orderDetailsStyles;
   return (
@@ -25,10 +29,6 @@ const OrderDetails = ({ order, name }) => {
       </p>
     </div>
   );
-};
-
-OrderDetails.propTypes = {
-  orderData: PropTypes.object,
 };
 
 export default OrderDetails;

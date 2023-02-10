@@ -1,5 +1,5 @@
 import { IIngredient, IOrder } from "../../types";
-import { HIDE_MODAL, SHOW_MODAL } from "../../utils/constants";
+import { HIDE_MODAL, SHOW_MODAL, SHOW_MODAL_WITH_DETAILS_FEED, SHOW_MODAL_WITH_DETAILS_INGREDIENT } from "../../utils/constants";
 import { TActionModal } from "../actions/modals";
 
 type TModalState = {
@@ -17,29 +17,27 @@ const initialState: TModalState = {
 const modalsReducer = (state = initialState, action: TActionModal) => {
   switch (action.type) {
     case SHOW_MODAL: {
-      if (action.typeModal === "ingredientModal") {
-        return {
-          ...state,
-          modalDisplay: !state.modalDisplay,
-          ingredient: action.payload,
-        };
-      } else if (action.typeModal === "orderModal") {
-        return {
-          ...state,
-          modalDisplay: !state.modalDisplay,
-          order: action.payload,
-        };
-      }
       return {
         ...state,
         modalDisplay: !state.modalDisplay,
       };
     }
-    case HIDE_MODAL: {
+    case SHOW_MODAL_WITH_DETAILS_FEED: {
       return {
         ...state,
         modalDisplay: !state.modalDisplay,
-      };
+        order: action.payload,
+      }
+    }
+    case SHOW_MODAL_WITH_DETAILS_INGREDIENT: {
+      return{
+        ...state,
+        modalDisplay: !state.modalDisplay,
+        ingredient: action.payload,
+      }
+    }
+    case HIDE_MODAL: {
+      return state;
     }
     default:
       return state;

@@ -2,28 +2,30 @@ import loginStyles from "./login.module.css";
 import {
   Button,
   Input,
-  PasswordInput,
+  PasswordInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { signIn } from "../../services/actions/authorization.js";
+import { useDispatch, useSelector } from "../../services/actions-types/hooks";
+import { signIn } from "../../services/actions/authorization";
 import { getCookie } from "../../services/utils";
 import useForm from "../../hooks/useForm/useForm";
+import { TLocation } from "../../types";
+import { FC, FormEvent } from "react";
 
-export function Login() {
+export const Login: FC = () => {
   const { loginPage, form, link } = loginStyles;
   const dispatch = useDispatch();
   const cookie = getCookie("token");
-  const location = useLocation();
-  const { isLoading } = useSelector((store) => ({
+  const location = useLocation<TLocation>();
+  const { isLoading } = useSelector(store => ({
     isLoading: store.authorization.isLoading,
-    isLogin: store.authorization.isLogin,
+    isLogin: store.authorization.isLogin
   }));
   const initialValuesForm = { email: "", password: "" };
   const { values, handleChange, setValues } = useForm(initialValuesForm);
   const { email, password } = values;
 
-  const handlerSubmit = (e) => {
+  const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(signIn(email, password));
     setValues(initialValuesForm);
@@ -43,7 +45,7 @@ export function Login() {
             name={"email"}
             value={email}
             placeholder={"E-mail"}
-            icon={"undefined"}
+            // icon={"undefined"}
             size={"default"}
             onChange={handleChange}
           />
@@ -59,6 +61,7 @@ export function Login() {
           type="primary"
           size="medium"
           disabled={isLoading || !(email !== "" && password !== "")}
+          htmlType={"button"}
         >
           {isLoading ? "Подождите" : "Войти"}
         </Button>
@@ -80,4 +83,4 @@ export function Login() {
       </p>
     </div>
   );
-}
+};

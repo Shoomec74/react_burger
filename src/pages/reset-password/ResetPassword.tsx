@@ -1,33 +1,34 @@
-import React from "react";
+import React, { FC, FormEvent } from "react";
 import resetPasswordStyles from "./resetPassword.module.css";
 import {
   Button,
   Input,
-  PasswordInput,
+  PasswordInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation, useHistory, Redirect } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { resetPassword } from "../../services/actions/resetPassword.js";
+import { useDispatch, useSelector } from "../../services/actions-types/hooks";
+import { resetPassword } from "../../services/actions/resetPassword";
 import { getCookie } from "../../services/utils";
 import useForm from "../../hooks/useForm/useForm";
+import { TLocation } from "../../types";
 
-export function ResetPassword() {
+export const ResetPassword: FC = () => {
   const { resetPasswordPage, form, link } = resetPasswordStyles;
   const { isPasswordRecovery, isPasswordRelevant, isLoading } = useSelector(
-    (store) => ({
+    store => ({
       isPasswordRecovery: store.resetPassword.isPasswordRecovery,
       isPasswordRelevant: store.resetPassword.isPasswordRelevant,
-      isLoading: store.resetPassword.isLoading,
+      isLoading: store.resetPassword.isLoading
     })
   );
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<TLocation>();
   const initialValuesForm = { password: "", token: "" };
   const { values, handleChange, setValues } = useForm(initialValuesForm);
   const { password, token } = values;
 
-  const handlerSubmit = (e) => {
+  const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setValues(initialValuesForm);
     dispatch(resetPassword(password, token));
@@ -59,7 +60,7 @@ export function ResetPassword() {
           <Input
             type={"text"}
             placeholder={"Введите код из письма"}
-            icon={"undefined"}
+            // icon={"undefined"}
             name={"token"}
             value={token}
             size={"default"}
@@ -70,6 +71,7 @@ export function ResetPassword() {
           type="primary"
           size="medium"
           disabled={isLoading || !(password !== "" && token !== "")}
+          htmlType={"button"}
         >
           {isLoading ? "Подождите..." : "Сохранить"}
         </Button>
@@ -82,4 +84,4 @@ export function ResetPassword() {
       </p>
     </div>
   );
-}
+};

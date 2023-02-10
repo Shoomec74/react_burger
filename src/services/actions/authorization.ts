@@ -12,28 +12,43 @@ import { request } from "../../utils/utils";
 import { AppDispatch, AppThunk } from "../actions-types";
 import { TUser } from "../../types/index";
 
-export interface ISignIn {
-  readonly type:
-    | typeof LOGIN_USER_REQUEST
-    | typeof LOGIN_USER_SUCCESS
-    | typeof LOGIN_USER_FALED;
+interface ISignInRequest {
+  readonly type: typeof LOGIN_USER_REQUEST;
+}
+
+interface ISignInSuccess {
+  readonly type: typeof LOGIN_USER_SUCCESS;
   readonly user: TUser;
+}
+
+interface ISignInFaled {
+  readonly type: typeof LOGIN_USER_FALED;
+  error: Error;
+}
+
+interface ISignOutRequest {
+  readonly type: typeof LOGOUT_USER_REQUEST;
+}
+
+interface ISignOutSuccess {
+  readonly type: typeof LOGOUT_USER_SUCCESS;
+}
+
+interface ISignOutFailed {
+  readonly type: typeof LOGOUT_USER_FALED;
   readonly error: Error;
 }
 
-export interface ISignOut {
-  readonly type:
-    | typeof LOGOUT_USER_REQUEST
-    | typeof LOGOUT_USER_SUCCESS
-    | typeof LOGOUT_USER_FALED;
-  readonly refreshToken: string;
-  readonly error: Error;
-}
+export type TActionAuthorization =
+  | ISignInRequest
+  | ISignInSuccess
+  | ISignInFaled
+  | ISignOutRequest
+  | ISignOutSuccess
+  | ISignOutFailed;
 
-export type TActionAuthorization = ISignIn | ISignOut;
-
-function signIn(email: string, password: string): (dispatch: any) => void {
-  return (dispatch) => {
+const signIn: AppThunk = (email: string, password: string) => {
+  return (dispatch: AppDispatch) => {
     dispatch({
       type: LOGIN_USER_REQUEST,
     });
@@ -66,8 +81,8 @@ function signIn(email: string, password: string): (dispatch: any) => void {
   };
 };
 
-function signOut(refreshToken: string): (dispatch: any) => void{
-  return (dispatch) => {
+const signOut: AppThunk = (refreshToken: string) => {
+  return (dispatch: AppDispatch) => {
     dispatch({
       type: LOGOUT_USER_REQUEST,
     });
@@ -92,6 +107,6 @@ function signOut(refreshToken: string): (dispatch: any) => void{
         })
       );
   };
-};
+}
 
 export { signIn, signOut };

@@ -1,7 +1,8 @@
-import { useSelector } from "react-redux";
+import { FC } from "react";
+import { useSelector } from "../../../services/actions-types/hooks";
 import statsOrdersStyles from "./statsOrders.module.css";
 
-const StatsOrders = () => {
+const StatsOrders: FC = () => {
   const {
     section,
     orderBoard,

@@ -1,7 +1,7 @@
 export type TUser = {
-  email?: string;
-  name?: string;
-  password?: string;
+  name: string;
+  email: string;
+  password: string;
 };
 
 export interface IOrder {
@@ -32,7 +32,7 @@ export interface IIngredient {
 
 export interface IDNDIngredient extends IIngredient {
   index: number;
-  uniqueID: string;
+  readonly uniqueID: string;
 }
 
 export type TLocation = {

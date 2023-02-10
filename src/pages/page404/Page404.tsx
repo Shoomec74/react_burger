@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import page404Styles from "./page404.module.css";
 
-export function Page404() {
+export const Page404: FC = () => {
   const { page404, neonText } = page404Styles;
   return (
     <div className={`${page404} text text_type_main-medium`}>

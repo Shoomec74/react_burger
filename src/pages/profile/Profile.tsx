@@ -1,31 +1,23 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, FormEvent, ChangeEvent, FC } from "react";
 import profileStyles from "./profile.module.css";
 import {
   Button,
-  Input,
+  Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import {
-  NavLink,
-  Switch,
-  Route,
-  useLocation,
-  useHistory,
-} from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { updateUserInfo } from "../../services/actions/user.js";
-import { signOut } from "../../services/actions/authorization.js";
-import { ProfileOrders } from "../../pages";
+import { NavLink, Switch, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "../../services/actions-types/hooks";
+import { updateUserInfo } from "../../services/actions/user";
+import { signOut } from "../../services/actions/authorization";
+import { ProfileOrders } from "..";
 import useForm from "../../hooks/useForm/useForm";
-import { wsConnectionClosed } from "../../services/actions/webSocket";
+import { WS_CONNECTION_CLOSED } from "../../utils/constants";
 
-export function Profile() {
+export const Profile: FC = () => {
   const { profilePage, form, link, activeLink, navigation } = profileStyles;
   const dispatch = useDispatch();
-  const history = useHistory();
-  const location = useLocation();
-  const { user, isLoading } = useSelector((store) => ({
+  const { user, isLoading } = useSelector(store => ({
     user: store.userInfo.user,
-    isLoading: store.userInfo.isLoading,
+    isLoading: store.userInfo.isLoading
   }));
 
   const { values, handleChange, setValues } = useForm(user);
@@ -35,25 +27,25 @@ export function Profile() {
 
   const isFormByChanged = useMemo(() => {
     for (const key in values) {
-      if (values[key] !== user[key]) {
+      if (values[key] !== user[key as keyof typeof user]) {
         return true;
       }
     }
     return false;
   }, [values]);
 
-  const handlerSubmit = (e) => {
+  const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(updateUserInfo(values));
   };
 
-  const handlerOnClick = (e) => {
+  const handlerOnClick = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    dispatch(wsConnectionClosed());
+    dispatch({ type: WS_CONNECTION_CLOSED });
     dispatch(signOut(refreshToken));
-  }
+  };
 
-  const resetForm = (e) => {
+  const resetForm = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setValues(user);
   };
@@ -82,7 +74,7 @@ export function Profile() {
           exact
           className={`${link} text text_type_main-medium text_color_inactive mb-20`}
           activeClassName={activeLink}
-          onClick={handlerOnClick}
+          onClick={() => handlerOnClick}
         >
           {isLoading ? "ПОДОЖДИТЕ..." : "ВЫХОД"}
         </NavLink>
@@ -130,13 +122,19 @@ export function Profile() {
               />
             </div>
             <div>
-              <Button type="secondary" size="medium" onClick={resetForm}>
+              <Button
+                type="secondary"
+                size="medium"
+                onClick={() => resetForm}
+                htmlType={"button"}
+              >
                 Отмена
               </Button>
               <Button
                 type="primary"
                 size="medium"
                 disabled={!isFormByChanged || isLoading}
+                htmlType={"button"}
               >
                 {isLoading ? "Сохранение..." : "Сохранить"}
               </Button>
@@ -146,4 +144,4 @@ export function Profile() {
       </Switch>
     </div>
   );
-}
+};

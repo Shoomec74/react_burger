@@ -1,4 +1,4 @@
-import { Form } from "../../hooks/useForm/useForm";
+import { TForm } from "../../hooks/useForm/useForm";
 import { TUserResponse } from "../../types/data";
 import {
   BASE_API_AUTH,
@@ -16,36 +16,60 @@ import { request } from "../../utils/utils";
 import { AppDispatch, AppThunk } from "../actions-types";
 import { setCookie, getCookie } from "../utils";
 
-export interface IGetUserInfo {
-  readonly type:
-    | typeof GET_USER_INFO_REQUEST
-    | typeof GET_USER_INFO_SUCCESS
-    | typeof GET_USER_INFO_FALED;
+interface IGetUserInfoRequest {
+  readonly type: typeof GET_USER_INFO_REQUEST;
+}
+
+interface IGetUserInfoSuccess {
+  readonly type: typeof GET_USER_INFO_SUCCESS;
   readonly user: TUserResponse;
+}
+
+interface IGetUserInfoFailed {
+  readonly type: typeof GET_USER_INFO_FALED;
   readonly error: Error;
 }
 
-export interface IUpdateUserToken {
-  readonly type:
-    | typeof UPDATE_USER_TOKEN_REQUEST
-    | typeof UPDATE_USER_TOKEN_SUCCES
-    | typeof UPDATE_USER_TOKEN_FALED;
+interface IUpdateUserTokenRequest {
+  readonly type: typeof UPDATE_USER_TOKEN_REQUEST;
+}
+
+interface IUpdateUserTokenSuccess {
+  readonly type: typeof UPDATE_USER_TOKEN_SUCCES;
+}
+
+interface IUpdateUserTokenFailed {
+  readonly type: typeof UPDATE_USER_TOKEN_FALED;
   readonly error: Error;
 }
 
-export interface IUpdateUserInfo {
-  readonly type:
-    | typeof UPDATE_USER_INFO_REQUEST
-    | typeof UPDATE_USER_INFO_SUCCESS
-    | typeof UPDATE_USER_INFO_FALED;
+interface IUpdateUserInfoRequest {
+  readonly type: typeof UPDATE_USER_INFO_REQUEST;
+}
+
+interface IUpdateUserInfoSuccess {
+  readonly type: typeof UPDATE_USER_INFO_SUCCESS;
   readonly user: TUserResponse;
+}
+
+interface IUpdateUserInfoFailed {
+  readonly type: typeof UPDATE_USER_INFO_FALED;
   readonly error: Error;
 }
 
-export type TActionUser = IGetUserInfo | IUpdateUserToken | IUpdateUserInfo;
+export type TActionUser =
+  | IGetUserInfoRequest
+  | IGetUserInfoSuccess
+  | IGetUserInfoFailed
+  | IUpdateUserTokenRequest
+  | IUpdateUserTokenSuccess
+  | IUpdateUserTokenFailed
+  | IUpdateUserInfoRequest
+  | IUpdateUserInfoSuccess
+  | IUpdateUserInfoFailed;
 
-function getUserInfo(): (dispatch:any) =>void {
-  return (dispatch) => {
+const getUserInfo: AppThunk = () => {
+  return (dispatch: AppDispatch) => {
     dispatch({
       type: GET_USER_INFO_REQUEST,
     });
@@ -69,10 +93,10 @@ function getUserInfo(): (dispatch:any) =>void {
         })
       );
   };
-};
+}
 
-function updateUserToken(refreshToken: string): (dispatch:any) => void {
-  return (dispatch) => {
+const updateUserToken: AppThunk = (refreshToken: string) => {
+  return (dispatch: AppDispatch) => {
     dispatch({
       type: UPDATE_USER_TOKEN_REQUEST,
     });
@@ -99,10 +123,10 @@ function updateUserToken(refreshToken: string): (dispatch:any) => void {
         })
       );
   };
-};
+}
 
-function updateUserInfo(formData: Form): (dispatch:any) => void {
-  return (dispatch) => {
+const updateUserInfo: AppThunk = (formData: TForm) => {
+  return (dispatch: AppDispatch) => {
     dispatch({
       type: UPDATE_USER_INFO_REQUEST,
     });
@@ -128,6 +152,6 @@ function updateUserInfo(formData: Form): (dispatch:any) => void {
         })
       );
   };
-};
+}
 
 export { getUserInfo, updateUserToken, updateUserInfo };

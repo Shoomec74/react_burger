@@ -1,11 +1,17 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useMemo } from "react";
+import React, { FC, useCallback, useMemo } from "react";
 import ordersInfoDetailSstyles from "./ordersInfoDetails.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/actions-types/hooks";
 import { nanoid } from "nanoid";
 import { formatDate } from "../../utils/utils";
+import { TFeed } from "../../types/data";
+import { IIngredient, IOrder } from "../../types";
 
-const OrdersInfoDetails = ({ order }) => {
+interface IProps {
+  order: TFeed | null;
+}
+
+const OrdersInfoDetails: FC<IProps> = ({ order }) => {
   const {
     orderInfo,
     orderId,
@@ -19,12 +25,13 @@ const OrdersInfoDetails = ({ order }) => {
     img,
     totalInfo,
   } = ordersInfoDetailSstyles;
+
   const { ingredientsRedux } = useSelector((store) => ({
     ingredientsRedux: store.ingredients.ingredients,
   }));
 
   const orderIngredientsData = useMemo(() => {
-    return order.ingredients.map((id) => {
+    return order?.ingredients.map((id: string) => {
       return ingredientsRedux.find((item) => {
         return id === item._id;
       });
@@ -32,7 +39,7 @@ const OrdersInfoDetails = ({ order }) => {
   }, [ingredientsRedux, order]);
 
   const orderTotalPrice = useMemo(() => {
-    return orderIngredientsData.reduce((sum, item) => {
+    return orderIngredientsData?.reduce((sum, item) => {
       if (item?.type === "bun") {
         return (sum += item.price * 2);
       }
@@ -40,17 +47,18 @@ const OrdersInfoDetails = ({ order }) => {
     }, 0);
   }, []);
 
-  const count = (elem) => {
-    let count = orderIngredientsData.filter((item) => {
+  const count = (elem: IIngredient): number => {
+    const test = orderIngredientsData?.filter((item) => {
       return item === elem;
     });
-    return count.length;
+    const res = test === undefined ? 0 : test.length;
+    return res;
   };
 
-  return (
+  return order && (
     <div className={orderInfo}>
       <p className={`${orderId} text text_type_digits-default mb-10`}>
-        #{order.number}
+        {order.number}
       </p>
       <h2 className="text text_type_main-medium mb-3">{order.name}</h2>
       {!!order.status && (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import ReactDOM from "react-dom";
 import modalStyles from "./modal.module.css";
 import ModalOverlay from "./ModalOverlay/ModalOverlay";
@@ -14,7 +14,7 @@ interface IStyles{
   [key:string]: string,
 };
 
-const Modal: React.FC<IProps> = ({ isOpened, onClose, children }) => {
+const Modal: FC<IProps> = ({ isOpened, onClose, children }) => {
   const { content, closeButton }: IStyles = modalStyles;
 
   React.useEffect(() => {

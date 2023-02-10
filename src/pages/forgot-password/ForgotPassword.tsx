@@ -1,30 +1,31 @@
-import React from "react";
+import React, { FC, FormEvent } from "react";
 import forgotPasswordStyles from "./forgotPassword.module.css";
 import {
   Button,
-  Input,
+  Input
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useLocation, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { forgotPassword } from "../../services/actions/resetPassword.js";
+import { useDispatch, useSelector } from "../../services/actions-types/hooks";
+import { forgotPassword } from "../../services/actions/resetPassword";
 import { getCookie } from "../../services/utils";
 import useForm from "../../hooks/useForm/useForm";
+import { TLocation } from "../../types";
 
-export function ForgotPassword() {
+export const ForgotPassword: FC = () => {
   const { forgotPasswordPage, form, link } = forgotPasswordStyles;
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
-  const { isPasswordRecovery, isLoading } = useSelector((store) => ({
+  const location = useLocation<TLocation>();
+  const { isPasswordRecovery, isLoading } = useSelector(store => ({
     isPasswordRecovery: store.resetPassword.isPasswordRecovery,
-    isLoading: store.resetPassword.isLoading,
+    isLoading: store.resetPassword.isLoading
   }));
 
-  const initialValuesForm = { email: ""};
+  const initialValuesForm = { email: "" };
   const { values, handleChange, setValues } = useForm(initialValuesForm);
   const { email } = values;
 
-  const handlerSubmit = (e) => {
+  const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(forgotPassword(email));
     setValues(initialValuesForm);
@@ -48,7 +49,7 @@ export function ForgotPassword() {
             name={"email"}
             value={email}
             placeholder={"Укажите E-mail"}
-            icon={"undefined"}
+            // icon={"undefined"}
             size={"default"}
             onChange={handleChange}
           />
@@ -57,6 +58,7 @@ export function ForgotPassword() {
           type="primary"
           size="medium"
           disabled={isLoading || !(email !== "")}
+          htmlType={"button"}
         >
           {isLoading ? "Подождите..." : "Восстановить"}
         </Button>
@@ -69,4 +71,4 @@ export function ForgotPassword() {
       </p>
     </div>
   );
-}
+};

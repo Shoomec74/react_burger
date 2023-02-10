@@ -1,15 +1,12 @@
-import React, { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import profileOrdersStyles from "./profileOrders.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  wsConnectionOpen,
-  wsConnectionClosed,
-} from "../../../services/actions/webSocket";
+import { useDispatch, useSelector } from "../../../services/actions-types/hooks";
 import POSMonitor from "../../../components/POSMonitor/POSMonitor";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import { getCookie } from "../../../services/utils";
+import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../../utils/constants";
 
-export const ProfileOrders = () => {
+export const ProfileOrders: FC = () => {
   const { pageOrders } = profileOrdersStyles;
   const dispatch = useDispatch();
   const { isMessage } = useSelector((store) => ({
@@ -19,9 +16,9 @@ export const ProfileOrders = () => {
   const wsUserOrdersEndpoint = `?token=${accessToken}`;
 
   useEffect(() => {
-    dispatch(wsConnectionOpen(wsUserOrdersEndpoint));
+    dispatch({type: WS_CONNECTION_START, payload: wsUserOrdersEndpoint});
     return () => {
-      dispatch(wsConnectionClosed());
+      dispatch({type: WS_CONNECTION_CLOSED});
     };
   }, [dispatch]);
 

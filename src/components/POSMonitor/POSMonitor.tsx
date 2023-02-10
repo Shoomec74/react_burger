@@ -1,29 +1,30 @@
-import React, { useCallback } from "react";
+import React, { FC, useCallback } from "react";
 import POSMonitorStyles from "./POSMonitor.module.css";
 import OrderElement from "./OrderElement/OrderElement";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/actions-types/hooks";
 import { useLocation, Link, useHistory } from "react-router-dom";
 import { nanoid } from "nanoid";
 import Modal from "../Modal/Modal";
-import { FEED_MODAL } from "../../utils/constants.ts";
-import { handleWievPopup } from "../../services/actions/modals";
+import { HIDE_MODAL, SHOW_MODAL_WITH_DETAILS_FEED } from "../../utils/constants";
 import OrdersInfoDetails from "../OrdersInfoDetails/OrdersInfoDetails";
 import StatsOrders from "./StatsOrders/StatsOrders";
+import { TFeed } from "../../types/data";
+import { TLocation } from "../../types";
 
-const POSMonitor = () => {
+const POSMonitor: FC = () => {
   const { section, feedScrollBox, link } = POSMonitorStyles;
-  const location = useLocation();
+  const location = useLocation<TLocation>();
   const history = useHistory();
   const dispatch = useDispatch();
   const { orders, feedModal, order, feedConnected } = useSelector((store) => ({
     orders: store.webSocket.orders,
-    feedModal: store.popup.feedModal,
+    feedModal: store.popup.modalDisplay,
     order: store.popup.order,
     feedConnected: store.webSocket.feedConnected,
   }));
 
   const handlerCloseModal = useCallback(() => {
-    dispatch(handleWievPopup(FEED_MODAL));
+    dispatch({type: HIDE_MODAL});
     history.goBack();
   }, [dispatch]);
 
@@ -33,7 +34,7 @@ const POSMonitor = () => {
         <h1 className="text text_type_main-large mt-10 mb-5">Лента заказов</h1>
         <div className={feedScrollBox}>
           {orders &&
-            orders.map((orderElement, index) => {
+            orders.map((orderElement: TFeed, index: number) => {
               const uniqueID = nanoid();
               return (
                 <Link
@@ -51,7 +52,7 @@ const POSMonitor = () => {
                   }
                   key={uniqueID}
                   onClick={() => {
-                    dispatch(handleWievPopup(FEED_MODAL, orderElement));
+                    dispatch({type: SHOW_MODAL_WITH_DETAILS_FEED, payload: orderElement});
                   }}
                 >
                   <OrderElement order={orderElement} key={index} />

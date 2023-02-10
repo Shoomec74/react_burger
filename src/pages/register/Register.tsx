@@ -1,36 +1,37 @@
-import React from "react";
+import React, { FC, FormEvent } from "react";
 import registerStyles from "./register.module.css";
 import {
   Button,
   Input,
-  PasswordInput,
+  PasswordInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation, useHistory, Redirect } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../../services/actions/register.js";
+import { useDispatch, useSelector } from "../../services/actions-types/hooks";
+import { registerUser } from "../../services/actions/register";
 import { getCookie } from "../../services/utils";
 import useForm from "../../hooks/useForm/useForm";
+import { TLocation } from "../../types";
 
-export function Register() {
+export const Register: FC = () => {
   const { registerPage, form, link } = registerStyles;
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<TLocation>();
 
-  const { isLoading } = useSelector((store) => ({
-    isLoading: store.registerUser.isLoading,
+  const { isLoading } = useSelector(store => ({
+    isLoading: store.registerUser.isLoading
   }));
 
   const initialValuesForm = {
     name: "",
     email: "",
-    password: "",
+    password: ""
   };
 
   const { values, handleChange, setValues } = useForm(initialValuesForm);
   const { name, email, password } = values;
 
-  const handlerSubmit = (e) => {
+  const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(registerUser(name, email, password));
     setValues(initialValuesForm);
@@ -49,7 +50,7 @@ export function Register() {
           <Input
             type={"text"}
             placeholder={"Имя"}
-            icon={"undefined"}
+            // icon={"undefined"}
             name={"name"}
             size={"default"}
             value={name}
@@ -60,7 +61,7 @@ export function Register() {
           <Input
             type={"email"}
             placeholder={"E-mail"}
-            icon={"undefined"}
+            // icon={"undefined"}
             name={"email"}
             size={"default"}
             value={email}
@@ -80,6 +81,7 @@ export function Register() {
           disabled={
             isLoading || !(name !== "" && email !== "" && password !== "")
           }
+          htmlType={"button"}
         >
           {isLoading ? "Подождите..." : "Зарегистрироваться"}
         </Button>
@@ -92,4 +94,4 @@ export function Register() {
       </p>
     </div>
   );
-}
+};

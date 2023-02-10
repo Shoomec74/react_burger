@@ -1,11 +1,16 @@
-import React from "react";
+import React, { FC } from "react";
 import ingredientDetailsStyles from "./ingredientDetails.module.css";
-import PropTypes from "prop-types";
+import { IIngredient } from "../../types";
 
-const IngredientDetails = ({ ingredient, children }) => {
+interface IProps {
+  ingredient: IIngredient | null;
+  children: React.ReactNode;
+}
+
+const IngredientDetails: FC<IProps> = ({ ingredient, children }) => {
   const { popup, nutritionalValues, nutritionalValue, image, name } = ingredientDetailsStyles;
 
-  return (
+  return ingredient && (
     <div className={popup}>
       <h2 className="text text_type_main-large mt-10 mr-10 ml-10">
         {children}
@@ -62,11 +67,6 @@ const IngredientDetails = ({ ingredient, children }) => {
       </ul>
     </div>
   );
-};
-
-IngredientDetails.propTypes = {
-  ingredient: PropTypes.object.isRequired,
-  children: PropTypes.node.isRequired,
 };
 
 export default IngredientDetails;

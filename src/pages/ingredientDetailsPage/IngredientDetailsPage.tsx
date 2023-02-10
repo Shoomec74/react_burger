@@ -1,13 +1,18 @@
-import React from "react";
+import React, { FC, ReactNode } from "react";
 import ingredientDetailsPageStyles from "./ingredientDetailsPage.module.css";
-import PropTypes from "prop-types";
 import {
   useParams,
 } from "react-router-dom";
+import { IIngredient } from "../../types";
 
-function IngredientDetailsPage({ ingredients, children }) {
+interface IProps {
+  ingredients: Array<IIngredient>;
+  children: ReactNode;
+}
+
+const IngredientDetailsPage: FC<IProps> = ({ ingredients, children }) => {
   const {ingredientDetailsPage, nutritionalValues, nutritionalValue, image, name} = ingredientDetailsPageStyles;
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const ingredient = ingredients.find(({ _id }) => _id === id);
 
   if (!ingredient) {

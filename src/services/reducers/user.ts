@@ -1,3 +1,4 @@
+import { TUser } from "../../types";
 import {
   GET_USER_INFO_REQUEST,
   GET_USER_INFO_SUCCESS,
@@ -18,11 +19,7 @@ type TUserState = {
   registerRequest: boolean,
   isLoading: boolean,
   isJwtExpired: boolean,
-  user: {
-    name: string,
-    email: string,
-    password: string,
-  },
+  user: TUser,
   error: null | Error,
 }
 

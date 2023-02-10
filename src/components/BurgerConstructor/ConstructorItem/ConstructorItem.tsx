@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { FC, useRef } from "react";
 import constructorStyles from "./ConstructorItem.module.css";
 import {
   ConstructorElement,
@@ -9,12 +9,12 @@ import { useDispatch } from "../../../services/actions-types/hooks";
 import * as ACTION_TYPES from "../../../utils/constants";
 import { IDNDIngredient } from "../../../types";
 
-interface Props {
+interface IProps {
   ingredient: IDNDIngredient;
   index: number;
 }
 
-const ConstructorItem: React.FC<Props> = ({ ingredient, index }) => {
+const ConstructorItem: FC<IProps> = ({ ingredient, index }) => {
   const dispatch = useDispatch();
 
   const ingredientRef = useRef(null);

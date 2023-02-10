@@ -10,12 +10,16 @@ import * as ACTION_TYPES from "../../utils/constants";
 
 export interface IOpenPopup {
   readonly type: typeof ACTION_TYPES.SHOW_MODAL;
-  readonly typeModal: string;
-  payload?: IIngredient | IOrder;
 }
 
-export interface IOpenPopupWithDetails {
-  readonly type: typeof ACTION_TYPES.SHOW_MODAL_WITH_DETAILS;
+export interface IOpenPopupWithDetailsFeed {
+  readonly type: typeof ACTION_TYPES.SHOW_MODAL_WITH_DETAILS_FEED;
+  readonly payload: IOrder;
+}
+
+export interface IOpenPopupWithDetailsIngredient {
+  readonly type: typeof ACTION_TYPES.SHOW_MODAL_WITH_DETAILS_INGREDIENT;
+  readonly payload: IIngredient;
 }
 
 export interface IClosePopup {
@@ -24,4 +28,6 @@ export interface IClosePopup {
 
 export type TActionModal =
   | IOpenPopup
+  | IOpenPopupWithDetailsFeed
+  | IOpenPopupWithDetailsIngredient
   | IClosePopup;

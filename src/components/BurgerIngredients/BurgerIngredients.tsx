@@ -1,16 +1,16 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, FC } from "react";
 import burgerIngredientsStyles from "./burgerIngredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientElement from "./IngredientElement/IngredientElement.js";
+import IngredientElement from "./IngredientElement/IngredientElement";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { useSelector, useDispatch } from "../../services/actions-types/hooks";
 import { useInView } from "react-intersection-observer";
-import { INGREDIENT_MODAL } from "../../utils/constants.ts";
-import { handleWievPopup } from "../../services/actions/modals";
+import { SHOW_MODAL_WITH_DETAILS_INGREDIENT } from "../../utils/constants";
 import { useHistory } from "react-router-dom";
+import { HIDE_MODAL } from "../../utils/constants";
 
-const BurgerIngredients = () => {
+const BurgerIngredients: FC = () => {
   const { section, ingredientsScrollBox, ingredientsTypeBox, tabs } =
     burgerIngredientsStyles;
   const [current, setCurrent] = useState("bun");
@@ -20,7 +20,7 @@ const BurgerIngredients = () => {
   const { ingredients, ingredientModal, ingredientItem } = useSelector(
     (store) => ({
       ingredients: store.ingredients.ingredients,
-      ingredientModal: store.popup.ingredientModal,
+      ingredientModal: store.popup.modalDisplay,
       ingredientItem: store.popup.ingredient,
     })
   );
@@ -64,7 +64,7 @@ const BurgerIngredients = () => {
   }, [bunInView, sauceInView, mainInView]);
 
   const handlerCloseModal = useCallback(() => {
-    dispatch(handleWievPopup(INGREDIENT_MODAL, null))
+    dispatch({type: HIDE_MODAL})
     history.replace({ pathname: "/" });
   }, [dispatch]);
 
@@ -106,7 +106,7 @@ const BurgerIngredients = () => {
                   key={ingredient._id}
                   ingredient={ingredient}
                   onClick={() => {
-                    dispatch(handleWievPopup(INGREDIENT_MODAL, ingredient));
+                    dispatch({type: SHOW_MODAL_WITH_DETAILS_INGREDIENT, payload: ingredient});
                   }}
                 />
               )
@@ -123,7 +123,7 @@ const BurgerIngredients = () => {
                   key={ingredient._id}
                   ingredient={ingredient}
                   onClick={() => {
-                    dispatch(handleWievPopup(INGREDIENT_MODAL, ingredient));
+                    dispatch({type: SHOW_MODAL_WITH_DETAILS_INGREDIENT, payload: ingredient});
                   }}
                 />
               )
@@ -140,7 +140,7 @@ const BurgerIngredients = () => {
                   key={ingredient._id}
                   ingredient={ingredient}
                   onClick={() => {
-                    dispatch(handleWievPopup(INGREDIENT_MODAL, ingredient));
+                    dispatch({type: SHOW_MODAL_WITH_DETAILS_INGREDIENT, payload: ingredient});
                   }}
                 />
               )

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 import spinerStyles from "./loadingSpinner.module.css";
 
-const LoadingSpinner: React.FC = () => {
+const LoadingSpinner: FC = () => {
   const { spinnerContainer, spinner, spinnerBlur } = spinerStyles;
   return (
     <div className={spinnerContainer}>

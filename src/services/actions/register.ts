@@ -9,13 +9,24 @@ import { request } from "../../utils/utils";
 import { AppDispatch, AppThunk } from "../actions-types";
 import { TUser } from "../../types/index";
 
-export interface IRegister {
-  readonly type: typeof REGISTER_USER_REQUEST | typeof REGISTER_USER_SUCCESS | typeof REGISTER_USER_FALED;
-  readonly user?: TUser;
-  readonly error?: Error;
+interface IRegisterRequest {
+  readonly type: typeof REGISTER_USER_REQUEST;
 }
 
-export type TActionregister = IRegister;
+interface IRegisterSuccess {
+  readonly type: typeof REGISTER_USER_SUCCESS;
+  readonly user: TUser;
+}
+
+interface IRegisterFailed {
+  readonly type: typeof REGISTER_USER_FALED;
+  readonly error: Error;
+}
+
+export type TActionregister =
+  | IRegisterRequest
+  | IRegisterSuccess
+  | IRegisterFailed;
 
 const registerUser: AppThunk = (name: string, email: string, password: string) => {
   return (dispatch: AppDispatch) => {

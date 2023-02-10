@@ -1,14 +1,14 @@
-import React from "react";
+import React, { FC } from "react";
 import headerMenuElementStyles from "./headerMenuElement.module.css";
 import { NavLink } from "react-router-dom";
 
-interface Props {
+interface IProps {
   text: string,
   children: React.ReactNode,
   path: string,
 }
 
-const HeaderMenuElement : React.FC<Props> = (props) => {
+const HeaderMenuElement : FC<IProps> = (props) => {
   const { element, title, link, activeLink } = headerMenuElementStyles;
   return (
     <li className={`${element} pl-5 pr-5`}>

@@ -1,12 +1,12 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import burgerConstructorStyles from "./burgerConstructor.module.css";
 import {
   ConstructorElement,
   CurrencyIcon,
-  Button,
+  Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
-import OrderDetails from "../OrderDetails/OrderDetails.jsx";
+import OrderDetails from "../OrderDetails/OrderDetails";
 import { useDispatch, useSelector } from "../../services/actions-types/hooks";
 import postOrder from "../../services/actions/orederDetails";
 import { REFRESH_CONSTRUCTOR } from "../../utils/constants";
@@ -18,7 +18,7 @@ import { useHistory } from "react-router-dom";
 import { getCookie } from "../../services/utils";
 import { IDNDIngredient, IIngredient, TLocation } from "../../types";
 
-const BurgerConstructor: React.FC = () => {
+const BurgerConstructor: FC = () => {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const history = useHistory<TLocation>();
   const dispatch = useDispatch();
@@ -26,13 +26,13 @@ const BurgerConstructor: React.FC = () => {
   const { ingredientsScrollBox, section, info } = burgerConstructorStyles;
 
   const { bun, filling, order, name, isLoading, modalDisplay } = useSelector(
-    (store) => ({
+    store => ({
       bun: store.burgerConstructor.bun,
       filling: store.burgerConstructor.filling,
       order: store.order.order,
       name: store.order.name,
       isLoading: store.order.isLoading,
-      modalDisplay: store.popup.modalDisplay,
+      modalDisplay: store.popup.modalDisplay
     })
   );
 
@@ -53,9 +53,9 @@ const BurgerConstructor: React.FC = () => {
     drop(ingredient: IDNDIngredient) {
       onDropHandler(ingredient);
     },
-    collect: (monitor) => ({
-      isHover: monitor.isOver(),
-    }),
+    collect: monitor => ({
+      isHover: monitor.isOver()
+    })
   });
 
   const onDropHandler = (ingredient: IDNDIngredient) => {
@@ -63,11 +63,11 @@ const BurgerConstructor: React.FC = () => {
     ingredient.type === "bun"
       ? dispatch({
           type: ACTION_TYPES.ADD_BUN,
-          payload: { ...ingredient, uniqueID },
+          payload: { ...ingredient, uniqueID }
         })
       : dispatch({
           type: ACTION_TYPES.ADD_INGREDIENT,
-          payload: { ...ingredient, uniqueID },
+          payload: { ...ingredient, uniqueID }
         });
   };
 
@@ -79,7 +79,7 @@ const BurgerConstructor: React.FC = () => {
     dispatch(postOrder(inbgredientsId));
     dispatch({
       type: ACTION_TYPES.SHOW_MODAL,
-      typeModal: 'orderModal',
+      typeModal: "orderModal"
     });
   };
 
@@ -156,6 +156,7 @@ const BurgerConstructor: React.FC = () => {
           size="medium"
           onClick={handlerCreateOrder}
           disabled={!(bun.length !== 0 && filling.length !== 0) || isLoading}
+          htmlType={"button"}
         >
           {isLoading ? "Оформляем..." : "Оформить заказ"}
         </Button>
@@ -165,7 +166,7 @@ const BurgerConstructor: React.FC = () => {
           isOpened={modalDisplay}
           onClose={() => {
             dispatch({
-              type: ACTION_TYPES.HIDE_MODAL,
+              type: ACTION_TYPES.HIDE_MODAL
             });
             dispatch({ type: REFRESH_CONSTRUCTOR });
           }}
@@ -178,18 +179,3 @@ const BurgerConstructor: React.FC = () => {
 };
 
 export default BurgerConstructor;
-
-//Как типизировать компонент из библиотеки Яндекса? Пробовал обновить библиотеку в консоле появляется следующее:
-
-// npm WARN using --force Recommended protections disabled.
-// npm ERR! code ENOENT
-// npm ERR! syscall open
-// npm ERR! path C:\react-developer-burger-ui-components/package.json
-// npm ERR! errno -4058
-// npm ERR! enoent ENOENT: no such file or directory, open 'C:\react-developer-burger-ui-components\package.json'
-// npm ERR! enoent This is related to npm not being able to find a file.
-// npm ERR! enoent
-// npm ERR! A complete log of this run can be found in:
-// npm ERR!     C:\Users\79634\AppData\Local\npm-cache\_logs\2023-02-07T17_54_19_323Z-debug-0.log
-
-// Почему из стора не приходит попап? Все приходит кроме стейта по модалкам. Пишет popup: never;

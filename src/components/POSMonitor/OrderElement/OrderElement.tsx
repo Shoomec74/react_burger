@@ -1,16 +1,17 @@
-import React, { useMemo } from "react";
+import React, { FC, useMemo } from "react";
 import orderElementStyles from "./orderElement.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../../services/actions-types/hooks";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { nanoid } from "nanoid";
 import { formatDate } from "../../../utils/utils";
 import { IOrder } from "../../../types";
+import { TFeed } from "../../../types/data";
 
 interface IProps {
-  order: IOrder
+  order: TFeed
 }
 
-const OrderElement: React.FC<IProps> = ({ order }) => {
+const OrderElement: FC<IProps> = ({ order }) => {
   const {
     orderInfoBox,
     orderId,

@@ -6,21 +6,30 @@ import {
   GET_INGREDIENTS_SUCCESS,
 } from "../../utils/constants";
 import { request } from "../../utils/utils";
+import { AppDispatch, AppThunk } from "../actions-types";
 
-export interface IGetIngredients {
-  readonly type:
-    | typeof GET_INGREDIENTS
-    | typeof GET_INGREDIENTS_SUCCESS
-    | typeof GET_INGREDIENTS_FAILED;
+interface IGetIngredientsRequest {
+  readonly type: typeof GET_INGREDIENTS;
+}
+
+interface IGetIngredientsSuccess {
+  readonly type: typeof GET_INGREDIENTS_SUCCESS;
   readonly data: TIngredientResponse;
   readonly success: boolean;
+}
+
+interface IGetIngredientsFailed {
+  readonly type: typeof GET_INGREDIENTS_FAILED;
   readonly error: Error;
 }
 
-export type TActionBurgerIngredients = IGetIngredients;
+export type TActionBurgerIngredients =
+  | IGetIngredientsRequest
+  | IGetIngredientsSuccess
+  | IGetIngredientsFailed;
 
-function getIngredients(): (dispatch: any) => void {
-  return function (dispatch): void {
+const getIngredients: AppThunk = () => {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_INGREDIENTS,
     });
@@ -39,6 +48,6 @@ function getIngredients(): (dispatch: any) => void {
         })
       );
   };
-}
+};
 
 export default getIngredients;

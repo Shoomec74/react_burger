@@ -10,24 +10,44 @@ import {
 import { request } from "../../utils/utils";
 import { AppDispatch, AppThunk } from "../actions-types";
 
-export interface IForgotPassword {
-  readonly type: typeof FORGOT_USER_PASSWORD_REQUEST | typeof FORGOT_USER_PASSWORD_SUCCESS | typeof FORGOT_USER_PASSWORD_FALED;
+interface IForgotPasswordRequest {
+  readonly type: typeof FORGOT_USER_PASSWORD_REQUEST;
+}
+
+interface IForgotPasswordSuccess {
+  readonly type: typeof FORGOT_USER_PASSWORD_SUCCESS;
   readonly isUserRegistered: boolean;
+}
+
+interface IForgotPasswordFailed {
+  readonly type: typeof FORGOT_USER_PASSWORD_FALED;
   readonly error: Error;
 }
 
-export interface IResetPassword {
-  readonly type: typeof RESET_USER_PASSWORD_REQUEST | typeof RESET_USER_PASSWORD_SUCCESS | typeof RESET_USER_PASSWORD_FALED;
+interface IResetPasswordRequest {
+  readonly type: typeof RESET_USER_PASSWORD_REQUEST;
+}
+
+interface IResetPasswordSuccess {
+  readonly type: typeof RESET_USER_PASSWORD_SUCCESS;
   readonly isPasswordRelevant: boolean;
-  error: Error;
+}
+
+interface IResetPasswordFailed {
+  readonly type: typeof RESET_USER_PASSWORD_FALED;
+  readonly error: Error;
 }
 
 export type TActionResetPassword =
-  | IForgotPassword
-  | IResetPassword;
+  | IForgotPasswordRequest
+  | IForgotPasswordSuccess
+  | IForgotPasswordFailed
+  | IResetPasswordRequest
+  | IResetPasswordSuccess
+  | IResetPasswordFailed;
 
-function forgotPassword(email: string): (dispatch: any) => void {
-  return (dispatch) => {
+const forgotPassword: AppThunk = (email: string) => {
+  return (dispatch: AppDispatch) => {
     dispatch({
       type: FORGOT_USER_PASSWORD_REQUEST,
     });
@@ -51,10 +71,10 @@ function forgotPassword(email: string): (dispatch: any) => void {
         })
       );
   };
-};
+}
 
-function resetPassword(password: string, token: string): (dispatch:any) => void {
-  return (dispatch) => {
+const resetPassword: AppThunk = (password: string,token: string) => {
+  return (dispatch: AppDispatch) => {
     dispatch({
       type: RESET_USER_PASSWORD_REQUEST,
     });
@@ -78,6 +98,6 @@ function resetPassword(password: string, token: string): (dispatch:any) => void 
         })
       );
   };
-};
+}
 
 export { forgotPassword, resetPassword };
