@@ -28,7 +28,11 @@ export type TActionregister =
   | IRegisterSuccess
   | IRegisterFailed;
 
-const registerUser: AppThunk = (name: string, email: string, password: string) => {
+const registerUser: AppThunk = (
+  name: string,
+  email: string,
+  password: string
+) => {
   return (dispatch: AppDispatch) => {
     dispatch({
       type: REGISTER_USER_REQUEST,

@@ -3,9 +3,9 @@ import registerStyles from "./register.module.css";
 import {
   Button,
   Input,
-  PasswordInput
+  PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useLocation, useHistory, Redirect } from "react-router-dom";
+import { Link, useLocation, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "../../services/actions-types/hooks";
 import { registerUser } from "../../services/actions/register";
 import { getCookie } from "../../services/utils";
@@ -15,23 +15,22 @@ import { TLocation } from "../../types";
 export const Register: FC = () => {
   const { registerPage, form, link } = registerStyles;
   const dispatch = useDispatch();
-  const history = useHistory();
   const location = useLocation<TLocation>();
 
-  const { isLoading } = useSelector(store => ({
-    isLoading: store.registerUser.isLoading
+  const { isLoading } = useSelector((store) => ({
+    isLoading: store.registerUser.isLoading,
   }));
 
   const initialValuesForm = {
     name: "",
     email: "",
-    password: ""
+    password: "",
   };
 
   const { values, handleChange, setValues } = useForm(initialValuesForm);
   const { name, email, password } = values;
 
-  const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handlerSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     dispatch(registerUser(name, email, password));
     setValues(initialValuesForm);
@@ -50,7 +49,6 @@ export const Register: FC = () => {
           <Input
             type={"text"}
             placeholder={"Имя"}
-            // icon={"undefined"}
             name={"name"}
             size={"default"}
             value={name}
@@ -61,7 +59,6 @@ export const Register: FC = () => {
           <Input
             type={"email"}
             placeholder={"E-mail"}
-            // icon={"undefined"}
             name={"email"}
             size={"default"}
             value={email}
@@ -81,7 +78,7 @@ export const Register: FC = () => {
           disabled={
             isLoading || !(name !== "" && email !== "" && password !== "")
           }
-          htmlType={"button"}
+          htmlType={"submit"}
         >
           {isLoading ? "Подождите..." : "Зарегистрироваться"}
         </Button>

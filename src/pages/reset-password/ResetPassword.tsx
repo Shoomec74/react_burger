@@ -3,7 +3,7 @@ import resetPasswordStyles from "./resetPassword.module.css";
 import {
   Button,
   Input,
-  PasswordInput
+  PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useLocation, useHistory, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "../../services/actions-types/hooks";
@@ -15,10 +15,10 @@ import { TLocation } from "../../types";
 export const ResetPassword: FC = () => {
   const { resetPasswordPage, form, link } = resetPasswordStyles;
   const { isPasswordRecovery, isPasswordRelevant, isLoading } = useSelector(
-    store => ({
+    (store) => ({
       isPasswordRecovery: store.resetPassword.isPasswordRecovery,
       isPasswordRelevant: store.resetPassword.isPasswordRelevant,
-      isLoading: store.resetPassword.isLoading
+      isLoading: store.resetPassword.isLoading,
     })
   );
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ export const ResetPassword: FC = () => {
   const { values, handleChange, setValues } = useForm(initialValuesForm);
   const { password, token } = values;
 
-  const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handlerSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     setValues(initialValuesForm);
     dispatch(resetPassword(password, token));
@@ -71,7 +71,7 @@ export const ResetPassword: FC = () => {
           type="primary"
           size="medium"
           disabled={isLoading || !(password !== "" && token !== "")}
-          htmlType={"button"}
+          htmlType={"submit"}
         >
           {isLoading ? "Подождите..." : "Сохранить"}
         </Button>

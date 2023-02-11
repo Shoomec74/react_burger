@@ -27,7 +27,10 @@ const initialState: TAuthorizationState = {
   error: null,
 };
 
-const authorizationReducer = (state = initialState, action: TActionAuthorization) => {
+const authorizationReducer = (
+  state = initialState,
+  action: TActionAuthorization
+) => {
   switch (action.type) {
     case LOGIN_USER_REQUEST: {
       return {

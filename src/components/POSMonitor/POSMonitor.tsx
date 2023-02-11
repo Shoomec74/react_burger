@@ -5,26 +5,27 @@ import { useSelector, useDispatch } from "../../services/actions-types/hooks";
 import { useLocation, Link, useHistory } from "react-router-dom";
 import { nanoid } from "nanoid";
 import Modal from "../Modal/Modal";
-import { HIDE_MODAL, SHOW_MODAL_WITH_DETAILS_FEED } from "../../utils/constants";
 import OrdersInfoDetails from "../OrdersInfoDetails/OrdersInfoDetails";
 import StatsOrders from "./StatsOrders/StatsOrders";
 import { TFeed } from "../../types/data";
 import { TLocation } from "../../types";
+import { hideModal, showModalFeed } from "../../services/actions/modals";
 
 const POSMonitor: FC = () => {
   const { section, feedScrollBox, link } = POSMonitorStyles;
   const location = useLocation<TLocation>();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { orders, feedModal, order, feedConnected } = useSelector((store) => ({
+  const { orders, feedModal, order } = useSelector((store) => ({
     orders: store.webSocket.orders,
-    feedModal: store.popup.modalDisplay,
-    order: store.popup.order,
-    feedConnected: store.webSocket.feedConnected,
+    feedModal: store.popup.feedModal,
+    order: store.popup.feedItem,
   }));
 
+  const feedConnected = location.pathname.includes('feed');
+
   const handlerCloseModal = useCallback(() => {
-    dispatch({type: HIDE_MODAL});
+    dispatch(hideModal());
     history.goBack();
   }, [dispatch]);
 
@@ -52,7 +53,7 @@ const POSMonitor: FC = () => {
                   }
                   key={uniqueID}
                   onClick={() => {
-                    dispatch({type: SHOW_MODAL_WITH_DETAILS_FEED, payload: orderElement});
+                    dispatch(showModalFeed(orderElement));
                   }}
                 >
                   <OrderElement order={orderElement} key={index} />
@@ -67,7 +68,7 @@ const POSMonitor: FC = () => {
           )}
         </div>
       </section>
-      {!feedConnected && <StatsOrders />}
+      {feedConnected && <StatsOrders />}
     </>
   );
 };

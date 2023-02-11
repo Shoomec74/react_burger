@@ -9,16 +9,19 @@ import { IDNDIngredient } from "../../types";
 import { TActionsBurgerConstructor } from "../actions/burgerConstructor";
 
 type TBurgerConstructorState = {
-    bun: Array<IDNDIngredient>;
-    filling: Array<IDNDIngredient>;
-}
+  bun: Array<IDNDIngredient>;
+  filling: Array<IDNDIngredient>;
+};
 
 const initialState: TBurgerConstructorState = {
   bun: [],
   filling: [],
 };
 
-const burgerConstructorReducer = (state = initialState, action: TActionsBurgerConstructor) => {
+const burgerConstructorReducer = (
+  state = initialState,
+  action: TActionsBurgerConstructor
+) => {
   switch (action.type) {
     case ADD_BUN: {
       return {

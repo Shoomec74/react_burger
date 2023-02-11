@@ -107,6 +107,6 @@ const signOut: AppThunk = (refreshToken: string) => {
         })
       );
   };
-}
+};
 
 export { signIn, signOut };

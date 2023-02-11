@@ -2,7 +2,7 @@ import loginStyles from "./login.module.css";
 import {
   Button,
   Input,
-  PasswordInput
+  PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "../../services/actions-types/hooks";
@@ -17,9 +17,9 @@ export const Login: FC = () => {
   const dispatch = useDispatch();
   const cookie = getCookie("token");
   const location = useLocation<TLocation>();
-  const { isLoading } = useSelector(store => ({
+  const { isLoading } = useSelector((store) => ({
     isLoading: store.authorization.isLoading,
-    isLogin: store.authorization.isLogin
+    isLogin: store.authorization.isLogin,
   }));
   const initialValuesForm = { email: "", password: "" };
   const { values, handleChange, setValues } = useForm(initialValuesForm);
@@ -45,7 +45,6 @@ export const Login: FC = () => {
             name={"email"}
             value={email}
             placeholder={"E-mail"}
-            // icon={"undefined"}
             size={"default"}
             onChange={handleChange}
           />

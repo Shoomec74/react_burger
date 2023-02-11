@@ -7,6 +7,17 @@ import { Profile } from "./profile/Profile";
 import { ProfileOrders } from "./profile/profileOrders/ProfileOrders";
 import { IngredientDetailsPage } from "./ingredientDetailsPage/IngredientDetailsPage";
 import { Feed } from "./feed/Feed";
-import {OrderInfoPage} from './orderInfoPage/OrderInfoPage'
+import { OrderInfoPage } from "./orderInfoPage/OrderInfoPage";
 
-export { Login, Register, ForgotPassword, ResetPassword, Page404, Profile, ProfileOrders, IngredientDetailsPage, Feed, OrderInfoPage };
+export {
+  Login,
+  Register,
+  ForgotPassword,
+  ResetPassword,
+  Page404,
+  Profile,
+  ProfileOrders,
+  IngredientDetailsPage,
+  Feed,
+  OrderInfoPage,
+};

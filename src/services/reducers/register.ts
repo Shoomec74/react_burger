@@ -6,15 +6,15 @@ import {
 import { TActionregister } from "../actions/register";
 
 type TRegisterState = {
-  isRegisterUser: boolean,
-  isLoading: boolean,
+  isRegisterUser: boolean;
+  isLoading: boolean;
   user: {
-    name: string,
-    email: string,
-    password: string,
-  },
-  error: null | Error,
-}
+    name: string;
+    email: string;
+    password: string;
+  };
+  error: null | Error;
+};
 
 const initialState: TRegisterState = {
   isRegisterUser: false,

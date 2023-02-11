@@ -5,14 +5,17 @@ import OrdersInfoDetails from "../../components/OrdersInfoDetails/OrdersInfoDeta
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { useParams, useLocation } from "react-router-dom";
 import { getCookie } from "../../services/utils";
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../utils/constants";
+import {
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_START,
+} from "../../utils/constants";
 import { TLocation } from "../../types";
 
 export const OrderInfoPage: FC = () => {
   const { orderInfoPage } = orderInfoPageStyles;
   const dispatch = useDispatch();
   const location = useLocation<TLocation>();
-  const { id } = useParams<{id: string}>();
+  const { id } = useParams<{ id: string }>();
   const { isMessage, orders } = useSelector((store) => ({
     isMessage: store.webSocket.isMessage,
     orders: store.webSocket.orders,
@@ -25,13 +28,13 @@ export const OrderInfoPage: FC = () => {
 
   useEffect(() => {
     if (location.pathname.includes("/feed")) {
-      dispatch({type: WS_CONNECTION_START, payload: wsFeedEndpoint});
+      dispatch({ type: WS_CONNECTION_START, payload: wsFeedEndpoint });
     } else {
-      dispatch({type: WS_CONNECTION_START, payload: wsUserOrdersEndpoint});
+      dispatch({ type: WS_CONNECTION_START, payload: wsUserOrdersEndpoint });
     }
 
     return () => {
-      dispatch({type: WS_CONNECTION_CLOSED});
+      dispatch({ type: WS_CONNECTION_CLOSED });
     };
   }, [dispatch, accessToken]);
 
@@ -42,4 +45,4 @@ export const OrderInfoPage: FC = () => {
   ) : (
     <LoadingSpinner />
   );
-}
+};

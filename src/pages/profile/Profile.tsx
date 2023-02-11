@@ -1,8 +1,8 @@
-import React, { useMemo, FormEvent, ChangeEvent, FC } from "react";
+import React, { useMemo, FormEvent, FC } from "react";
 import profileStyles from "./profile.module.css";
 import {
   Button,
-  Input
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink, Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "../../services/actions-types/hooks";
@@ -15,9 +15,9 @@ import { WS_CONNECTION_CLOSED } from "../../utils/constants";
 export const Profile: FC = () => {
   const { profilePage, form, link, activeLink, navigation } = profileStyles;
   const dispatch = useDispatch();
-  const { user, isLoading } = useSelector(store => ({
+  const { user, isLoading } = useSelector((store) => ({
     user: store.userInfo.user,
-    isLoading: store.userInfo.isLoading
+    isLoading: store.userInfo.isLoading,
   }));
 
   const { values, handleChange, setValues } = useForm(user);
@@ -39,14 +39,14 @@ export const Profile: FC = () => {
     dispatch(updateUserInfo(values));
   };
 
-  function handlerOnClick(){
+  function handlerOnClick() {
     dispatch({ type: WS_CONNECTION_CLOSED });
     dispatch(signOut(refreshToken));
-  };
+  }
 
-  function resetForm (){
+  function resetForm() {
     setValues(user);
-  };
+  }
 
   return (
     <div className={profilePage}>

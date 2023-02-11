@@ -7,12 +7,11 @@ const getCookie = (name: string): string | undefined => {
     )
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
-}
+};
 
 function setCookie(name: string, value: string, props?: any): void {
   props = props || {};
   let exp = props.expires;
-  console.log()
   if (typeof exp == "number" && exp) {
     const d = new Date();
     d.setTime(d.getTime() + exp * 20000);
@@ -34,7 +33,7 @@ function setCookie(name: string, value: string, props?: any): void {
 }
 
 function deleteCookie(name: string): void {
-  setCookie(name, '',{expires: -1});
+  setCookie(name, "", { expires: -1 });
 }
 
 export { setCookie, getCookie, deleteCookie };

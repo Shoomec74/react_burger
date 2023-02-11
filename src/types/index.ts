@@ -49,10 +49,10 @@ export type TLocation = {
 };
 
 export type TSocketMiddlewareActions = {
-	readonly wsInit: string;
-	readonly onOpen: string;
-	readonly onMessage: string;
-	readonly onClose: string;
-	readonly onError: string;
+  readonly wsInit: string;
+  readonly onOpen: string;
+  readonly onMessage: string;
+  readonly onClose: string;
+  readonly onError: string;
   readonly wsSendMessage: string;
-}
+};

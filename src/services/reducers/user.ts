@@ -13,15 +13,15 @@ import {
 import { TActionUser } from "../actions/user";
 
 type TUserState = {
-  isPasswordRelevant: boolean,
-  isUserRegistered: boolean,
-  registerFailed: boolean,
-  registerRequest: boolean,
-  isLoading: boolean,
-  isJwtExpired: boolean,
-  user: TUser,
-  error: null | Error,
-}
+  isPasswordRelevant: boolean;
+  isUserRegistered: boolean;
+  registerFailed: boolean;
+  registerRequest: boolean;
+  isLoading: boolean;
+  isJwtExpired: boolean;
+  user: TUser;
+  error: null | Error;
+};
 
 const initialState: TUserState = {
   isPasswordRelevant: false,

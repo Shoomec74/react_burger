@@ -20,13 +20,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TSocketMiddlewareActi
           dispatch({
             type: onOpen,
             payload: {
-              event: event,
-              // whoIsConnected: event.currentTarget.url.includes("all")
-              //   ? true
-              //   : false,
-              whoIsConnected: document.URL.includes("all")
-                ? true
-                : false,
+              event: event
             },
           });
         };

@@ -5,14 +5,14 @@ import ModalOverlay from "./ModalOverlay/ModalOverlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 interface IProps {
-  isOpened: boolean,
-  onClose: () => void,
-  children: React.ReactNode,
-};
+  isOpened: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+}
 
-interface IStyles{
-  [key:string]: string,
-};
+interface IStyles {
+  [key: string]: string;
+}
 
 const Modal: FC<IProps> = ({ isOpened, onClose, children }) => {
   const { content, closeButton }: IStyles = modalStyles;

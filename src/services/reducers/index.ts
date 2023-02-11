@@ -2,10 +2,10 @@ import { combineReducers } from "redux";
 import burgerIngredientsReducer from "./burgerIngredients";
 import burgerConstructorReducer from "./burgerConstructor";
 import orderDetailsReducer from "./orederDetails";
-import registerUserReduser from './register';
-import userInfoReduser from './user';
-import authorizationReducer from './authorization';
-import resetPasswordReducer from './resetPassword';
+import registerUserReduser from "./register";
+import userInfoReduser from "./user";
+import authorizationReducer from "./authorization";
+import resetPasswordReducer from "./resetPassword";
 import wsReducer from "./webSocketReduser";
 import modalsReducer from "./modals";
 

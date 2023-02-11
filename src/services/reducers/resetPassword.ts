@@ -9,16 +9,16 @@ import {
 import { TActionResetPassword } from "../actions/resetPassword";
 
 type TResetPasswordState = {
-  isLoading: boolean,
-  isPasswordRecovery: boolean,
-  isPasswordRelevant: boolean,
+  isLoading: boolean;
+  isPasswordRecovery: boolean;
+  isPasswordRelevant: boolean;
   user: {
-    name: string,
-    email: string,
-    password: string,
-  },
-  error: null | Error,
-}
+    name: string;
+    email: string;
+    password: string;
+  };
+  error: null | Error;
+};
 
 const initialState: TResetPasswordState = {
   isLoading: false,
@@ -32,7 +32,10 @@ const initialState: TResetPasswordState = {
   error: null,
 };
 
-const resetPasswordReducer = (state = initialState, action: TActionResetPassword) => {
+const resetPasswordReducer = (
+  state = initialState,
+  action: TActionResetPassword
+) => {
   switch (action.type) {
     case FORGOT_USER_PASSWORD_REQUEST: {
       return {

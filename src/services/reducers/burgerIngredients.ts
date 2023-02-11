@@ -11,7 +11,7 @@ type TBurgerIngredientsState = {
   ingredients: Array<IIngredient>;
   error: Error | null;
   isLoading: boolean;
-}
+};
 
 const initialState: TBurgerIngredientsState = {
   success: false,
@@ -20,7 +20,10 @@ const initialState: TBurgerIngredientsState = {
   isLoading: false,
 };
 
-const burgerIngredientsReducer = (state = initialState, action: TActionBurgerIngredients) => {
+const burgerIngredientsReducer = (
+  state = initialState,
+  action: TActionBurgerIngredients
+) => {
   switch (action.type) {
     case GET_INGREDIENTS: {
       return {

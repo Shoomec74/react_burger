@@ -8,13 +8,12 @@ import {
 import { TActionsWS } from "../actions/webSocket";
 
 type TWSState = {
-  wsConnected: boolean,
-  orders: Array<TFeed>,
-  total: number,
-  totalToday: number,
-  isMessage: boolean,
-  feedConnected: boolean,
-}
+  wsConnected: boolean;
+  orders: Array<TFeed>;
+  total: number;
+  totalToday: number;
+  isMessage: boolean;
+};
 
 const initialState: TWSState = {
   wsConnected: false,
@@ -22,7 +21,6 @@ const initialState: TWSState = {
   total: 0,
   totalToday: 0,
   isMessage: false,
-  feedConnected: false,
 };
 
 const wsReducer = (state = initialState, action: TActionsWS) => {
@@ -31,7 +29,6 @@ const wsReducer = (state = initialState, action: TActionsWS) => {
       return {
         ...state,
         wsConnected: true,
-        feedConnected: action.whoIsConnected,
       };
 
     case WS_CONNECTION_ERROR:
@@ -45,7 +42,6 @@ const wsReducer = (state = initialState, action: TActionsWS) => {
         ...state,
         wsConnected: false,
         isMessage: false,
-        feedConnected: false,
       };
 
     case WS_GET_ORDERS:

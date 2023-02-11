@@ -1,4 +1,5 @@
 import { TForm } from "../../hooks/useForm/useForm";
+import { TUser } from "../../types";
 import { TUserResponse } from "../../types/data";
 import {
   BASE_API_AUTH,
@@ -20,9 +21,14 @@ interface IGetUserInfoRequest {
   readonly type: typeof GET_USER_INFO_REQUEST;
 }
 
+type TUserRes = {
+  readonly success: boolean;
+  readonly user: TUser;
+};
+
 interface IGetUserInfoSuccess {
   readonly type: typeof GET_USER_INFO_SUCCESS;
-  readonly response: TUserResponse;
+  readonly response: TUserRes;
 }
 
 interface IGetUserInfoFailed {
@@ -31,7 +37,7 @@ interface IGetUserInfoFailed {
 }
 
 const getUserInfo: AppThunk = () => {
-  return function async (dispatch: AppDispatch) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_INFO_REQUEST,
     });
@@ -45,17 +51,17 @@ const getUserInfo: AppThunk = () => {
       .then((res) => {
         dispatch({
           type: GET_USER_INFO_SUCCESS,
-          response: res.user,
+          response: res,
         });
       })
-      .catch((error) =>
+      .catch((error) => {
         dispatch({
           type: GET_USER_INFO_FALED,
           error: error,
-        })
-      );
+        });
+      });
   };
-}
+};
 
 interface IUpdateUserTokenRequest {
   readonly type: typeof UPDATE_USER_TOKEN_REQUEST;
@@ -81,24 +87,23 @@ const updateUserToken: AppThunk = (refreshToken: string) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ token: refreshToken }),
-    })
-      .then((res) => {
-        const accessToken = res.accessToken.split("Bearer ")[1];
-        const refreshToken = res.refreshToken;
-        setCookie("token", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
-        dispatch({
-          type: UPDATE_USER_TOKEN_SUCCES,
-        });
-      })
-      .catch((error) =>
-        dispatch({
-          type: UPDATE_USER_TOKEN_FALED,
-          error: error,
-        })
-      );
+    }).then((res) => {
+      const accessToken = res.accessToken.split("Bearer ")[1];
+      const refreshToken = res.refreshToken;
+      setCookie("token", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      dispatch({
+        type: UPDATE_USER_TOKEN_SUCCES,
+      });
+    });
+    // .catch((error) =>
+    //   dispatch({
+    //     type: UPDATE_USER_TOKEN_FALED,
+    //     error: error,
+    //   })
+    // );
   };
-}
+};
 
 interface IUpdateUserInfoRequest {
   readonly type: typeof UPDATE_USER_INFO_REQUEST;
@@ -141,7 +146,7 @@ const updateUserInfo: AppThunk = (formData: TForm) => {
         })
       );
   };
-}
+};
 
 export type TActionUser =
   | IGetUserInfoRequest

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import modalOverlayStyles from "./modalOverlay.module.css";
 
 interface IProps {
-  onClose: () => void,
+  onClose: () => void;
 }
 
 const ModalOverlay: FC<IProps> = ({ onClose }) => {

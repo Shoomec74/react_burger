@@ -2,12 +2,14 @@
 // import { TFeed } from "../../types/data";
 // import * as ACTION_TYPES from "../../utils/constants";
 
-import { IIngredient, IOrder } from "../../types";
+import { IIngredient } from "../../types";
+import { TFeed } from "../../types/data";
 
 export enum ModalActionTypes {
   ShowModal,
   showModalIngredient,
   showModalOrder,
+  showModalFeed,
   HideModal,
 }
 
@@ -19,6 +21,13 @@ export interface ModalAction {
 export function showModal(): ModalAction {
   return {
     type: ModalActionTypes.ShowModal,
+  };
+}
+
+export function showModalFeed(payload: TFeed): ModalAction {
+  return {
+    type: ModalActionTypes.showModalFeed,
+    payload,
   };
 }
 

@@ -3,7 +3,7 @@ import burgerConstructorStyles from "./burgerConstructor.module.css";
 import {
   ConstructorElement,
   CurrencyIcon,
-  Button
+  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
@@ -27,13 +27,13 @@ const BurgerConstructor: FC = () => {
   const { ingredientsScrollBox, section, info } = burgerConstructorStyles;
 
   const { bun, filling, order, name, isLoading, modalOrder } = useSelector(
-    store => ({
+    (store) => ({
       bun: store.burgerConstructor.bun,
       filling: store.burgerConstructor.filling,
       order: store.order.order,
       name: store.order.name,
       isLoading: store.order.isLoading,
-      modalOrder: store.popup.modalOrder
+      modalOrder: store.popup.modalOrder,
     })
   );
 
@@ -54,9 +54,9 @@ const BurgerConstructor: FC = () => {
     drop(ingredient: IDNDIngredient) {
       onDropHandler(ingredient);
     },
-    collect: monitor => ({
-      isHover: monitor.isOver()
-    })
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
   });
 
   const onDropHandler = (ingredient: IDNDIngredient) => {
@@ -64,11 +64,11 @@ const BurgerConstructor: FC = () => {
     ingredient.type === "bun"
       ? dispatch({
           type: ACTION_TYPES.ADD_BUN,
-          payload: { ...ingredient, uniqueID }
+          payload: { ...ingredient, uniqueID },
         })
       : dispatch({
           type: ACTION_TYPES.ADD_INGREDIENT,
-          payload: { ...ingredient, uniqueID }
+          payload: { ...ingredient, uniqueID },
         });
   };
 

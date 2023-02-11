@@ -71,9 +71,9 @@ const forgotPassword: AppThunk = (email: string) => {
         })
       );
   };
-}
+};
 
-const resetPassword: AppThunk = (password: string,token: string) => {
+const resetPassword: AppThunk = (password: string, token: string) => {
   return (dispatch: AppDispatch) => {
     dispatch({
       type: RESET_USER_PASSWORD_REQUEST,
@@ -98,6 +98,6 @@ const resetPassword: AppThunk = (password: string,token: string) => {
         })
       );
   };
-}
+};
 
 export { forgotPassword, resetPassword };

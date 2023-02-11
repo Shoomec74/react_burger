@@ -2,7 +2,7 @@ import React, { FC, FormEvent } from "react";
 import forgotPasswordStyles from "./forgotPassword.module.css";
 import {
   Button,
-  Input
+  Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "../../services/actions-types/hooks";
@@ -16,16 +16,16 @@ export const ForgotPassword: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation<TLocation>();
-  const { isPasswordRecovery, isLoading } = useSelector(store => ({
+  const { isPasswordRecovery, isLoading } = useSelector((store) => ({
     isPasswordRecovery: store.resetPassword.isPasswordRecovery,
-    isLoading: store.resetPassword.isLoading
+    isLoading: store.resetPassword.isLoading,
   }));
 
   const initialValuesForm = { email: "" };
   const { values, handleChange, setValues } = useForm(initialValuesForm);
   const { email } = values;
 
-  const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handlerSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     dispatch(forgotPassword(email));
     setValues(initialValuesForm);
@@ -58,7 +58,7 @@ export const ForgotPassword: FC = () => {
           type="primary"
           size="medium"
           disabled={isLoading || !(email !== "")}
-          htmlType={"button"}
+          htmlType={"submit"}
         >
           {isLoading ? "Подождите..." : "Восстановить"}
         </Button>

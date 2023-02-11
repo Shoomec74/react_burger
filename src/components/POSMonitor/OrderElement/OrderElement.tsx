@@ -4,11 +4,10 @@ import { useSelector } from "../../../services/actions-types/hooks";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { nanoid } from "nanoid";
 import { formatDate } from "../../../utils/utils";
-import { IOrder } from "../../../types";
 import { TFeed } from "../../../types/data";
 
 interface IProps {
-  order: TFeed
+  order: TFeed;
 }
 
 const OrderElement: FC<IProps> = ({ order }) => {

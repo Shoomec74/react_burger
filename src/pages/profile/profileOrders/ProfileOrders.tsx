@@ -1,10 +1,16 @@
 import React, { FC, useEffect } from "react";
 import profileOrdersStyles from "./profileOrders.module.css";
-import { useDispatch, useSelector } from "../../../services/actions-types/hooks";
+import {
+  useDispatch,
+  useSelector,
+} from "../../../services/actions-types/hooks";
 import POSMonitor from "../../../components/POSMonitor/POSMonitor";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import { getCookie } from "../../../services/utils";
-import { WS_CONNECTION_CLOSED, WS_CONNECTION_START } from "../../../utils/constants";
+import {
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_START,
+} from "../../../utils/constants";
 
 export const ProfileOrders: FC = () => {
   const { pageOrders } = profileOrdersStyles;
@@ -16,9 +22,9 @@ export const ProfileOrders: FC = () => {
   const wsUserOrdersEndpoint = `?token=${accessToken}`;
 
   useEffect(() => {
-    dispatch({type: WS_CONNECTION_START, payload: wsUserOrdersEndpoint});
+    dispatch({ type: WS_CONNECTION_START, payload: wsUserOrdersEndpoint });
     return () => {
-      dispatch({type: WS_CONNECTION_CLOSED});
+      dispatch({ type: WS_CONNECTION_CLOSED });
     };
   }, [dispatch]);
 

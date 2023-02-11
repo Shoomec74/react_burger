@@ -9,4 +9,4 @@ export const Page404: FC = () => {
       <h2 className={neonText}>Упс, такой страницы не существует</h2>
     </div>
   );
-}
+};

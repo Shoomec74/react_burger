@@ -21,7 +21,10 @@ const initialState: TOrederDetailsState = {
   order: 0,
 };
 
-const orderDetailsReducer = (state = initialState, action: TActionOrederDetails) => {
+const orderDetailsReducer = (
+  state = initialState,
+  action: TActionOrederDetails
+) => {
   switch (action.type) {
     case POST_ORDER: {
       return {

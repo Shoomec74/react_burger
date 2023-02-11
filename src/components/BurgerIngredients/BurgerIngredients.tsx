@@ -6,10 +6,12 @@ import Modal from "../Modal/Modal";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import { useSelector, useDispatch } from "../../services/actions-types/hooks";
 import { useInView } from "react-intersection-observer";
-import { SHOW_MODAL_WITH_DETAILS_INGREDIENT } from "../../utils/constants";
 import { useHistory } from "react-router-dom";
-import { HIDE_MODAL } from "../../utils/constants";
-import { hideModal, showModal, showModalIngredient } from "../../services/actions/modals";
+
+import {
+  hideModal,
+  showModalIngredient,
+} from "../../services/actions/modals";
 
 const BurgerIngredients: FC = () => {
   const { section, ingredientsScrollBox, ingredientsTypeBox, tabs } =
@@ -65,7 +67,7 @@ const BurgerIngredients: FC = () => {
   }, [bunInView, sauceInView, mainInView]);
 
   const handlerCloseModal = useCallback(() => {
-    dispatch(hideModal())
+    dispatch(hideModal());
     history.replace({ pathname: "/" });
   }, [dispatch]);
 
@@ -149,14 +151,11 @@ const BurgerIngredients: FC = () => {
         </ul>
       </div>
       {ingredientModal && (
-          <Modal
-            isOpened={ingredientModal}
-            onClose={handlerCloseModal}
-          >
-            <IngredientDetails ingredient={ingredientItem}>
-              Детали ингридиента
-            </IngredientDetails>
-          </Modal>
+        <Modal isOpened={ingredientModal} onClose={handlerCloseModal}>
+          <IngredientDetails ingredient={ingredientItem}>
+            Детали ингридиента
+          </IngredientDetails>
+        </Modal>
       )}
     </section>
   );
