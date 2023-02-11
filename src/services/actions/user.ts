@@ -22,7 +22,7 @@ interface IGetUserInfoRequest {
 
 interface IGetUserInfoSuccess {
   readonly type: typeof GET_USER_INFO_SUCCESS;
-  readonly user: TUserResponse;
+  readonly response: TUserResponse;
 }
 
 interface IGetUserInfoFailed {
@@ -30,46 +30,8 @@ interface IGetUserInfoFailed {
   readonly error: Error;
 }
 
-interface IUpdateUserTokenRequest {
-  readonly type: typeof UPDATE_USER_TOKEN_REQUEST;
-}
-
-interface IUpdateUserTokenSuccess {
-  readonly type: typeof UPDATE_USER_TOKEN_SUCCES;
-}
-
-interface IUpdateUserTokenFailed {
-  readonly type: typeof UPDATE_USER_TOKEN_FALED;
-  readonly error: Error;
-}
-
-interface IUpdateUserInfoRequest {
-  readonly type: typeof UPDATE_USER_INFO_REQUEST;
-}
-
-interface IUpdateUserInfoSuccess {
-  readonly type: typeof UPDATE_USER_INFO_SUCCESS;
-  readonly user: TUserResponse;
-}
-
-interface IUpdateUserInfoFailed {
-  readonly type: typeof UPDATE_USER_INFO_FALED;
-  readonly error: Error;
-}
-
-export type TActionUser =
-  | IGetUserInfoRequest
-  | IGetUserInfoSuccess
-  | IGetUserInfoFailed
-  | IUpdateUserTokenRequest
-  | IUpdateUserTokenSuccess
-  | IUpdateUserTokenFailed
-  | IUpdateUserInfoRequest
-  | IUpdateUserInfoSuccess
-  | IUpdateUserInfoFailed;
-
 const getUserInfo: AppThunk = () => {
-  return (dispatch: AppDispatch) => {
+  return function async (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_INFO_REQUEST,
     });
@@ -83,7 +45,7 @@ const getUserInfo: AppThunk = () => {
       .then((res) => {
         dispatch({
           type: GET_USER_INFO_SUCCESS,
-          user: res.user,
+          response: res.user,
         });
       })
       .catch((error) =>
@@ -93,6 +55,19 @@ const getUserInfo: AppThunk = () => {
         })
       );
   };
+}
+
+interface IUpdateUserTokenRequest {
+  readonly type: typeof UPDATE_USER_TOKEN_REQUEST;
+}
+
+interface IUpdateUserTokenSuccess {
+  readonly type: typeof UPDATE_USER_TOKEN_SUCCES;
+}
+
+interface IUpdateUserTokenFailed {
+  readonly type: typeof UPDATE_USER_TOKEN_FALED;
+  readonly error: Error;
 }
 
 const updateUserToken: AppThunk = (refreshToken: string) => {
@@ -125,6 +100,20 @@ const updateUserToken: AppThunk = (refreshToken: string) => {
   };
 }
 
+interface IUpdateUserInfoRequest {
+  readonly type: typeof UPDATE_USER_INFO_REQUEST;
+}
+
+interface IUpdateUserInfoSuccess {
+  readonly type: typeof UPDATE_USER_INFO_SUCCESS;
+  readonly user: TUserResponse;
+}
+
+interface IUpdateUserInfoFailed {
+  readonly type: typeof UPDATE_USER_INFO_FALED;
+  readonly error: Error;
+}
+
 const updateUserInfo: AppThunk = (formData: TForm) => {
   return (dispatch: AppDispatch) => {
     dispatch({
@@ -153,5 +142,16 @@ const updateUserInfo: AppThunk = (formData: TForm) => {
       );
   };
 }
+
+export type TActionUser =
+  | IGetUserInfoRequest
+  | IGetUserInfoSuccess
+  | IGetUserInfoFailed
+  | IUpdateUserTokenRequest
+  | IUpdateUserTokenSuccess
+  | IUpdateUserTokenFailed
+  | IUpdateUserInfoRequest
+  | IUpdateUserInfoSuccess
+  | IUpdateUserInfoFailed;
 
 export { getUserInfo, updateUserToken, updateUserInfo };

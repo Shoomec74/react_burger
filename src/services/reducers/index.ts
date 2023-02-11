@@ -10,14 +10,14 @@ import wsReducer from "./webSocketReduser";
 import modalsReducer from "./modals";
 
 const rootReducer = combineReducers({
-  ingredients: burgerIngredientsReducer,
-  order: orderDetailsReducer,
-  popup: modalsReducer,
-  burgerConstructor: burgerConstructorReducer,
-  registerUser: registerUserReduser,
-  userInfo: userInfoReduser,
   authorization: authorizationReducer,
+  burgerConstructor: burgerConstructorReducer,
+  ingredients: burgerIngredientsReducer,
+  popup: modalsReducer,
+  order: orderDetailsReducer,
+  registerUser: registerUserReduser,
   resetPassword: resetPasswordReducer,
+  userInfo: userInfoReduser,
   webSocket: wsReducer,
 });
 

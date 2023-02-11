@@ -39,14 +39,12 @@ export const Profile: FC = () => {
     dispatch(updateUserInfo(values));
   };
 
-  const handlerOnClick = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  function handlerOnClick(){
     dispatch({ type: WS_CONNECTION_CLOSED });
     dispatch(signOut(refreshToken));
   };
 
-  const resetForm = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  function resetForm (){
     setValues(user);
   };
 
@@ -74,7 +72,7 @@ export const Profile: FC = () => {
           exact
           className={`${link} text text_type_main-medium text_color_inactive mb-20`}
           activeClassName={activeLink}
-          onClick={() => handlerOnClick}
+          onClick={handlerOnClick}
         >
           {isLoading ? "ПОДОЖДИТЕ..." : "ВЫХОД"}
         </NavLink>
@@ -125,7 +123,7 @@ export const Profile: FC = () => {
               <Button
                 type="secondary"
                 size="medium"
-                onClick={() => resetForm}
+                onClick={resetForm}
                 htmlType={"button"}
               >
                 Отмена
@@ -134,7 +132,7 @@ export const Profile: FC = () => {
                 type="primary"
                 size="medium"
                 disabled={!isFormByChanged || isLoading}
-                htmlType={"button"}
+                htmlType={"submit"}
               >
                 {isLoading ? "Сохранение..." : "Сохранить"}
               </Button>

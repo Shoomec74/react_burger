@@ -31,7 +31,7 @@ const initialState: TUserState = {
   isLoading: false,
   isJwtExpired: false,
   user: {
-    name: "",
+    name: "Jon",
     email: "",
     password: "",
   },
@@ -49,11 +49,11 @@ const userInfoReduser = (state = initialState, action: TActionUser) => {
     case GET_USER_INFO_SUCCESS: {
       return {
         ...state,
-        isLogin: action.user.success,
+        isLogin: action.response.success,
         user: {
           ...state.user,
-          name: action.user.user.name,
-          email: action.user.user.email,
+          name: action.response.user.name,
+          email: action.response.user.email,
           password: "",
         },
         isLoading: false,

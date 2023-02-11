@@ -3,22 +3,22 @@ import { IDNDIngredient, IIngredient } from "../../types";
 
 interface IAddBun {
   readonly type: typeof ACTION_TYPES.ADD_BUN;
-  readonly payLoad: IDNDIngredient;
+  readonly payload: IDNDIngredient;
 }
 
 interface IAddIngredient {
   readonly type: typeof ACTION_TYPES.ADD_INGREDIENT;
-  readonly payLoad: IDNDIngredient;
+  readonly payload: IDNDIngredient;
 }
 
 interface IRemoveIngredient {
   readonly type: typeof ACTION_TYPES.REMOVE_INGREDIENT;
-  readonly payLoad: string;
+  readonly payload: string;
 }
 
 interface ISwapIngredient {
   readonly type: typeof ACTION_TYPES.SWAP_INGREDIENT;
-  readonly payLoad: { hoverIndex: number; dragIndex: number };
+  readonly payload: { hoverIndex: number; dragIndex: number };
 }
 
 export interface IRefreshConstructor {

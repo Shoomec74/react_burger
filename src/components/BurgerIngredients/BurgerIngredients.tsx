@@ -9,6 +9,7 @@ import { useInView } from "react-intersection-observer";
 import { SHOW_MODAL_WITH_DETAILS_INGREDIENT } from "../../utils/constants";
 import { useHistory } from "react-router-dom";
 import { HIDE_MODAL } from "../../utils/constants";
+import { hideModal, showModal, showModalIngredient } from "../../services/actions/modals";
 
 const BurgerIngredients: FC = () => {
   const { section, ingredientsScrollBox, ingredientsTypeBox, tabs } =
@@ -20,7 +21,7 @@ const BurgerIngredients: FC = () => {
   const { ingredients, ingredientModal, ingredientItem } = useSelector(
     (store) => ({
       ingredients: store.ingredients.ingredients,
-      ingredientModal: store.popup.modalDisplay,
+      ingredientModal: store.popup.modalIngredient,
       ingredientItem: store.popup.ingredient,
     })
   );
@@ -64,7 +65,7 @@ const BurgerIngredients: FC = () => {
   }, [bunInView, sauceInView, mainInView]);
 
   const handlerCloseModal = useCallback(() => {
-    dispatch({type: HIDE_MODAL})
+    dispatch(hideModal())
     history.replace({ pathname: "/" });
   }, [dispatch]);
 
@@ -106,7 +107,7 @@ const BurgerIngredients: FC = () => {
                   key={ingredient._id}
                   ingredient={ingredient}
                   onClick={() => {
-                    dispatch({type: SHOW_MODAL_WITH_DETAILS_INGREDIENT, payload: ingredient});
+                    dispatch(showModalIngredient(ingredient));
                   }}
                 />
               )
@@ -123,7 +124,7 @@ const BurgerIngredients: FC = () => {
                   key={ingredient._id}
                   ingredient={ingredient}
                   onClick={() => {
-                    dispatch({type: SHOW_MODAL_WITH_DETAILS_INGREDIENT, payload: ingredient});
+                    dispatch(showModalIngredient(ingredient));
                   }}
                 />
               )
@@ -140,7 +141,7 @@ const BurgerIngredients: FC = () => {
                   key={ingredient._id}
                   ingredient={ingredient}
                   onClick={() => {
-                    dispatch({type: SHOW_MODAL_WITH_DETAILS_INGREDIENT, payload: ingredient});
+                    dispatch(showModalIngredient(ingredient));
                   }}
                 />
               )

@@ -7,9 +7,9 @@ export type TForm = {
 function useForm(inputValues: TForm) {
   const [values, setValues] = useState(inputValues);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
-    setValues({ [name]: value, ...values });
+    setValues({...values, [name]: value });
   };
   return { values, handleChange, setValues };
 }

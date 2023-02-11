@@ -17,6 +17,7 @@ import ConstructorItem from "./ConstructorItem/ConstructorItem";
 import { useHistory } from "react-router-dom";
 import { getCookie } from "../../services/utils";
 import { IDNDIngredient, IIngredient, TLocation } from "../../types";
+import { hideModal, showModalOrder } from "../../services/actions/modals";
 
 const BurgerConstructor: FC = () => {
   const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -25,14 +26,14 @@ const BurgerConstructor: FC = () => {
   const cookie = getCookie("token");
   const { ingredientsScrollBox, section, info } = burgerConstructorStyles;
 
-  const { bun, filling, order, name, isLoading, modalDisplay } = useSelector(
+  const { bun, filling, order, name, isLoading, modalOrder } = useSelector(
     store => ({
       bun: store.burgerConstructor.bun,
       filling: store.burgerConstructor.filling,
       order: store.order.order,
       name: store.order.name,
       isLoading: store.order.isLoading,
-      modalDisplay: store.popup.modalDisplay
+      modalOrder: store.popup.modalOrder
     })
   );
 
@@ -77,10 +78,7 @@ const BurgerConstructor: FC = () => {
       return;
     }
     dispatch(postOrder(inbgredientsId));
-    dispatch({
-      type: ACTION_TYPES.SHOW_MODAL,
-      typeModal: "orderModal"
-    });
+    dispatch(showModalOrder());
   };
 
   type TInbgredientsId = {
@@ -93,7 +91,7 @@ const BurgerConstructor: FC = () => {
       (ingredient: IDNDIngredient) => ingredient._id
     );
     for (let i = 0; i < 2; i++) {
-      componentId.ingredients.push(bunIngredient._id);
+      componentId.ingredients.push(bunIngredient?._id);
     }
     return componentId;
   }, [filling, bun]);
@@ -163,11 +161,9 @@ const BurgerConstructor: FC = () => {
       </div>
       {!isLoading && (
         <Modal
-          isOpened={modalDisplay}
+          isOpened={modalOrder}
           onClose={() => {
-            dispatch({
-              type: ACTION_TYPES.HIDE_MODAL
-            });
+            dispatch(hideModal());
             dispatch({ type: REFRESH_CONSTRUCTOR });
           }}
         >

@@ -25,7 +25,7 @@ export const Login: FC = () => {
   const { values, handleChange, setValues } = useForm(initialValuesForm);
   const { email, password } = values;
 
-  const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handlerSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     dispatch(signIn(email, password));
     setValues(initialValuesForm);
@@ -61,7 +61,7 @@ export const Login: FC = () => {
           type="primary"
           size="medium"
           disabled={isLoading || !(email !== "" && password !== "")}
-          htmlType={"button"}
+          htmlType={"submit"}
         >
           {isLoading ? "Подождите" : "Войти"}
         </Button>

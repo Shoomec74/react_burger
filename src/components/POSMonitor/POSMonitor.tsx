@@ -67,7 +67,7 @@ const POSMonitor: FC = () => {
           )}
         </div>
       </section>
-      {feedConnected && <StatsOrders />}
+      {!feedConnected && <StatsOrders />}
     </>
   );
 };

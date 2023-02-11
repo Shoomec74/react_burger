@@ -23,26 +23,26 @@ const burgerConstructorReducer = (state = initialState, action: TActionsBurgerCo
     case ADD_BUN: {
       return {
         ...state,
-        bun: [action.payLoad],
+        bun: [action.payload],
       };
     }
     case ADD_INGREDIENT: {
-      return { ...state, filling: [...state.filling, action.payLoad] };
+      return { ...state, filling: [...state.filling, action.payload] };
     }
     case REMOVE_INGREDIENT: {
       return {
         ...state,
         filling: [...state.filling].filter(
-          (item: IDNDIngredient) => item.uniqueID !== action.payLoad
+          (item: IDNDIngredient) => item.uniqueID !== action.payload
         ),
       };
     }
     case SWAP_INGREDIENT: {
       const newState = [...state.filling];
       newState.splice(
-        action.payLoad.dragIndex,
+        action.payload.dragIndex,
         0,
-        newState.splice(action.payLoad.hoverIndex, 1)[0]
+        newState.splice(action.payload.hoverIndex, 1)[0]
       );
       return {
         ...state,

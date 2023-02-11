@@ -31,7 +31,11 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { deleteCookie, getCookie } from "../../services/utils";
 import { TLocation } from "../../types";
 
-
+declare module 'react' {
+  interface FunctionComponent<P = {}> {
+    (props: PropsWithChildren<P>, context?: any): ReactElement<any, any> | null;
+  }
+}
 
 const App: FC = () => {
   const dispatch = useDispatch();
@@ -39,7 +43,7 @@ const App: FC = () => {
   const refreshToken = localStorage.getItem("refreshToken");
   const history = useHistory();
   const location = useLocation<TLocation>();
-  // const background = location.state?.background;
+  const background = location.state?.background;
   const { isExact } : any = useParams();
   const { page, content } = appStyles;
   const { isLoading, success, isJwtExpired, ingredients } = useSelector(
@@ -53,17 +57,19 @@ const App: FC = () => {
 
   React.useEffect(() => {
     dispatch(getIngredients());
-    // if (!isExact) {
-    //   history.push(location.pathname);
-    // }
+    if (!isExact) {
+      history.push(location.pathname);
+    }
   }, []);
 
   React.useEffect(() => {
-    dispatch(getUserInfo());
-    if (isJwtExpired && refreshToken) {
-      deleteCookie("token");
-      dispatch(updateUserToken(refreshToken));
+    if (cookie && refreshToken) {
+      dispatch(getUserInfo());
     }
+    // if (isJwtExpired && refreshToken) {
+    //   deleteCookie("token");
+    //   dispatch(updateUserToken(refreshToken));
+    // }
   }, [dispatch, isJwtExpired, cookie, refreshToken]);
 
   return !isLoading ? (

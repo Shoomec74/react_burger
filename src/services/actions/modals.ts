@@ -1,33 +1,42 @@
+// import { IIngredient, IOrder } from "../../types";
+// import { TFeed } from "../../types/data";
+// import * as ACTION_TYPES from "../../utils/constants";
+
 import { IIngredient, IOrder } from "../../types";
-import * as ACTION_TYPES from "../../utils/constants";
 
-// export function handleWievPopup(namePopup, payload) {
-//   return {
-//     type: namePopup,
-//     payload: payload,
-//   };
-// }
-
-export interface IOpenPopup {
-  readonly type: typeof ACTION_TYPES.SHOW_MODAL;
+export enum ModalActionTypes {
+  ShowModal,
+  showModalIngredient,
+  showModalOrder,
+  HideModal,
 }
 
-export interface IOpenPopupWithDetailsFeed {
-  readonly type: typeof ACTION_TYPES.SHOW_MODAL_WITH_DETAILS_FEED;
-  readonly payload: IOrder;
+export interface ModalAction {
+  type: ModalActionTypes;
+  payload?: any;
 }
 
-export interface IOpenPopupWithDetailsIngredient {
-  readonly type: typeof ACTION_TYPES.SHOW_MODAL_WITH_DETAILS_INGREDIENT;
-  readonly payload: IIngredient;
+export function showModal(): ModalAction {
+  return {
+    type: ModalActionTypes.ShowModal,
+  };
 }
 
-export interface IClosePopup {
-  readonly type: typeof ACTION_TYPES.HIDE_MODAL;
+export function showModalIngredient(payload: IIngredient): ModalAction {
+  return {
+    type: ModalActionTypes.showModalIngredient,
+    payload,
+  };
 }
 
-export type TActionModal =
-  | IOpenPopup
-  | IOpenPopupWithDetailsFeed
-  | IOpenPopupWithDetailsIngredient
-  | IClosePopup;
+export function showModalOrder(): ModalAction {
+  return {
+    type: ModalActionTypes.showModalOrder,
+  };
+}
+
+export function hideModal(): ModalAction {
+  return {
+    type: ModalActionTypes.HideModal,
+  };
+}
