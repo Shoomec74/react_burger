@@ -1,0 +1,39 @@
+.element {
+  display      : flex;
+  border-radius: 40px;
+  align-items  : center;
+}
+
+.element:first-of-type {
+  margin-right: 8px;
+}
+
+.title {
+  display: flex;
+}
+
+.title>svg {
+  padding-right: 8px;
+}
+
+.link {
+  color          : #8585AD;
+  text-decoration: none;
+  transition     : opacity .5s ease-in-out;
+}
+
+.link:hover {
+  cursor : pointer;
+  opacity: .8;
+}
+
+.activeLink:hover {
+  cursor : pointer;
+  opacity: .8;
+}
+
+.activeLink {
+  color          : #F2F2F3;
+  text-decoration: none;
+  transition     : opacity .5s ease-in-out;
+}
