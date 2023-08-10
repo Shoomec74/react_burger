@@ -1,0 +1,7 @@
+.orderInfoPage {
+  display        : flex;
+  height         : calc(100vh - 128px);
+  justify-items  : center;
+  align-items    : center;
+  justify-content: center;
+}

@@ -24,3 +24,12 @@
 .name {
   text-align: center;
 }
+
+.link {
+  display        : flex;
+  flex-direction : column;
+  align-content  : center;
+  align-items    : center;
+  text-decoration: none;
+  color          : white;
+}

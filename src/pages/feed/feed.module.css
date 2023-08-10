@@ -1,0 +1,9 @@
+.feedPage {
+  display  : flex;
+  max-width: 1240px;
+  margin   : 0 auto;
+}
+
+.title {
+  width: 100%;
+}

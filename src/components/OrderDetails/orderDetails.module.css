@@ -1,9 +1,9 @@
 .popup {
-  width: 720px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-  align-items: center;
+  width          : 720px;
+  display        : flex;
+  flex-direction : column;
+  justify-content: center;
+  align-items    : center;
 }
 
 .status {
@@ -39,14 +39,14 @@
 
 }
 
-.icon{
-  display: flex;
-  align-items: center;
+.icon {
+  display        : flex;
+  align-items    : center;
   justify-content: center;
-  position    : absolute;
-  left        : 50%;
-  top         : 50%;
-  transform   : translate(-50%, -50%);
-  width       : 48px;
-  height      : 48px;
+  position       : absolute;
+  left           : 50%;
+  top            : 50%;
+  transform      : translate(-50%, -50%);
+  width          : 48px;
+  height         : 48px;
 }

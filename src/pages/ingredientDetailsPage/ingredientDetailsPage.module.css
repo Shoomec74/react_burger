@@ -1,9 +1,10 @@
-.popup {
-  display       : flex;
-  flex-direction: column;
-  justify-items : center;
-  width         : 720px;
-  padding-top   : 12px;
+.ingredientDetailsPage {
+  display        : flex;
+  height         : calc(100vh - 128px);
+  justify-items  : center;
+  align-items    : center;
+  justify-content: center;
+  flex-direction : column;
 }
 
 .nutritionalValues {
