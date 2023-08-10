@@ -28,7 +28,7 @@ const StatsOrders: FC = () => {
 
   return (
     <section className={`${section} pt-25 pl-15`}>
-      <div className={`${orderBoard} pb-15`}>
+      <div className={`${orderBoard} pb-10`}>
         <div className={column}>
           <p className="text text_type_main-medium pb-6">Готовы:</p>
           <ul className={orderList}>
@@ -60,7 +60,7 @@ const StatsOrders: FC = () => {
           </ul>
         </div>
       </div>
-      <div className={`${completed} pb-15`}>
+      <div className={`${completed} pb-10`}>
         <p className="text text_type_main-medium">Выполнено за все время:</p>
         <h2 className={`${totalItems} text text_type_digits-large`}>{total}</h2>
       </div>

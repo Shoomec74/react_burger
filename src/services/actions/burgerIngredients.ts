@@ -1,3 +1,4 @@
+import { delay } from "../../utils/utils";
 import { TIngredientResponse } from "../../types/data";
 import {
   BASE_API_URL,
@@ -29,10 +30,12 @@ export type TActionBurgerIngredients =
   | IGetIngredientsFailed;
 
 const getIngredients: AppThunk = () => {
-  return function (dispatch: AppDispatch) {
+  return async function (dispatch: AppDispatch) {
     dispatch({
       type: GET_INGREDIENTS,
     });
+    //--Имитируем загузку реально большого приложения--//
+    await delay(1000);
     request(`${BASE_API_URL}/ingredients`)
       .then((res) =>
         dispatch({

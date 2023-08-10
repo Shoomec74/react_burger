@@ -7,7 +7,6 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import {
   BrowserRouter as Router,
-  // @ts-ignore
 } from "react-router-dom";
 import store from "./services/store";
 

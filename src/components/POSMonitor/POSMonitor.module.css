@@ -8,7 +8,7 @@
 .feedScrollBox {
   max-width: 600px;
   overflow : auto;
-  height   : 756px;
+  height   : 670px;
 }
 
 .feedScrollBox::-webkit-scrollbar {

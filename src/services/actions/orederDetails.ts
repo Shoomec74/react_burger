@@ -6,6 +6,7 @@ import {
 } from "../../utils/constants";
 import { request } from "../../utils/utils";
 import { AppDispatch, AppThunk } from "../actions-types";
+import { useDispatch } from "../actions-types/hooks";
 import { getCookie } from "../utils";
 
 export type TBurgerInbgredientsId = {
@@ -60,4 +61,5 @@ const postOrder: AppThunk = (burgerIds: TBurgerInbgredientsId) => {
       });
   };
 };
+
 export default postOrder;
